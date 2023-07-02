@@ -2,10 +2,10 @@ package virtual_machine.memory;
 import virtual_machine.types.UnsignedShort;
 
 public class Memory implements InstructionMemory, DataMemory {
-    private final UnsignedShort[] memory = new UnsignedShort[65_536];
+    private final UnsignedShort[] mainMemory = new UnsignedShort[65_536];
     public Memory() {
         for (int i = 0; i < 65_536; i++) {
-            this.memory[i] = new UnsignedShort(0);
+            this.mainMemory[i] = new UnsignedShort(0);
         }
     }
     @Override
@@ -15,11 +15,11 @@ public class Memory implements InstructionMemory, DataMemory {
 
     @Override
     public void write(UnsignedShort value, UnsignedShort address) {
-        this.memory[address.getValue()] = value;
+        this.mainMemory[address.getValue()] = value;
     }
 
     @Override
     public UnsignedShort read(UnsignedShort address) {
-        return this.memory[address.getValue()];
+        return this.mainMemory[address.getValue()];
     }
 }

@@ -1,7 +1,6 @@
 package virtual_machine.commands.operations;
 
 import virtual_machine.registers.RegWork;
-import virtual_machine.types.UnsignedByte;
 import virtual_machine.types.UnsignedShort;
 
 import java.util.List;
