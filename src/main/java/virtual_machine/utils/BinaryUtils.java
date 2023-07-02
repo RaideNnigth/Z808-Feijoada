@@ -20,4 +20,12 @@ public class BinaryUtils {
 
         return (num1 | s2);
     }
+
+    public static byte getLowByte(short b) {
+        return (byte) (b & 0xFF);
+    }
+
+    public static byte getHighByte(short b) {
+        return (byte) (b >> 8);
+    }
 }
