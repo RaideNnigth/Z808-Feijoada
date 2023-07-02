@@ -8,13 +8,13 @@ import virtual_machine.types.UnsignedByte;
 import java.util.HashMap;
 import java.util.List;
 
-public class Invoker {
+public class CommandExecutor {
 
     private Command command;
 
     private final HashMap<UnsignedByte, Command> opCodeMap;
 
-    public Invoker() {
+    public CommandExecutor() {
         this.opCodeMap = new HashMap<>();
         this.opCodeMap.put( new UnsignedByte( 30 ), new Add() );
     }
