@@ -1,14 +1,231 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
   <help_text/>
-  <zoom_level>10</zoom_level>
+  <zoom_level>5</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>820</x>
-      <y>370</y>
-      <w>210</w>
-      <h>180</h>
+      <x>585</x>
+      <y>565</y>
+      <w>145</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>UnsignedByte
+-
+- value : int
+-
++ setValue(val : int) : void
++ getValue() : int
+_+ concatenateBytes(b1 : int, b2 : int): int_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>290</y>
+      <w>120</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Memory
+-
+- memory :  UnsignedShort [65536]
+_- instance : Memory_
+-
+- Memory()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>690</x>
+      <y>285</y>
+      <w>145</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Interpreter
+-
+- ax : RegWork
+- dx : RegWork
+- sp : RegWork
+- si : RegWork
+- ip : RegWork
+- sr : RegFlags
+- memController : MemoryController
+- invoker : Invoker
+-
++ startExecution() : void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>160</x>
+      <y>255</y>
+      <w>185</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+DataMemory
+-
++ getInstance() : Memory
++ write(val : UnsignedShort, add : UnsignedShort) : void
++ read(add : UnsignedShort) : UnsignedShort</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>160</x>
+      <y>335</y>
+      <w>185</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+InstructionMemory
+-
++ getInstance() : Memory
++ write(val : UnsignedShort, add : UnsignedShort) : void
++ read(add : UnsignedShort) : UnsignedShort</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>115</x>
+      <y>280</y>
+      <w>55</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>90.0;10.0;40.0;10.0;40.0;70.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>115</x>
+      <y>310</y>
+      <w>55</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>90.0;100.0;40.0;100.0;40.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>870</x>
+      <y>265</y>
+      <w>170</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>Invoker
+-
+- command : Command
+- opCodeMap : HashMap&lt;UnsignedByte,Command&gt;
+-
++ setOperation(UnsignedByte opcode) : void
++ doOperation(List&lt;Object&gt; args) : void
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>830</x>
+      <y>290</y>
+      <w>50</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>80.0;10.0;40.0;10.0;40.0;110.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>435</y>
+      <w>145</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>RegWork
+-
+- regHigh : UnsignedByte
+- regLow : UnsignedByte
+-
++ getRegHigh() : UnsignedByte
++ getRegLow() : UnsignedByte
++ getReg() : UnsignedShort
++ setRegHigh(value : UnsignedByte) : void
++ setRegLow(value : UnsignedByte) : void
++ setReg(value : UnsignedShort) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>750</x>
+      <y>565</y>
+      <w>145</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>UnsignedShort
+-
+- value : int
+-
++ setValue(val : int) : void
++ getValue() : int
++ getHigh() : UnsignedByte
++ getLow() : UnsignedByte</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>655</x>
+      <y>520</y>
+      <w>45</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;50.0;70.0;50.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>685</x>
+      <y>520</y>
+      <w>150</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>280.0;90.0;280.0;50.0;10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>870</x>
+      <y>340</y>
+      <w>120</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Command
+-
++ doOp(args : List&lt;Object&gt;)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>780</x>
+      <y>435</y>
+      <w>105</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>RegFlags
 -
@@ -27,165 +244,214 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>460</x>
-      <y>620</y>
-      <w>290</w>
-      <h>170</h>
+      <x>1015</x>
+      <y>340</y>
+      <w>110</w>
+      <h>20</h>
     </coordinates>
-    <panel_attributes>UnsignedByte
+    <panel_attributes>Concrete Commands [26]
 -
-- value : int
--
-+ setValue(val : int) : void
-+ getValue() : int
-_+ concatenateBytes(b1 : int, b2 : int): int_</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>0</x>
-      <y>70</y>
-      <w>240</w>
-      <h>120</h>
-    </coordinates>
-    <panel_attributes>Memory
--
-- memory : unsigned short [65536]
-- instance : Memory
--
-+ getInstance() : Memory
-# write(val : unsigned short) : void
-# read() : unsigned short</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>670</x>
-      <y>30</y>
-      <w>290</w>
-      <h>260</h>
-    </coordinates>
-    <panel_attributes>Interpreter
--
-- ax : RegWork
-- dx : RegWork
-- sp : RegWork
-- si : RegWork
-- ip : RegWork
-- sr : RegFlags
-- dataMem : DataMemory
-- instructionMem : InstructionMemory
-- invoker : Invoker
-
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>320</x>
-      <y>0</y>
-      <w>240</w>
-      <h>100</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;interface&gt;&gt;
-DataMemory
--
-+ getInstance() : Memory
-# write(val : unsigned short) : void
-# read() : unsigned short</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>320</x>
-      <y>150</y>
-      <w>240</w>
-      <h>100</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;interface&gt;&gt;
-InstructionMemory
--
-+ getInstance() : Memory
-# write(val : unsigned short) : void
-# read() : unsigned short</panel_attributes>
+-</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>230</x>
-      <y>50</y>
-      <w>110</w>
-      <h>100</h>
+      <x>985</x>
+      <y>345</y>
+      <w>40</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>90.0;10.0;40.0;10.0;40.0;80.0;10.0;80.0</additional_attributes>
+    <additional_attributes>10.0;30.0;40.0;30.0;40.0;10.0;60.0;10.0</additional_attributes>
   </element>
   <element>
-    <id>Relation</id>
+    <id>UMLNote</id>
     <coordinates>
-      <x>230</x>
-      <y>120</y>
-      <w>110</w>
-      <h>100</h>
+      <x>1125</x>
+      <y>340</y>
+      <w>50</w>
+      <h>40</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>90.0;80.0;40.0;80.0;40.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1110</x>
-      <y>30</y>
-      <w>340</w>
-      <h>110</h>
-    </coordinates>
-    <panel_attributes>Invoker
--
-- command : Command
-- opCodeMap : HashMap&lt;UnsignedByte,Command&gt;
--
-+ setOperation(UnsignedByte opcode) : void
-+ doOperation(List&lt;Object&gt; args)
-
-
-</panel_attributes>
+    <panel_attributes>Here are the
+commands
+supported by
+the Z808
+bg=blue</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>950</x>
-      <y>80</y>
-      <w>180</w>
-      <h>90</h>
+      <x>925</x>
+      <y>315</y>
+      <w>15</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>160.0;10.0;80.0;10.0;80.0;70.0;10.0;70.0</additional_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>685</x>
+      <y>400</y>
+      <w>90</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;40.0;160.0;40.0;160.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>760</x>
+      <y>380</y>
+      <w>80</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>140.0;110.0;140.0;80.0;10.0;80.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>470</x>
-      <y>390</y>
-      <w>290</w>
-      <h>170</h>
+      <x>545</x>
+      <y>190</y>
+      <w>170</w>
+      <h>60</h>
     </coordinates>
-    <panel_attributes>RegWork
+    <panel_attributes>Loader
 -
-- regHigh : UnsignedByte
-- regLow : UnsignedByte
+- reader : Scanner
+- pathToProgram : String
+- memController : MemoryController
 -
-+ getRegHigh() : UnsignedByte
-+ getRegLow() : UnsignedByte
-+ getReg() : UnsignedShort
-+ setRegHigh(value : UnsignedByte) : void
-+ setRegLow(value : UnsignedByte) : void
-+ setReg(value : UnsignedShort) : void</panel_attributes>
++ setPathToProgram(path : String) : void
++ loadToMemory() : void
+
+
+</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>760</x>
+      <y>190</y>
+      <w>80</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>Não sei se fazemos 
+a Interpreter ter uma 
+referência p/ o Loader
+ou fazemos o Loader ter
+uma referência p/ o
+Interpreter
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>705</x>
+      <y>100</y>
+      <w>95</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>*Main*
+-
+- pathToProgram : String
+-
+_+ main() : void_
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>625</x>
+      <y>135</y>
+      <w>135</w>
+      <h>65</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;40.0;250.0;40.0;250.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>410</x>
+      <y>285</y>
+      <w>235</w>
+      <h>85</h>
+    </coordinates>
+    <panel_attributes>MemoryController
+-
+- dataMemory : DataMemory
+- instructionMemory : InstructionMemory
+-
++ getInstructionMem(add : UnsignedShort) : UnsignedShort
++ getDataMem(add : UnsignedShort) : UnsignedShort
++ writeInstructionMem(add : UnsignedShort, data : UnsignedShort) : void
++ writeDataMem(add : UnsignedShort, data : UnsignedShort) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>275</y>
+      <w>80</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0;70.0;90.0;140.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>315</y>
+      <w>80</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;90.0;70.0;90.0;70.0;10.0;140.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>525</x>
+      <y>245</y>
+      <w>105</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;40.0;190.0;40.0;190.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>640</x>
+      <y>325</y>
+      <w>60</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;100.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>745</x>
+      <y>135</y>
+      <w>15</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;300.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
