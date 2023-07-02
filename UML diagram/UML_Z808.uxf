@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
   <help_text/>
-  <zoom_level>5</zoom_level>
+  <zoom_level>11</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>585</x>
-      <y>565</y>
-      <w>145</w>
-      <h>55</h>
+      <x>1287</x>
+      <y>1276</y>
+      <w>319</w>
+      <h>121</h>
     </coordinates>
     <panel_attributes>UnsignedByte
 -
@@ -23,9 +23,9 @@ _+ concatenateBytes(b1 : int, b2 : int): int_</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>290</y>
-      <w>120</w>
-      <h>45</h>
+      <y>671</y>
+      <w>264</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>Memory
 -
@@ -38,10 +38,10 @@ _- instance : Memory_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>690</x>
-      <y>285</y>
-      <w>145</w>
-      <h>100</h>
+      <x>1518</x>
+      <y>660</y>
+      <w>319</w>
+      <h>220</h>
     </coordinates>
     <panel_attributes>Interpreter
 -
@@ -62,10 +62,10 @@ _- instance : Memory_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>160</x>
-      <y>255</y>
-      <w>185</w>
-      <h>50</h>
+      <x>352</x>
+      <y>594</y>
+      <w>407</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 DataMemory
@@ -78,10 +78,10 @@ DataMemory
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>160</x>
-      <y>335</y>
-      <w>185</w>
-      <h>50</h>
+      <x>352</x>
+      <y>770</y>
+      <w>407</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 InstructionMemory
@@ -94,10 +94,10 @@ InstructionMemory
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>115</x>
-      <y>280</y>
-      <w>55</w>
-      <h>45</h>
+      <x>253</x>
+      <y>649</y>
+      <w>121</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>90.0;10.0;40.0;10.0;40.0;70.0;10.0;70.0</additional_attributes>
@@ -105,10 +105,10 @@ InstructionMemory
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>115</x>
-      <y>310</y>
-      <w>55</w>
-      <h>60</h>
+      <x>253</x>
+      <y>715</y>
+      <w>121</w>
+      <h>132</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>90.0;100.0;40.0;100.0;40.0;10.0;10.0;10.0</additional_attributes>
@@ -116,10 +116,10 @@ InstructionMemory
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>870</x>
-      <y>265</y>
-      <w>170</w>
-      <h>55</h>
+      <x>1914</x>
+      <y>616</y>
+      <w>374</w>
+      <h>121</h>
     </coordinates>
     <panel_attributes>Invoker
 -
@@ -136,10 +136,10 @@ InstructionMemory
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>830</x>
-      <y>290</y>
-      <w>50</w>
-      <h>65</h>
+      <x>1826</x>
+      <y>671</y>
+      <w>110</w>
+      <h>143</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>80.0;10.0;40.0;10.0;40.0;110.0;10.0;110.0</additional_attributes>
@@ -147,10 +147,10 @@ InstructionMemory
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>620</x>
-      <y>435</y>
-      <w>145</w>
-      <h>90</h>
+      <x>1364</x>
+      <y>990</y>
+      <w>319</w>
+      <h>198</h>
     </coordinates>
     <panel_attributes>RegWork
 -
@@ -168,10 +168,10 @@ InstructionMemory
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>750</x>
-      <y>565</y>
-      <w>145</w>
-      <h>60</h>
+      <x>1650</x>
+      <y>1276</y>
+      <w>319</w>
+      <h>132</h>
     </coordinates>
     <panel_attributes>UnsignedShort
 -
@@ -186,10 +186,10 @@ InstructionMemory
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>655</x>
-      <y>520</y>
-      <w>45</w>
-      <h>55</h>
+      <x>1441</x>
+      <y>1177</y>
+      <w>99</w>
+      <h>121</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;90.0;10.0;50.0;70.0;50.0;70.0;10.0</additional_attributes>
@@ -197,10 +197,10 @@ InstructionMemory
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>685</x>
-      <y>520</y>
-      <w>150</w>
-      <h>55</h>
+      <x>1507</x>
+      <y>1177</y>
+      <w>330</w>
+      <h>121</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>280.0;90.0;280.0;50.0;10.0;50.0;10.0;10.0</additional_attributes>
@@ -208,10 +208,10 @@ InstructionMemory
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>870</x>
-      <y>340</y>
-      <w>120</w>
-      <h>35</h>
+      <x>1914</x>
+      <y>781</y>
+      <w>264</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 Command
@@ -222,10 +222,10 @@ Command
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>780</x>
-      <y>435</y>
-      <w>105</w>
-      <h>90</h>
+      <x>1716</x>
+      <y>990</y>
+      <w>231</w>
+      <h>198</h>
     </coordinates>
     <panel_attributes>RegFlags
 -
@@ -244,10 +244,10 @@ Command
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1015</x>
-      <y>340</y>
-      <w>110</w>
-      <h>20</h>
+      <x>2233</x>
+      <y>781</y>
+      <w>242</w>
+      <h>44</h>
     </coordinates>
     <panel_attributes>Concrete Commands [26]
 -
@@ -257,10 +257,10 @@ Command
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>985</x>
-      <y>345</y>
-      <w>40</w>
-      <h>25</h>
+      <x>2167</x>
+      <y>792</y>
+      <w>88</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;30.0;40.0;30.0;40.0;10.0;60.0;10.0</additional_attributes>
@@ -268,10 +268,10 @@ Command
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1125</x>
-      <y>340</y>
-      <w>50</w>
-      <h>40</h>
+      <x>2475</x>
+      <y>781</y>
+      <w>110</w>
+      <h>88</h>
     </coordinates>
     <panel_attributes>Here are the
 commands
@@ -283,10 +283,10 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>925</x>
-      <y>315</y>
-      <w>15</w>
-      <h>35</h>
+      <x>2035</x>
+      <y>726</y>
+      <w>33</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
@@ -294,10 +294,10 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>685</x>
-      <y>400</y>
-      <w>90</w>
-      <h>45</h>
+      <x>1507</x>
+      <y>913</y>
+      <w>198</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;70.0;10.0;40.0;160.0;40.0;160.0;10.0</additional_attributes>
@@ -305,10 +305,10 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>760</x>
-      <y>380</y>
-      <w>80</w>
-      <h>65</h>
+      <x>1672</x>
+      <y>869</y>
+      <w>176</w>
+      <h>143</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>140.0;110.0;140.0;80.0;10.0;80.0;10.0;10.0</additional_attributes>
@@ -316,10 +316,10 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>545</x>
-      <y>190</y>
-      <w>170</w>
-      <h>60</h>
+      <x>1199</x>
+      <y>451</y>
+      <w>374</w>
+      <h>132</h>
     </coordinates>
     <panel_attributes>Loader
 -
@@ -328,36 +328,19 @@ bg=blue</panel_attributes>
 - memController : MemoryController
 -
 + setPathToProgram(path : String) : void
-+ loadToMemory() : void
++ loadToMemory() : boolean
 
 
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>UMLNote</id>
-    <coordinates>
-      <x>760</x>
-      <y>190</y>
-      <w>80</w>
-      <h>55</h>
-    </coordinates>
-    <panel_attributes>Não sei se fazemos 
-a Interpreter ter uma 
-referência p/ o Loader
-ou fazemos o Loader ter
-uma referência p/ o
-Interpreter
-bg=red</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>705</x>
-      <y>100</y>
-      <w>95</w>
-      <h>40</h>
+      <x>1551</x>
+      <y>253</y>
+      <w>209</w>
+      <h>88</h>
     </coordinates>
     <panel_attributes>*Main*
 -
@@ -372,10 +355,10 @@ _+ main() : void_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>625</x>
-      <y>135</y>
-      <w>135</w>
-      <h>65</h>
+      <x>1375</x>
+      <y>330</y>
+      <w>297</w>
+      <h>143</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;110.0;10.0;40.0;250.0;40.0;250.0;10.0</additional_attributes>
@@ -383,10 +366,10 @@ _+ main() : void_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>410</x>
-      <y>285</y>
-      <w>235</w>
-      <h>85</h>
+      <x>902</x>
+      <y>660</y>
+      <w>517</w>
+      <h>187</h>
     </coordinates>
     <panel_attributes>MemoryController
 -
@@ -402,10 +385,10 @@ _+ main() : void_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>340</x>
-      <y>275</y>
-      <w>80</w>
-      <h>55</h>
+      <x>748</x>
+      <y>638</y>
+      <w>176</w>
+      <h>121</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;70.0;10.0;70.0;90.0;140.0;90.0</additional_attributes>
@@ -413,10 +396,10 @@ _+ main() : void_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>340</x>
-      <y>315</y>
-      <w>80</w>
-      <h>55</h>
+      <x>748</x>
+      <y>726</y>
+      <w>176</w>
+      <h>121</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;90.0;70.0;90.0;70.0;10.0;140.0;10.0</additional_attributes>
@@ -424,10 +407,10 @@ _+ main() : void_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>525</x>
-      <y>245</y>
-      <w>105</w>
-      <h>50</h>
+      <x>1155</x>
+      <y>572</y>
+      <w>231</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;80.0;10.0;40.0;190.0;40.0;190.0;10.0</additional_attributes>
@@ -435,10 +418,10 @@ _+ main() : void_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>640</x>
-      <y>325</y>
-      <w>60</w>
-      <h>15</h>
+      <x>1408</x>
+      <y>748</y>
+      <w>132</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;100.0;10.0</additional_attributes>
@@ -446,10 +429,10 @@ _+ main() : void_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>745</x>
-      <y>135</y>
-      <w>15</w>
-      <h>160</h>
+      <x>1639</x>
+      <y>330</y>
+      <w>33</w>
+      <h>352</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;300.0;10.0;10.0</additional_attributes>
