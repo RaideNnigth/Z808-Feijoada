@@ -34,8 +34,18 @@ public class Interpreter {
 
     protected void startExecution() {
         while ( Interpreter.ip.getReg() < MemoryController.standardDataSegment ) {
-
             short currentInstructionPointer = Interpreter.ip.getReg();
+            short instruction = Interpreter.memoryController.getInstruction( currentInstructionPointer );
+
+            //decode instruction
+
+
+
+            //execution instruction
+
+
+            if ( Interpreter.ip.getReg() == currentInstructionPointer )
+                Interpreter.ip.setReg( (short) (Interpreter.ip.getReg() + 1));
         }
     }
 }
