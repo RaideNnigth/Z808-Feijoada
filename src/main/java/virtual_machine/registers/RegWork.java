@@ -1,34 +1,33 @@
 package virtual_machine.registers;
 
-import virtual_machine.types.UnsignedByte;
-import virtual_machine.types.UnsignedShort;
+import virtual_machine.types.BinaryUtils;
 
 public class RegWork {
-    private UnsignedByte regHigh;
-    private UnsignedByte regLow;
+    private byte regHigh;
+    private byte regLow;
 
     public int getRegHigh() {
-        return regHigh.getValue();
+        return regHigh;
     }
 
     public int getRegLow() {
-        return regLow.getValue();
+        return regLow;
     }
 
     public int getReg() {
-        return UnsignedByte.concatenateBytes( this.regHigh.getValue(), this.regLow.getValue() );
+        return BinaryUtils.concatBytes(regHigh, regLow);
     }
 
     public void setRegHigh( int regHigh ) {
-        this.regHigh.setValue( regHigh );
+        this.regHigh = (byte) regHigh;
     }
 
     public void setRegLow( int regLow ) {
-        this.regLow.setValue( regLow );
+        this.regLow = (byte) regLow;
     }
 
-    public void setReg( UnsignedShort reg ) {
-        this.regHigh = reg.getHigh();
-        this.regLow = reg.getLow();
+    public void setReg( short reg ) {
+        this.regHigh = (byte)(reg >> 8);
+        this.regLow = (byte)(reg & 0xFF);
     }
 }

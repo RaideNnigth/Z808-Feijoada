@@ -2,13 +2,13 @@ package virtual_machine.commands.operations.arithmetical;
 
 import virtual_machine.commands.operations.Command;
 import virtual_machine.registers.RegWork;
-import virtual_machine.types.UnsignedShort;
+import virtual_machine.types.short;
 
 import java.util.List;
 
 public class AddAxDx implements Command {
     private void add( RegWork ax, RegWork dx ) {
-        ax.setReg( new UnsignedShort( ax.getReg() + dx.getReg() ) );
+        ax.setReg( new short( ax.getReg() + dx.getReg() ) );
     }
 
     @Override
