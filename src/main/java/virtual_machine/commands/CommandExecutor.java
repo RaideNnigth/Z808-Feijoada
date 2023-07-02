@@ -1,7 +1,7 @@
 package virtual_machine.commands;
 
 
-import virtual_machine.commands.operations.Add;
+import virtual_machine.commands.operations.AddAxDx;
 import virtual_machine.commands.operations.Command;
 import virtual_machine.types.UnsignedByte;
 
@@ -16,7 +16,7 @@ public class CommandExecutor {
 
     public CommandExecutor() {
         this.opCodeMap = new HashMap<>();
-        this.opCodeMap.put( new UnsignedByte( 30 ), new Add() );
+        this.opCodeMap.put( new UnsignedByte( 30 ), new AddAxDx() );
     }
 
     private void setOperation( UnsignedByte opCode ) {

@@ -5,7 +5,7 @@ import virtual_machine.types.UnsignedShort;
 
 import java.util.List;
 
-public class Add implements Command {
+public class AddAxAx implements Command {
     private void add( RegWork ax, RegWork dx ) {
         ax.setReg( new UnsignedShort( ax.getReg() + dx.getReg() ) );
     }
@@ -13,7 +13,6 @@ public class Add implements Command {
     @Override
     public void doOperation( List<Object> args ) {
         RegWork ax = (RegWork)args.get( 0 );
-        RegWork dx = (RegWork)args.get( 1 );
-        this.add( ax, dx );
+        this.add( ax, ax );
     }
 }
