@@ -2,14 +2,12 @@ package virtual_machine.commands.operations.arithmetical;
 
 import virtual_machine.commands.operations.Command;
 import virtual_machine.registers.RegWork;
-import virtual_machine.types.byte;
-import virtual_machine.types.short;
 
 import java.util.List;
 
 public class AddAxCte implements Command {
     private void add( RegWork ax, byte dx ) {
-        ax.setReg( new short( ax.getReg() + dx.getValue() ) );
+        ax.setReg( (short)(ax.getReg() + dx ) );
     }
 
     @Override

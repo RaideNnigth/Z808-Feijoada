@@ -1,4 +1,4 @@
-package virtual_machine.types;
+package virtual_machine.utils;
 
 public class BinaryUtils {
     public static final short maxShort = Short.MAX_VALUE;

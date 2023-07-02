@@ -1,6 +1,6 @@
 package virtual_machine.registers;
 
-import virtual_machine.types.BinaryUtils;
+import virtual_machine.utils.BinaryUtils;
 
 public class RegWork {
     private byte regHigh;
