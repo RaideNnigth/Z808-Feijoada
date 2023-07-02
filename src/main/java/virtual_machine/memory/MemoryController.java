@@ -14,16 +14,16 @@ public class MemoryController {
         return mainMemory.read((short) (addAddress + codeSegment));
     }
 
-    public void writeInstruction(short value, int addAddress) {
-        mainMemory.write(value, (short) (addAddress + codeSegment));
+    public void writeInstruction(short value, int address) {
+        mainMemory.write(value, (short) (address + codeSegment));
     }
 
-    public short getData(int addAddress) {
-        return mainMemory.read((short) (addAddress + dataSegment));
+    public short getData(int address) {
+        return mainMemory.read((short) (address + dataSegment));
     }
 
-    public void writeData(short value, int addAddress) {
-        mainMemory.write(value, (short) (addAddress + dataSegment));
+    public void writeData(short value, int address) {
+        mainMemory.write(value, (short) (address + dataSegment));
     }
 
     public void resetSegments() {
