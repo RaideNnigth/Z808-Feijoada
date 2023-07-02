@@ -2,6 +2,7 @@ package virtual_machine;
 
 import virtual_machine.commands.CommandExecutor;
 import virtual_machine.memory.MemoryController;
+import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
 
 import java.util.HashMap;
@@ -15,7 +16,7 @@ public class Interpreter {
     protected static final RegWork sp = new RegWork();
     protected static final RegWork si = new RegWork();
     protected static final RegWork ip = new RegWork();
-    protected static final RegWork sr = new RegWork();
+    protected static final RegFlags sr = new RegFlags();
     //endregion
 
     //region Memory
@@ -32,7 +33,7 @@ public class Interpreter {
     }
 
     protected void startExecution() {
-        while ( this.ip.getReg() != MemoryController.Standard ) {
+        while ( Interpreter.ip.getReg() < MemoryController.standardDataSegment ) {
 
 
         }
