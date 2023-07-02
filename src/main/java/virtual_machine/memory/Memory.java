@@ -9,8 +9,8 @@ public class Memory implements InstructionMemory, DataMemory {
         }
     }
     @Override
-    public UnsignedShort[] getInstance() {
-        return this.memory;
+    public Memory getInstance() {
+        return this;
     }
 
     @Override
