@@ -1,5 +1,6 @@
-package virtual_machine.commands.operations;
+package virtual_machine.commands.operations.arithmetical;
 
+import virtual_machine.commands.operations.Command;
 import virtual_machine.registers.RegWork;
 import virtual_machine.types.UnsignedByte;
 import virtual_machine.types.UnsignedShort;

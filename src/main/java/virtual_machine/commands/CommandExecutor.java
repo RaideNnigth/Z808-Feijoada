@@ -1,8 +1,8 @@
 package virtual_machine.commands;
 
 
-import virtual_machine.commands.operations.AddAxDx;
-import virtual_machine.commands.operations.Command;
+import virtual_machine.commands.operations.*;
+import virtual_machine.commands.operations.arithmetical.AddAxDx;
 import virtual_machine.types.UnsignedByte;
 
 import java.util.HashMap;
