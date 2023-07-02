@@ -1,12 +1,13 @@
 package virtual_machine.registers;
 
-import jdk.jfr.Unsigned;
+import virtual_machine.types.UnsignedByte;
+import virtual_machine.types.UnsignedShort;
 
 public class RegWork {
     private UnsignedByte regHigh;
     private UnsignedByte regLow;
 
-    public UnsigedByte getRegHigh() {
+    public UnsignedByte getRegHigh() {
         return regHigh;
     }
     public UnsignedByte getRegLow() {

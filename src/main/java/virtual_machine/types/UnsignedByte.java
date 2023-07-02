@@ -1,4 +1,4 @@
-package main;
+package virtual_machine.types;
 
 public class UnsignedByte {
     private int value = 0;

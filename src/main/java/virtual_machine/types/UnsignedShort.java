@@ -1,4 +1,4 @@
-package main;
+package virtual_machine.types;
 
 public class UnsignedShort {
     private int value = 0;
