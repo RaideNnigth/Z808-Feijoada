@@ -3,7 +3,7 @@ package virtual_machine.commands.operations.arithmetical;
 import virtual_machine.commands.operations.Command;
 import virtual_machine.registers.RegWork;
 
-import java.util.List;
+import java.util.HashMap;
 
 public class DivSi implements Command {
 
@@ -11,10 +11,10 @@ public class DivSi implements Command {
     }
 
     @Override
-    public void doOperation( List<Object> args ) {
-        RegWork ax = (RegWork)args.get( 0 );
-        RegWork dx = (RegWork)args.get( 1 );
-        RegWork si = (RegWork)args.get( 2 );
+    public void doOperation( HashMap<String, Object> args ) {
+        RegWork ax = (RegWork)args.get("ax");
+        RegWork dx = (RegWork)args.get("dx");
+        RegWork si = (RegWork)args.get("si");
         this.div( ax, dx , si);
 
     }

@@ -22,7 +22,7 @@ public class CommandExecutor {
         this.command = this.opCodeMap.get( opCode );
     }
 
-    public void doOperation( byte opCode, List<Object> args ) {
+    public void doOperation( byte opCode, HashMap<String, Object> args ) {
         this.setOperation( opCode );
         this.command.doOperation( args );
     }
