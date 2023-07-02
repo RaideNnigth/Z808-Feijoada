@@ -8,7 +8,7 @@
       <x>670</x>
       <y>920</y>
       <w>290</w>
-      <h>140</h>
+      <h>170</h>
     </coordinates>
     <panel_attributes>BinaryUtils
 -
@@ -18,7 +18,9 @@ _+ maxByte : byte_
 _+ minByte : byte_
 -
 _+ concatBytes(b1 : byte, b2 : byte) : short_
-_+ concatShorts(s1 : short, s2 : short) : int_</panel_attributes>
+_+ concatShorts(s1 : short, s2 : short) : int_
+_+ getLowByte(b : short) : byte_
+_+ getHighByte(b : short) : byte_</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
