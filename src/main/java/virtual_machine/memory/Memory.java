@@ -18,11 +18,11 @@ public class Memory {
         return memInstance;
     }
 
-    public void write(short value, short address) {
+    public void write(short value, int address) {
         this.mainMemory[address] = value;
     }
 
-    public short read(short address) {
+    public short read(int address) {
         return this.mainMemory[address];
     }
 }
