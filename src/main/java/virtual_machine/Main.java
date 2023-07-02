@@ -1,4 +1,4 @@
-package org.example;
+package virtual_machine;
 
 public class Main {
     public static void main( String[] args ) {
