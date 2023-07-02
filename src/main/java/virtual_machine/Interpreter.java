@@ -35,7 +35,7 @@ public class Interpreter {
     protected void startExecution() {
         while ( Interpreter.ip.getReg() < MemoryController.standardDataSegment ) {
 
-
+            short currentInstructionPointer = Interpreter.ip.getReg();
         }
     }
 }

@@ -6,15 +6,15 @@ public class RegWork {
     private byte regHigh;
     private byte regLow;
 
-    public int getRegHigh() {
+    public byte getRegHigh() {
         return regHigh;
     }
 
-    public int getRegLow() {
+    public byte getRegLow() {
         return regLow;
     }
 
-    public int getReg() {
+    public short getReg() {
         return BinaryUtils.concatBytes(regHigh, regLow);
     }
 
