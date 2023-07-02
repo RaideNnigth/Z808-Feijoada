@@ -1,5 +1,4 @@
 package virtual_machine.memory;
-import virtual_machine.utils.UnsignedShort;
 
 public class MemoryController {
     private Memory mainMemory;
