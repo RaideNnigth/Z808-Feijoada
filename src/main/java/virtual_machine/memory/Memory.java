@@ -2,7 +2,7 @@ package virtual_machine.memory;
 
 public class Memory {
     private final short[] mainMemory;
-    private static Memory memInstance = null;
+    private static Memory memoryInstance = null;
 
     private Memory() {
         mainMemory = new short[65_536];
@@ -12,10 +12,10 @@ public class Memory {
     }
 
     public static Memory getInstance() {
-        if (memInstance == null)
-            memInstance = new Memory();
+        if (memoryInstance == null)
+            memoryInstance = new Memory();
 
-        return memInstance;
+        return memoryInstance;
     }
 
     public void write(short value, int address) {

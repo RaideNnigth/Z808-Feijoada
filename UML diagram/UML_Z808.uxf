@@ -57,7 +57,8 @@ _+ getInstance() : Memory_
 - ip : RegWork
 - sr : RegFlags
 - memController : MemoryController
-- invoker : Invoker
+- invoker : CommandExecuter
+- operators : HashMap&lt;String, Object&gt;
 -
 + startExecution() : void
 
@@ -69,7 +70,7 @@ _+ getInstance() : Memory_
     <coordinates>
       <x>1180</x>
       <y>310</y>
-      <w>430</w>
+      <w>450</w>
       <h>130</h>
     </coordinates>
     <panel_attributes>CommandExecutor
@@ -79,7 +80,7 @@ _+ getInstance() : Memory_
 -
 + Invoker()
 - setOperation(byte opcode) : void
-+ doOperation(opCode : byte, args : List&lt;Object&gt;) : void
++ doOperation(opCode : byte, args : HashMap&lt;String, Object&gt;) : void
 
 
 </panel_attributes>
@@ -133,13 +134,13 @@ _+ getInstance() : Memory_
     <coordinates>
       <x>1180</x>
       <y>480</y>
-      <w>240</w>
+      <w>270</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 Command
 -
-+ doOp(args : List&lt;Object&gt;)</panel_attributes>
++ doOp(args : HashMap&lt;String, Object&gt;)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -167,8 +168,8 @@ Command
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1470</x>
-      <y>480</y>
+      <x>1550</x>
+      <y>490</y>
       <w>220</w>
       <h>40</h>
     </coordinates>
@@ -180,19 +181,19 @@ Command
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1410</x>
-      <y>490</y>
-      <w>80</w>
-      <h>50</h>
+      <x>1440</x>
+      <y>500</y>
+      <w>130</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>10.0;30.0;40.0;30.0;40.0;10.0;60.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1690</x>
-      <y>480</y>
+      <x>1700</x>
+      <y>410</y>
       <w>100</w>
       <h>80</h>
     </coordinates>
