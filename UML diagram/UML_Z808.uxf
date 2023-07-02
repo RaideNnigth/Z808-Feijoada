@@ -36,8 +36,8 @@ _- memInstance : Memory_
 -
 - Memory()
 _+ getInstance() : Memory_
-+ write(addr : short, data : short) : void
-+ read(addr : short) : short</panel_attributes>
++ write(addr : int, data : short) : void
++ read(addr : int) : short</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -297,17 +297,17 @@ _+ main() : void_
     <panel_attributes>MemoryController
 -
 - mainMemory : Memory
-- codeSegment : short
-- dataSegment : short
-- stackSegment :short
-_- CSAddrStart : short_
-_- DSAddrStart : short_
-_- SSAddrStart : short_
+- codeSegment : int
+- dataSegment : int
+- stackSegment :int
+_- CSAddrStart : int_
+_- DSAddrStart : int_
+_- SSAddrStart : int_
 -
-+ getInstruction(addr : short) : short
-+ writeInstruction(addr : short, data : short) : void
-+ getData(addr : short) : short
-+ writeData(addr : short, data : short) : void
++ getInstruction(addr : int) : short
++ writeInstruction(addr : int, data : short) : void
++ getData(addr : int) : short
++ writeData(addr : int, data : short) : void
 + resetSegments() : void</panel_attributes>
     <additional_attributes/>
   </element>
