@@ -6,9 +6,9 @@ public class MemoryController {
     private int dataSegment;
     private int stackSegment;
 
-    private static final int standardCodeSegment = 0;
-    private static final int standardDataSegment = 1001;
-    private static final int standardStackSegment = 65_000;
+    public static final int standardCodeSegment = 0;
+    public static final int standardDataSegment = 1001;
+    public static final int standardStackSegment = 65_000;
 
     public short getInstruction(int addAddress) {
         return mainMemory.read((short) (addAddress + codeSegment));
