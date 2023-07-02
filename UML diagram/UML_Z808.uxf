@@ -110,9 +110,9 @@ _+ getInstance() : Memory_
 - regHigh : byte
 - regLow : byte
 -
-+ getRegHigh() : int
-+ getRegLow() : int
-+ getReg() : int
++ getRegHigh() : byte
++ getRegLow() : byte
++ getReg() : short
 + setRegHigh(value : int) : void
 + setRegLow(value : int) : void
 + setReg(value : short) : void</panel_attributes>
