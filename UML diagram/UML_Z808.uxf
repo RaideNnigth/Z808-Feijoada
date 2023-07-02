@@ -6,9 +6,9 @@
     <id>UMLClass</id>
     <coordinates>
       <x>1287</x>
-      <y>1276</y>
+      <y>1023</y>
       <w>319</w>
-      <h>121</h>
+      <h>132</h>
     </coordinates>
     <panel_attributes>UnsignedByte
 -
@@ -23,7 +23,7 @@ _+ concatenateBytes(b1 : int, b2 : int): int_</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>671</y>
+      <y>418</y>
       <w>264</w>
       <h>99</h>
     </coordinates>
@@ -39,7 +39,7 @@ _- instance : Memory_
     <id>UMLClass</id>
     <coordinates>
       <x>1518</x>
-      <y>660</y>
+      <y>407</y>
       <w>319</w>
       <h>220</h>
     </coordinates>
@@ -63,7 +63,7 @@ _- instance : Memory_
     <id>UMLClass</id>
     <coordinates>
       <x>352</x>
-      <y>594</y>
+      <y>341</y>
       <w>407</w>
       <h>110</h>
     </coordinates>
@@ -79,7 +79,7 @@ DataMemory
     <id>UMLClass</id>
     <coordinates>
       <x>352</x>
-      <y>770</y>
+      <y>517</y>
       <w>407</w>
       <h>110</h>
     </coordinates>
@@ -95,7 +95,7 @@ InstructionMemory
     <id>Relation</id>
     <coordinates>
       <x>253</x>
-      <y>649</y>
+      <y>396</y>
       <w>121</w>
       <h>99</h>
     </coordinates>
@@ -106,7 +106,7 @@ InstructionMemory
     <id>Relation</id>
     <coordinates>
       <x>253</x>
-      <y>715</y>
+      <y>462</y>
       <w>121</w>
       <h>132</h>
     </coordinates>
@@ -117,17 +117,18 @@ InstructionMemory
     <id>UMLClass</id>
     <coordinates>
       <x>1914</x>
-      <y>616</y>
-      <w>374</w>
-      <h>121</h>
+      <y>341</y>
+      <w>473</w>
+      <h>143</h>
     </coordinates>
     <panel_attributes>Invoker
 -
 - command : Command
 - opCodeMap : HashMap&lt;UnsignedByte,Command&gt;
 -
-+ setOperation(UnsignedByte opcode) : void
-+ doOperation(List&lt;Object&gt; args) : void
++ Invoker()
+- setOperation(UnsignedByte opcode) : void
++ doOperation(opCode : UnsignedByte, args : List&lt;Object&gt;) : void
 
 
 </panel_attributes>
@@ -137,7 +138,7 @@ InstructionMemory
     <id>Relation</id>
     <coordinates>
       <x>1826</x>
-      <y>671</y>
+      <y>418</y>
       <w>110</w>
       <h>143</h>
     </coordinates>
@@ -148,7 +149,7 @@ InstructionMemory
     <id>UMLClass</id>
     <coordinates>
       <x>1364</x>
-      <y>990</y>
+      <y>737</y>
       <w>319</w>
       <h>198</h>
     </coordinates>
@@ -157,11 +158,11 @@ InstructionMemory
 - regHigh : UnsignedByte
 - regLow : UnsignedByte
 -
-+ getRegHigh() : UnsignedByte
-+ getRegLow() : UnsignedByte
-+ getReg() : UnsignedShort
-+ setRegHigh(value : UnsignedByte) : void
-+ setRegLow(value : UnsignedByte) : void
++ getRegHigh() : int
++ getRegLow() : int
++ getReg() : int
++ setRegHigh(value : int) : void
++ setRegLow(value : int) : void
 + setReg(value : UnsignedShort) : void</panel_attributes>
     <additional_attributes/>
   </element>
@@ -169,7 +170,7 @@ InstructionMemory
     <id>UMLClass</id>
     <coordinates>
       <x>1650</x>
-      <y>1276</y>
+      <y>1023</y>
       <w>319</w>
       <h>132</h>
     </coordinates>
@@ -187,7 +188,7 @@ InstructionMemory
     <id>Relation</id>
     <coordinates>
       <x>1441</x>
-      <y>1177</y>
+      <y>924</y>
       <w>99</w>
       <h>121</h>
     </coordinates>
@@ -198,7 +199,7 @@ InstructionMemory
     <id>Relation</id>
     <coordinates>
       <x>1507</x>
-      <y>1177</y>
+      <y>924</y>
       <w>330</w>
       <h>121</h>
     </coordinates>
@@ -209,7 +210,7 @@ InstructionMemory
     <id>UMLClass</id>
     <coordinates>
       <x>1914</x>
-      <y>781</y>
+      <y>528</y>
       <w>264</w>
       <h>77</h>
     </coordinates>
@@ -223,7 +224,7 @@ Command
     <id>UMLClass</id>
     <coordinates>
       <x>1716</x>
-      <y>990</y>
+      <y>737</y>
       <w>231</w>
       <h>198</h>
     </coordinates>
@@ -245,7 +246,7 @@ Command
     <id>UMLClass</id>
     <coordinates>
       <x>2233</x>
-      <y>781</y>
+      <y>528</y>
       <w>242</w>
       <h>44</h>
     </coordinates>
@@ -258,7 +259,7 @@ Command
     <id>Relation</id>
     <coordinates>
       <x>2167</x>
-      <y>792</y>
+      <y>539</y>
       <w>88</w>
       <h>55</h>
     </coordinates>
@@ -269,7 +270,7 @@ Command
     <id>UMLNote</id>
     <coordinates>
       <x>2475</x>
-      <y>781</y>
+      <y>528</y>
       <w>110</w>
       <h>88</h>
     </coordinates>
@@ -284,7 +285,7 @@ bg=blue</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>2035</x>
-      <y>726</y>
+      <y>473</y>
       <w>33</w>
       <h>77</h>
     </coordinates>
@@ -295,7 +296,7 @@ bg=blue</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1507</x>
-      <y>913</y>
+      <y>660</y>
       <w>198</w>
       <h>99</h>
     </coordinates>
@@ -306,7 +307,7 @@ bg=blue</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1672</x>
-      <y>869</y>
+      <y>616</y>
       <w>176</w>
       <h>143</h>
     </coordinates>
@@ -317,7 +318,7 @@ bg=blue</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1199</x>
-      <y>451</y>
+      <y>198</y>
       <w>374</w>
       <h>132</h>
     </coordinates>
@@ -338,7 +339,7 @@ bg=blue</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1551</x>
-      <y>253</y>
+      <y>0</y>
       <w>209</w>
       <h>88</h>
     </coordinates>
@@ -356,7 +357,7 @@ _+ main() : void_
     <id>Relation</id>
     <coordinates>
       <x>1375</x>
-      <y>330</y>
+      <y>77</y>
       <w>297</w>
       <h>143</h>
     </coordinates>
@@ -367,7 +368,7 @@ _+ main() : void_
     <id>UMLClass</id>
     <coordinates>
       <x>902</x>
-      <y>660</y>
+      <y>407</y>
       <w>517</w>
       <h>187</h>
     </coordinates>
@@ -386,7 +387,7 @@ _+ main() : void_
     <id>Relation</id>
     <coordinates>
       <x>748</x>
-      <y>638</y>
+      <y>385</y>
       <w>176</w>
       <h>121</h>
     </coordinates>
@@ -397,7 +398,7 @@ _+ main() : void_
     <id>Relation</id>
     <coordinates>
       <x>748</x>
-      <y>726</y>
+      <y>473</y>
       <w>176</w>
       <h>121</h>
     </coordinates>
@@ -408,7 +409,7 @@ _+ main() : void_
     <id>Relation</id>
     <coordinates>
       <x>1155</x>
-      <y>572</y>
+      <y>319</y>
       <w>231</w>
       <h>110</h>
     </coordinates>
@@ -419,7 +420,7 @@ _+ main() : void_
     <id>Relation</id>
     <coordinates>
       <x>1408</x>
-      <y>748</y>
+      <y>495</y>
       <w>132</w>
       <h>33</h>
     </coordinates>
@@ -430,7 +431,7 @@ _+ main() : void_
     <id>Relation</id>
     <coordinates>
       <x>1639</x>
-      <y>330</y>
+      <y>77</y>
       <w>33</w>
       <h>352</h>
     </coordinates>
