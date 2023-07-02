@@ -7,19 +7,27 @@ public class RegWork {
     private UnsignedByte regHigh;
     private UnsignedByte regLow;
 
-    public UnsignedByte getRegHigh() {
-        return regHigh;
+    public int getRegHigh() {
+        return regHigh.getValue();
     }
-    public UnsignedByte getRegLow() {
-        return regLow;
+
+    public int getRegLow() {
+        return regLow.getValue();
     }
-    public void setRegHigh(UnsignedByte regHigh) {
-        this.regHigh = regHigh;
+
+    public int getReg() {
+        return UnsignedByte.concatenateBytes( this.regHigh.getValue(), this.regLow.getValue() );
     }
-    public void setRegLow(UnsignedByte regLow) {
-        this.regLow = regLow;
+
+    public void setRegHigh( int regHigh ) {
+        this.regHigh.setValue( regHigh );
     }
-    public void setReg(UnsignedShort reg) {
+
+    public void setRegLow( int regLow ) {
+        this.regLow.setValue( regLow );
+    }
+
+    public void setReg( UnsignedShort reg ) {
         this.regHigh = reg.getHigh();
         this.regLow = reg.getLow();
     }
