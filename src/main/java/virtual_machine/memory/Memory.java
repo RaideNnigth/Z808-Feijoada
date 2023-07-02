@@ -20,7 +20,6 @@ public class Memory implements InstructionMemory, DataMemory {
 
     @Override
     public UnsignedShort read(UnsignedShort address) {
-        this.memory[address.getValue()] = address;
-        return address;
+        return this.memory[address.getValue()];
     }
 }
