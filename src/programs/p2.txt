@@ -1,0 +1,8 @@
+mov AX, 10
+mov DX, AX
+mov AX, 20
+add AX, DX
+hlt
+
+AX = 30
+DX = 10
