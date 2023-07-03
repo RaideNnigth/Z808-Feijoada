@@ -5,7 +5,6 @@ import virtual_machine.commands.operations.Command;
 import virtual_machine.commands.operations.arithmetical.AddAxDx;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class CommandExecutor {
 
