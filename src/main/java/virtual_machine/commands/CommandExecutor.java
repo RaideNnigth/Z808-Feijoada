@@ -2,16 +2,10 @@ package virtual_machine.commands;
 
 
 import virtual_machine.commands.operations.Command;
-import virtual_machine.commands.operations.arithmetical.AddAxAx;
-import virtual_machine.commands.operations.arithmetical.AddAxCte;
-import virtual_machine.commands.operations.arithmetical.AddAxDir;
-import virtual_machine.commands.operations.arithmetical.AddAxDx;
-import virtual_machine.commands.operations.flow.Halt;
+import virtual_machine.commands.operations.arithmetical.*;
+import virtual_machine.commands.operations.flow.*;
 import virtual_machine.commands.operations.logical.*;
-import virtual_machine.commands.operations.move.MovAxCte;
-import virtual_machine.commands.operations.move.MovAxDir;
-import virtual_machine.commands.operations.move.MovDirAx;
-import virtual_machine.commands.operations.move.MovDxAx;
+import virtual_machine.commands.operations.move.*;
 import virtual_machine.interpreter.OpParameters;
 
 import java.util.HashMap;
@@ -53,6 +47,15 @@ public class CommandExecutor {
 
         // HLT Instruction
         this.opCodeMap.put((short) 0x0000, new Halt());
+
+        // FLOW Instructions
+        this.opCodeMap.put((short) 0xEBFF, new Jmp());
+        this.opCodeMap.put((short) 0x74FF, new JmpZero());
+        this.opCodeMap.put((short) 0x75FF, new JmpNotZero());
+        this.opCodeMap.put((short) 0x7AFF, new JmpNotNeg());
+        this.opCodeMap.put((short) 0xE8FF, new Call());
+        this.opCodeMap.put((short) 0xCDFF, new Int());
+        this.opCodeMap.put((short) 0xC3FF, new Ret());
     }
 
     private void setOperation(short opCode) {
