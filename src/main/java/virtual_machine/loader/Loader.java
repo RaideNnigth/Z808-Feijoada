@@ -8,7 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class Loader {
-    private String filePath;
+    private String pathToProgram;
     private long programSize;
     private byte[] programBinary;
     private int PC = 0;
@@ -20,14 +20,14 @@ public class Loader {
     }
 
     public void setPathToProgram(String path) throws IOException {
-        filePath = path;
+        pathToProgram = path;
 
-        try (var programFileReader = new FileInputStream(filePath)) {
-            programSize = (new File(filePath)).length();
+        try (var programFileReader = new FileInputStream(pathToProgram)) {
+            programSize = (new File(pathToProgram)).length();
             programBinary = new byte[(int) programSize];
             programFileReader.read(programBinary);
         } catch (IOException e) {
-            throw new IOException("Error opening: \"" + filePath + "\" file.");
+            throw new IOException("Error opening: \"" + pathToProgram + "\" file.");
         }
     }
 
