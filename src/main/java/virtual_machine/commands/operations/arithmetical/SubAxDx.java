@@ -15,7 +15,7 @@ public class SubAxDx implements Command {
         RegFlags sr = (RegFlags) args.get("sr");
 
         int result = ax.getReg() - dx.getReg();
-        sr.setOf(ArithmeticUtils.hasOverflow(result));
+        sr.setOf(ArithmeticUtils.hasOverflow16(result));
         sr.setCf(ArithmeticUtils.hasCarry(ax.getReg(), dx.getReg()));
         sr.setPf(ArithmeticUtils.parityBit(result));
         sr.setZf(ArithmeticUtils.isZero(result));

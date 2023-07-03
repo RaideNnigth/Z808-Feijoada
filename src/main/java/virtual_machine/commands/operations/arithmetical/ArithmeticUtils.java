@@ -5,10 +5,18 @@ public abstract class ArithmeticUtils {
         return (op1 & op2) == 0;
     }
 
-    public static boolean hasOverflow(int result) {
+    public static boolean hasOverflow16(int result) {
         if (result <= 32_767)
             return false;
         if (result >= -32_768)
+            return false;
+        return true;
+    }
+
+    public static boolean hasOverflow32(long result) {
+        if (result <= 2_147_483_647)
+            return false;
+        if (result >= -2_147_483_648)
             return false;
         return true;
     }

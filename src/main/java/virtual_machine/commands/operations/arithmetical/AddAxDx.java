@@ -4,9 +4,7 @@ import virtual_machine.commands.operations.Command;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
 
-import javax.lang.model.type.ArrayType;
 import java.util.HashMap;
-import java.util.List;
 
 public class AddAxDx implements Command {
     private void add( RegWork ax, RegWork dx ) {
@@ -30,7 +28,7 @@ public class AddAxDx implements Command {
         RegFlags sr = (RegFlags) args.get("sr");
 
         int result = ax.getReg() + dx.getReg();
-        sr.setOf(ArithmeticUtils.hasOverflow(result));
+        sr.setOf(ArithmeticUtils.hasOverflow16(result));
         sr.setCf(ArithmeticUtils.hasCarry(ax.getReg(), dx.getReg()));
         sr.setPf(ArithmeticUtils.parityBit(result));
         sr.setZf(ArithmeticUtils.isZero(result));

@@ -24,7 +24,7 @@ public class SubAxCte implements Command {
         RegFlags sr = (RegFlags) args.get("sr");
 
         int result = ax.getReg() - cte;
-        sr.setOf(ArithmeticUtils.hasOverflow(result));
+        sr.setOf(ArithmeticUtils.hasOverflow16(result));
         sr.setCf(ArithmeticUtils.hasCarry(ax.getReg(), (int) cte));
         sr.setPf(ArithmeticUtils.parityBit(result));
         sr.setZf(ArithmeticUtils.isZero(result));
