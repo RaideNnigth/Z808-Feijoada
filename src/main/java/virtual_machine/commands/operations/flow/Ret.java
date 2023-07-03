@@ -12,14 +12,12 @@ public class Ret implements Command {
     @Override
     public void doOperation(HashMap<OpParameters, Object> args) {
         RegWork ip = (RegWork) args.get(OpParameters.IP);
-        RegFlags sr = (RegFlags) args.get(OpParameters.SR_FLAGS);
+        RegWork sp = (RegWork) args.get(OpParameters.SP); // Get stack pointer register
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
-        // We must get from the memory the 16 bit constant
-        ip.setReg((short) (ip.getReg() + 1)); // Increment IP
-        short jmpAddr = mc.getInstruction(ip.getReg()); // Get operand addr in dataMem
+        short retAddr = mc.getStack(sp.getReg()); // Pop from stack where sub routine was called
+        sp.setReg((short) (sp.getReg() - 1));
 
-        if (sr.getZf() == true)
-            ip.setReg((short) (ip.getReg() + jmpAddr));
+        ip.setReg(retAddr);
     }
 }

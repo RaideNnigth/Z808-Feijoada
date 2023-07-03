@@ -33,6 +33,32 @@ public class MemoryController {
         mainMemory.write(value, (short) (address + dataSegment));
     }
 
+    /**
+     * Pop from stack, it also verifies if the given address is a valid stack address
+     * @param address
+     * @return data at that address
+     */
+    public short getStack(int address) {
+        if (address < stackSegment)
+            return 0x0000;
+
+        short value = mainMemory.read((short) (address));
+        mainMemory.write((short) 0x0000, (short) (address));
+        return value;
+    }
+
+    /**
+     * Push to stack, it also verifies if the given address is a valid stack address
+     * @param value
+     * @param address
+     */
+    public void writeStack(short value, int address) {
+        if (address < stackSegment)
+            return;
+
+        mainMemory.write(value, (short) (address));
+    }
+
     public void resetSegments() {
         codeSegment = standardCodeSegment;
         dataSegment = standardDataSegment;

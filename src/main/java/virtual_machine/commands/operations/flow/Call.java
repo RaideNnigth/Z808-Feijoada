@@ -12,14 +12,15 @@ public class Call implements Command {
     @Override
     public void doOperation(HashMap<OpParameters, Object> args) {
         RegWork ip = (RegWork) args.get(OpParameters.IP);
-        RegFlags sr = (RegFlags) args.get(OpParameters.SR_FLAGS);
+        RegWork sp = (RegWork) args.get(OpParameters.SP); // Get stack pointer register
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
         // We must get from the memory the 16 bit constant
         ip.setReg((short) (ip.getReg() + 1)); // Increment IP
         short jmpAddr = mc.getInstruction(ip.getReg()); // Get operand addr in dataMem
 
-        if (sr.getZf() == true)
-            ip.setReg((short) (ip.getReg() + jmpAddr));
+        mc.writeStack((short) (ip.getReg() + 1), sp.getReg()); // Push to stack the next instruction address
+
+        ip.setReg(jmpAddr);
     }
 }
