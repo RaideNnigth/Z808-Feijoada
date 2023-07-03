@@ -2,16 +2,17 @@ package virtual_machine.commands.operations.logical;
 
 import virtual_machine.commands.operations.Command;
 import virtual_machine.commands.operations.OperationsUtils;
+import virtual_machine.interpreter.OpParameters;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
 
 import java.util.HashMap;
 
 public class OrAxDx implements Command {
-    public void doOperation(HashMap<String, Object> args) {
-        RegWork ax = (RegWork) args.get("ax");
-        RegWork dx = (RegWork) args.get("dx");
-        RegFlags sr = (RegFlags) args.get("sr");
+    public void doOperation(HashMap<OpParameters, Object> args) {
+        RegWork ax = (RegWork) args.get(OpParameters.AX);
+        RegWork dx = (RegWork) args.get(OpParameters.DX);
+        RegFlags sr = (RegFlags) args.get(OpParameters.SR_FLAGS);
 
         short result = 0;
         boolean carryFlag = false;
