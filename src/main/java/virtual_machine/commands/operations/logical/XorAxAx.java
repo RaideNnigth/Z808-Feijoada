@@ -3,24 +3,17 @@ package virtual_machine.commands.operations.logical;
 import virtual_machine.commands.operations.Command;
 import virtual_machine.commands.operations.OperationsUtils;
 import virtual_machine.interpreter.OpParameters;
-import virtual_machine.memory.MemoryController;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
 
 import java.util.HashMap;
 
-public class OrAxCte implements Command {
+public class XorAxAx implements Command {
     public void doOperation(HashMap<OpParameters, Object> args) {
         RegWork ax = (RegWork) args.get(OpParameters.AX);
-        RegWork ip = (RegWork) args.get(OpParameters.IP);
         RegFlags sr = (RegFlags) args.get(OpParameters.SR_FLAGS);
-        MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
-        // We must get from the memory the 16 bit constant
-        ip.setReg((short) (ip.getReg() + 1)); // Increment IP
-        short cte = mc.getInstruction(ip.getReg());
-
-        short result = (short) (ax.getReg() | cte);
+        short result = (short) (ax.getReg() ^ ax.getReg());
 
         sr.setCf(false);
         sr.setPf(OperationsUtils.parityBit(result));

@@ -9,7 +9,7 @@ import virtual_machine.registers.RegWork;
 
 import java.util.HashMap;
 
-public class OrAxCte implements Command {
+public class AndAxDir implements Command {
     public void doOperation(HashMap<OpParameters, Object> args) {
         RegWork ax = (RegWork) args.get(OpParameters.AX);
         RegWork ip = (RegWork) args.get(OpParameters.IP);
@@ -18,9 +18,10 @@ public class OrAxCte implements Command {
 
         // We must get from the memory the 16 bit constant
         ip.setReg((short) (ip.getReg() + 1)); // Increment IP
-        short cte = mc.getInstruction(ip.getReg());
+        short operandAddr = mc.getInstruction(ip.getReg()); // Get operand addr in dataMem
+        short cte = mc.getData(operandAddr);
 
-        short result = (short) (ax.getReg() | cte);
+        short result = (short) (ax.getReg() & cte);
 
         sr.setCf(false);
         sr.setPf(OperationsUtils.parityBit(result));
