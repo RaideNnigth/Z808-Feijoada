@@ -23,6 +23,29 @@ public class CommandExecutor {
         this.opCodeMap.put((short) 0x03C0, new AddAxAx());
         this.opCodeMap.put((short) 0x03C2, new AddAxDx());
         this.opCodeMap.put((short) 0x04FF, new AddAxCte());
+        this.opCodeMap.put((short) 0x05FF, new AddAxDir());
+        this.opCodeMap.put((short) 0x06FF, new AddAxInd()); // Verificar possível conflito
+
+        // SUB Instructions
+        this.opCodeMap.put((short) 0x2BC0, new SubAxAx());
+        this.opCodeMap.put((short) 0x2BC2, new SubAxDx());
+        this.opCodeMap.put((short) 0x2CFF, new SubAxCte());
+        this.opCodeMap.put((short) 0x2DFF, new SubAxDir());
+        this.opCodeMap.put((short) 0x2EFF, new SubAxInd()); // Verificar possível conflito
+
+        // DIV Instructions
+        this.opCodeMap.put((short) 0xF7F0, new DivAx());
+        this.opCodeMap.put((short) 0xF7F6, new DivSi());
+
+        // MUL Instructions
+        this.opCodeMap.put((short) 0xF7E0, new MulAx());
+        this.opCodeMap.put((short) 0xF7E6, new MulSi());
+
+        // CMP Instructions
+        this.opCodeMap.put((short) 0x3BC2, new CmpAxDx());
+        this.opCodeMap.put((short) 0x3DFF, new CmpAxCte());
+        this.opCodeMap.put((short) 0x3CFF, new CmpAxDir());
+        this.opCodeMap.put((short) 0x3EFF, new CmpAxInd()); // Vericar possível conflito
 
         // OR Instructions
         this.opCodeMap.put((short) 0x0BC0, new OrAxAx());
