@@ -6,17 +6,17 @@ import virtual_machine.registers.RegWork;
 
 import java.util.HashMap;
 
-public class AddAxCte implements Command {
+public class SubAxDx implements Command {
 
     @Override
     public void doOperation( HashMap<String, Object> args ) {
         RegWork ax = (RegWork) args.get("ax");
-        byte cte = (byte) args.get("cte");
+        RegWork dx = (RegWork) args.get("dx");
         RegFlags sr = (RegFlags) args.get("sr");
 
-        int result = ax.getReg() + cte;
+        int result = ax.getReg() - dx.getReg();
         sr.setOf(ArithmeticUtils.hasOverflow(result));
-        sr.setCf(ArithmeticUtils.hasCarry(ax.getReg(), (int) cte));
+        sr.setCf(ArithmeticUtils.hasCarry(ax.getReg(), dx.getReg()));
         sr.setPf(ArithmeticUtils.parityBit(result));
         sr.setZf(ArithmeticUtils.isZero(result));
         sr.setSf(ArithmeticUtils.hasSignal(result));
