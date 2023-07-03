@@ -1,6 +1,7 @@
 package virtual_machine.commands.operations.arithmetical;
 
 import virtual_machine.commands.operations.Command;
+import virtual_machine.commands.operations.OperationsUtils;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
 
@@ -16,8 +17,8 @@ public class MulSi implements Command {
         RegFlags sr = (RegFlags) args.get("sr");
 
         long result = ax.getReg() * si.getReg();
-        sr.setOf(ArithmeticUtils.hasOverflow32(result));
-        sr.setCf(ArithmeticUtils.hasCarry(ax.getReg(), si.getReg()));
+        sr.setOf(OperationsUtils.hasOverflow32(result));
+        sr.setCf(OperationsUtils.hasCarry(ax.getReg(), si.getReg()));
 
 
         long mostSig = result >>> 48;

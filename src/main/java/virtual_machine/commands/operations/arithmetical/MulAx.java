@@ -1,6 +1,7 @@
 package virtual_machine.commands.operations.arithmetical;
 
 import virtual_machine.commands.operations.Command;
+import virtual_machine.commands.operations.OperationsUtils;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
 
@@ -15,8 +16,8 @@ public class MulAx implements Command {
         RegFlags sr = (RegFlags) args.get("sr");
 
         int result = ax.getReg() * ax.getReg();
-        sr.setCf(ArithmeticUtils.hasCarry(ax.getReg(), ax.getReg()));
-        sr.setOf(ArithmeticUtils.hasOverflow32(result));
+        sr.setCf(OperationsUtils.hasCarry(ax.getReg(), ax.getReg()));
+        sr.setOf(OperationsUtils.hasOverflow32(result));
 
 
     }

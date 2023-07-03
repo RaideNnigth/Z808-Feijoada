@@ -1,6 +1,7 @@
 package virtual_machine.commands.operations.arithmetical;
 
 import virtual_machine.commands.operations.Command;
+import virtual_machine.commands.operations.OperationsUtils;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
 
@@ -15,11 +16,11 @@ public class AddAxCte implements Command {
         RegFlags sr = (RegFlags) args.get("sr");
 
         int result = ax.getReg() + cte;
-        sr.setOf(ArithmeticUtils.hasOverflow16(result));
-        sr.setCf(ArithmeticUtils.hasCarry(ax.getReg(), (int) cte));
-        sr.setPf(ArithmeticUtils.parityBit(result));
-        sr.setZf(ArithmeticUtils.isZero(result));
-        sr.setSf(ArithmeticUtils.hasSignal(result));
+        sr.setOf(OperationsUtils.hasOverflow16(result));
+        sr.setCf(OperationsUtils.hasCarry(ax.getReg(), (int) cte));
+        sr.setPf(OperationsUtils.parityBit(result));
+        sr.setZf(OperationsUtils.isZero(result));
+        sr.setSf(OperationsUtils.hasSignal(result));
 
         ax.setReg((short) result);
     }
