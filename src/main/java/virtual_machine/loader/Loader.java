@@ -79,7 +79,7 @@ public class Loader {
         // Start writing instructions in Code Segment
         PC = csStart;
         int memCounter = 0;
-        while (PC < csEnd) {
+        while (PC <= csEnd) {
             short temp = read16bit();
             //System.out.printf("%04x%n", temp);
             memoryController.writeInstruction(temp, memCounter++);
@@ -88,7 +88,7 @@ public class Loader {
         // Start writing data in Data Segment
         PC = dsStart;
         memCounter = 0;
-        while (PC < dsEnd) {
+        while (PC <= dsEnd) {
             short temp = read16bit();
             //System.out.printf("%04x%n", temp);
             memoryController.writeData(temp, memCounter++);

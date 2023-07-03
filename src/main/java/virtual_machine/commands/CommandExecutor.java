@@ -4,6 +4,7 @@ package virtual_machine.commands;
 import virtual_machine.commands.operations.Command;
 import virtual_machine.commands.operations.arithmetical.AddAxAx;
 import virtual_machine.commands.operations.arithmetical.AddAxCte;
+import virtual_machine.commands.operations.arithmetical.AddAxDir;
 import virtual_machine.commands.operations.arithmetical.AddAxDx;
 import virtual_machine.commands.operations.flow.Halt;
 import virtual_machine.interpreter.OpParameters;
@@ -21,7 +22,8 @@ public class CommandExecutor {
         // Instructions <Hex opcode, Operation Object>
         this.opCodeMap.put((short) 0x03C0, new AddAxAx());
         this.opCodeMap.put((short) 0x03C2, new AddAxDx());
-        this.opCodeMap.put((short) 0x05FF, new AddAxCte());
+        this.opCodeMap.put((short) 0x04FF, new AddAxCte());
+        this.opCodeMap.put((short) 0x05FF, new AddAxDir());
         this.opCodeMap.put((short) 0xEEFF, new Halt());
     }
 
