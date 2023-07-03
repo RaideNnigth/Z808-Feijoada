@@ -4,6 +4,7 @@ import virtual_machine.commands.CommandExecutor;
 import virtual_machine.memory.MemoryController;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
+import virtual_machine.utils.BinaryUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,10 +28,27 @@ public class Interpreter {
     protected static final CommandExecutor commandExecutor = new CommandExecutor();
     //endregion
 
-    protected static final Map<String, Object> operators = new HashMap<>();
-    protected static void main( String[] args ) {
+    //region Interpreter
+    protected static final Map<Byte, Integer>opCodeAndSizeOfInstruction = new HashMap<>();
+    //endregion
 
+    protected static final HashMap<String, Object> operators = new HashMap<>();
+
+
+    protected Interpreter(){
+        operators.put( "ax", ax );
+        operators.put( "dx", dx );
+        operators.put( "sp", sp );
+        operators.put( "si", si );
+        operators.put( "ip", ip );
+        operators.put( "sr", sr );
+        operators.put( "memoryController", memoryController );
+        operators.put( "identifier", null );
     }
+
+    /*protected static void main( String[] args ) {
+
+    }*/
 
     protected void startExecution() {
         while ( Interpreter.ip.getReg() < MemoryController.standardDataSegment ) {
@@ -38,11 +56,12 @@ public class Interpreter {
             short instruction = Interpreter.memoryController.getInstruction( currentInstructionPointer );
 
             //decode instruction
-
-
+            byte opCode = BinaryUtils.getHighByte( instruction );
+            byte identifier = BinaryUtils.getLowByte( instruction );
+            operators.put( "identifier", identifier );
 
             //execution instruction
-
+            commandExecutor.doOperation( opCode, operators );
 
             if ( Interpreter.ip.getReg() == currentInstructionPointer )
                 Interpreter.ip.setReg( (short) (Interpreter.ip.getReg() + 1));
