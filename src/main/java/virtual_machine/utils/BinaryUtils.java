@@ -11,14 +11,15 @@ public class BinaryUtils {
 
         num1 = num1 << 8;
 
-        return (short) (num1 | b2);
+        return (short) (num1 | (b2 & 0xFF));
     }
 
     public static int concatShorts(short s1, short s2) {
         int num1 = s1;
+
         num1 = num1 << 16;
 
-        return (num1 | s2);
+        return (num1 | (s2 & 0xFFFF));
     }
 
     public static byte getLowByte(short b) {
@@ -26,6 +27,6 @@ public class BinaryUtils {
     }
 
     public static byte getHighByte(short b) {
-        return (byte) (b >> 8);
+        return (byte) (b >>> 8);
     }
 }

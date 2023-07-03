@@ -27,7 +27,7 @@ public class RegWork {
     }
 
     public void setReg( short reg ) {
-        this.regHigh = (byte)(reg >> 8);
-        this.regLow = (byte)(reg & 0xFF);
+        this.regHigh = BinaryUtils.getHighByte(reg);
+        this.regLow = BinaryUtils.getLowByte(reg);
     }
 }

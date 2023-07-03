@@ -14,7 +14,7 @@ public class CommandExecutor {
 
     public CommandExecutor() {
         this.opCodeMap = new HashMap<>();
-        this.opCodeMap.put( (byte) 30, new AddAxDx() );
+        this.opCodeMap.put( (byte) 0x03, new AddAxDx() );
     }
 
     private void setOperation( byte opCode ) {
