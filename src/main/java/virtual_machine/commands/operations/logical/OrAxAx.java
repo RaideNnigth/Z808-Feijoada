@@ -19,10 +19,10 @@ public class OrAxAx implements Command {
         byte bitOp1;
         byte bitOp2;
         for (int i = 0; i < 16; i++) {
-            bitOp1 = (byte) (((ax.getReg() << (15 - i)) >>> (15 - i)));
-            bitOp2 = (byte) (((ax.getReg() << (15 - i)) >>> (15 - i)));
+            bitOp1 = (byte) (((ax.getReg() << (15 - i)) >>> (14)));
+            bitOp2 = (byte) (((ax.getReg() << (15 - i)) >>> (14)));
             bitResult = (byte) (bitOp1 | bitOp2 | bitCarry);
-            bitCarry = (byte) (bitOp1 & bitOp2 & bitCarry);
+            bitCarry = (byte) (bitOp1 & bitOp2 | bitCarry);
             if (bitCarry == 1)
                 carryFlag = true;
             result = (short) (bitResult | (bitResult << (15 - i)));
