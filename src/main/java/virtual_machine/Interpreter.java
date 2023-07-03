@@ -7,7 +7,6 @@ import virtual_machine.registers.RegWork;
 import virtual_machine.utils.BinaryUtils;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class Interpreter {
 
@@ -29,13 +28,11 @@ public class Interpreter {
     //endregion
 
     //region Interpreter
-    protected static final Map<Byte, Integer>opCodeAndSizeOfInstruction = new HashMap<>();
+    protected static final HashMap<String, Object> operators = new HashMap<>();
     //endregion
 
-    protected static final HashMap<String, Object> operators = new HashMap<>();
 
-
-    protected Interpreter(){
+    protected Interpreter() {
         operators.put( "ax", ax );
         operators.put( "dx", dx );
         operators.put( "sp", sp );
@@ -45,10 +42,6 @@ public class Interpreter {
         operators.put( "memoryController", memoryController );
         operators.put( "identifier", null );
     }
-
-    /*protected static void main( String[] args ) {
-
-    }*/
 
     protected void startExecution() {
         while ( Interpreter.ip.getReg() < MemoryController.standardDataSegment ) {
@@ -63,8 +56,9 @@ public class Interpreter {
             //execution instruction
             commandExecutor.doOperation( opCode, operators );
 
-            if ( Interpreter.ip.getReg() == currentInstructionPointer )
-                Interpreter.ip.setReg( (short) (Interpreter.ip.getReg() + 1));
+            if ( Interpreter.ip.getReg() == currentInstructionPointer ) {
+                Interpreter.ip.setReg( (short)( Interpreter.ip.getReg() + 1 ) );
+            }
         }
     }
 }
