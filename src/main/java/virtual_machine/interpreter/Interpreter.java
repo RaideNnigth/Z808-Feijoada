@@ -1,6 +1,7 @@
 package virtual_machine.interpreter;
 
 import virtual_machine.commands.CommandExecutor;
+import virtual_machine.os_interruptions.OSInterruptionHandler;
 import virtual_machine.memory.MemoryController;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
@@ -19,9 +20,12 @@ public class Interpreter {
 
     private static final MemoryController memoryController = new MemoryController();
     private static final CommandExecutor commandExecutor = new CommandExecutor();
+    private static final HashMap<Short, Object> interruptionVector = new HashMap<>();
     private static final HashMap<OpParameters, Object> operationParameters = new HashMap<>();
 
     public Interpreter() {
+        interruptionVector.put((short) 0x0021, new OSInterruptionHandler());
+
         operationParameters.put(OpParameters.AX, ax); // Accumulator
         operationParameters.put(OpParameters.DX, dx); // Data rex
         operationParameters.put(OpParameters.SP, sp); // Stack Pointer
@@ -29,6 +33,7 @@ public class Interpreter {
         operationParameters.put(OpParameters.IP, ip); // Instruction Pointer
         operationParameters.put(OpParameters.SR_FLAGS, sr); // Flags Register
         operationParameters.put(OpParameters.MEM_CONTROLLER, memoryController); // Memory (duh)
+        operationParameters.put(OpParameters.INT_VECTOR, interruptionVector);
     }
 
     public void startExecution() {
