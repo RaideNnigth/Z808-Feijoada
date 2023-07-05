@@ -17,6 +17,7 @@ public class MovDirAx implements Command {
         ip.setReg((short) (ip.getReg() + 1)); // Increment IP
         short operandAddr = mc.getInstructionBE(ip.getReg()); // Get operand addr in dataMem
 
+        // NEED TO BE GETREGLE()
         mc.writeData(ax.getRegLE(), operandAddr);
     }
 }

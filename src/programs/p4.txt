@@ -1,0 +1,7 @@
+MOV AX, 10
+MOV DX, AX
+SUB AX, 5
+MUL AX, 5
+CMP AX, 20
+JZ  <END>
+hlt

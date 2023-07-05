@@ -30,9 +30,5 @@ public class MulSi implements Command {
 
         dx.setReg((short) mostSig);
         ax.setReg((short) lessSig);
-
-
-
-
     }
 }
