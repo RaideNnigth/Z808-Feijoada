@@ -4,6 +4,7 @@ import virtual_machine.commands.CommandExecutor;
 import virtual_machine.memory.MemoryController;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
+import virtual_machine.utils.BinaryUtils;
 
 import java.util.HashMap;
 
@@ -33,7 +34,8 @@ public class Interpreter {
 
     public void startExecution() {
         while (ip.getReg() < MemoryController.standardDataSegment) {
-            short instruction = Interpreter.memoryController.getInstruction(ip.getReg());
+            // Get instruction from memory
+            short instruction = Interpreter.memoryController.getInstructionBE(ip.getReg());
 
             // Execute instruction
             commandExecutor.doOperation(instruction, operationParameters);

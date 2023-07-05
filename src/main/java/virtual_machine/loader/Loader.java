@@ -33,14 +33,30 @@ public class Loader {
 
     /**
      * Esse método retorna um valor de 16 bits lido a partir
-     * do byte atual apontado por PC em Little Endian, retornando
+     * do byte em Little Endian apontado por PC, retornando
+     * em Little Endian também.
+     * A função já deixa PC apontando para a próxima palavra
+     * de 16 bits no arquivo.
+     *
+     * @return Um valor de 16 bits em Little Endian na posição de PC
+     */
+    private short read16bitLE() {
+        short ret = BinaryUtils.concatBytes(programBinary[PC], programBinary[PC + 1]);
+        PC += 2;
+
+        return ret;
+    }
+
+    /**
+     * Esse método retorna um valor de 16 bits lido a partir
+     * do byte em Little Endian apontado por PC, retornando
      * em Big Endian.
      * A função já deixa PC apontando para a próxima palavra
      * de 16 bits no arquivo.
      *
      * @return Um valor de 16 bits em Big Endian na posição de PC
      */
-    private short read16bit() {
+    private short read16bitBE() {
         short ret = BinaryUtils.concatBytes(programBinary[PC + 1], programBinary[PC]);
         PC += 2;
 
@@ -56,12 +72,12 @@ public class Loader {
         int ssEnd = 0;
 
         // Reading header
-        csStart = read16bit();
-        csEnd = read16bit();
-        dsStart = read16bit();
-        dsEnd = read16bit();
-        ssStart = read16bit();
-        ssEnd = read16bit();
+        csStart = read16bitBE();
+        csEnd = read16bitBE();
+        dsStart = read16bitBE();
+        dsEnd = read16bitBE();
+        ssStart = read16bitBE();
+        ssEnd = read16bitBE();
 
         // Print segments addresses (test purposes only)
         System.out.printf("""
@@ -76,21 +92,25 @@ public class Loader {
                 dsStart, dsEnd,
                 ssStart, ssEnd);
 
+        System.out.println("Instructions loaded to memory: ");
+
         // Start writing instructions in Code Segment
         PC = csStart;
         int memCounter = 0;
         while (PC <= csEnd) {
-            short temp = read16bit();
-            //System.out.printf("%04x%n", temp);
+            short temp = read16bitLE();
+            System.out.printf("%04x%n", temp);
             memoryController.writeInstruction(temp, memCounter++);
         }
+
+        System.out.println("Data loaded to memory: ");
 
         // Start writing data in Data Segment
         PC = dsStart;
         memCounter = 0;
         while (PC <= dsEnd) {
-            short temp = read16bit();
-            //System.out.printf("%04x%n", temp);
+            short temp = read16bitLE();
+            System.out.printf("%04x%n", temp);
             memoryController.writeData(temp, memCounter++);
         }
 

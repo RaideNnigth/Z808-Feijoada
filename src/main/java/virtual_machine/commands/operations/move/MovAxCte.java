@@ -17,7 +17,7 @@ public class MovAxCte implements Command {
         // Increment IP
         ip.setReg((short) (ip.getReg() + 1));
 
-        short cte = mc.getInstruction(ip.getReg());
+        short cte = mc.getInstructionBE(ip.getReg());
 
         ax.setReg(cte);
     }

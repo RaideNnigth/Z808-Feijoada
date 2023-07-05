@@ -23,8 +23,8 @@ public class AddAxInd implements Command {
 
         // We must get from the memory the 16 bit constant
         ip.setReg((short) (ip.getReg() + 1)); // Increment IP
-        short indirectAddr = mc.getInstruction(ip.getReg()); // Get operand addr in dataMem
-        short cte = mc.getData(mc.getData(indirectAddr)); // Get operand from dataMem
+        short indirectAddr = mc.getInstructionBE(ip.getReg()); // Get operand addr in dataMem
+        short cte = mc.getDataBE(mc.getDataBE(indirectAddr)); // Get operand from dataMem
 
         int result = ax.getReg() + cte; // Doing op
 

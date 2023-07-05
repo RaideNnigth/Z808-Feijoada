@@ -1,12 +1,13 @@
 package virtual_machine.memory;
 
 public class Memory {
+    public static final int MEM_SIZE = 65_536;
     private final short[] mainMemory;
     private static Memory memoryInstance = null;
 
     private Memory() {
-        mainMemory = new short[65_536];
-        for (int i = 0; i < 65_536; i++) {
+        mainMemory = new short[MEM_SIZE];
+        for (int i = 0; i < MEM_SIZE; i++) {
             this.mainMemory[i] = 0;
         }
     }

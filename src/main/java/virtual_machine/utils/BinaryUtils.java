@@ -29,4 +29,11 @@ public class BinaryUtils {
     public static byte getHighByte(short b) {
         return (byte) (b >>> 8);
     }
+
+    public static short swapHighAndLowOrder(short value) {
+        byte HO = getHighByte(value);
+        byte LO = getLowByte(value);
+
+        return concatBytes(LO, HO);
+    }
 }

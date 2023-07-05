@@ -24,13 +24,13 @@ public class AddAxCte implements Command {
 
         // We must get from the memory the 16 bit constant
         ip.setReg((short) (ip.getReg() + 1)); // Increment IP
-        short cte = mc.getInstruction(ip.getReg()); // Get constant
+        short cte = mc.getInstructionBE(ip.getReg()); // Get constant
 
         int result = ax.getReg() + cte; // Doing op
 
         // Flags
         sr.setOf(OperationsUtils.hasOverflow16(result));
-        sr.setCf(OperationsUtils.hasCarry(ax.getReg(), (int) cte));
+        sr.setCf(OperationsUtils.hasCarry(ax.getReg(), cte));
         sr.setPf(OperationsUtils.parityBit(result));
         sr.setZf(OperationsUtils.isZero(result));
         sr.setSf(OperationsUtils.hasSignal(result));
