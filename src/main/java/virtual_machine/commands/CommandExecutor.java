@@ -6,6 +6,7 @@ import virtual_machine.commands.operations.arithmetical.*;
 import virtual_machine.commands.operations.flow.*;
 import virtual_machine.commands.operations.logical.*;
 import virtual_machine.commands.operations.move.*;
+import virtual_machine.commands.operations.stack.*;
 import virtual_machine.interpreter.OpParameters;
 
 import java.util.HashMap;
@@ -79,6 +80,13 @@ public class CommandExecutor {
         this.opCodeMap.put((short) 0xE8FF, new Call());
         this.opCodeMap.put((short) 0xCDFF, new Int());
         this.opCodeMap.put((short) 0xC3FF, new Ret());
+
+        // STACK Instructions
+        this.opCodeMap.put((short) 0x58FF, new PopAx());
+        this.opCodeMap.put((short) 0x9DFF, new PopF());
+        this.opCodeMap.put((short) 0x50FF, new PushAx());
+        this.opCodeMap.put((short) 0x9CFF, new PushF());
+
     }
 
     private void setOperation(short opCode) {
