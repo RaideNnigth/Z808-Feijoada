@@ -3,6 +3,7 @@ package virtual_machine.commands.operations.arithmetical;
 import virtual_machine.commands.operations.Command;
 import virtual_machine.commands.operations.OperationsUtils;
 import virtual_machine.interpreter.OpParameters;
+import virtual_machine.memory.MemoryController;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
 
@@ -22,8 +23,13 @@ public class SubAxCte implements Command {
     @Override
     public void doOperation(HashMap<OpParameters, Object> args ) {
         RegWork ax = (RegWork) args.get(OpParameters.AX);
-        byte cte = (byte) args.get("cte");
+        RegWork ip = (RegWork) args.get(OpParameters.IP);
         RegFlags sr = (RegFlags) args.get(OpParameters.SR_FLAGS);
+        MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
+
+        // We must get from the memory the 16 bit constant
+        ip.setReg((short) (ip.getReg() + 1)); // Increment IP
+        short cte = mc.getInstructionBE(ip.getReg());
 
         int result = ax.getReg() - cte;
         sr.setOf(OperationsUtils.hasOverflow16(result));

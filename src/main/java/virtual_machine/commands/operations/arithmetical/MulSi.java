@@ -21,7 +21,6 @@ public class MulSi implements Command {
         sr.setOf(OperationsUtils.hasOverflow32(result));
         sr.setCf(OperationsUtils.hasCarry(ax.getReg(), si.getReg()));
 
-
         long mostSig = result >>> 48;
         mostSig = result << 16;
 

@@ -16,10 +16,11 @@ public class MulAx implements Command {
         RegWork si = (RegWork)args.get(OpParameters.SI);
         RegFlags sr = (RegFlags) args.get(OpParameters.SR_FLAGS);
 
-        int result = ax.getReg() * ax.getReg();
+        long result = ax.getReg() * ax.getReg();
         sr.setCf(OperationsUtils.hasCarry(ax.getReg(), ax.getReg()));
         sr.setOf(OperationsUtils.hasOverflow32(result));
 
-
+        dx.setReg((short) ((result >>> 48) & 0x7FFFFFFF));
+        ax.setReg((short) ((result << 48) >>> 48));
     }
 }
