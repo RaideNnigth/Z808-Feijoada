@@ -20,7 +20,7 @@ public class Ret implements Command {
         RegWork sp = (RegWork) args.get(OpParameters.SP); // Get stack pointer register
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
-        short retAddr = mc.getWord(sp.getReg()); // Pop from stack where sub routine was called
+        short retAddr = mc.getWordBE(sp.getReg()); // Pop from stack where sub routine was called
         sp.setReg((short) (sp.getReg() - 1));
 
         ip.setReg(retAddr);
