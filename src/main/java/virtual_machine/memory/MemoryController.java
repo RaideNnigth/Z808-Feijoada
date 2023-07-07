@@ -8,9 +8,9 @@ public class MemoryController {
     private int dataSegment;
     private int stackSegment;
 
-    public static final int standardCodeSegment = 0;
-    public static final int standardDataSegment = 1001;
-    public static final int standardStackSegment = 64_000;
+    public final int standardCodeSegment = 0;
+    public final int standardDataSegment = 1001;
+    public final int standardStackSegment = 65_000;
 
     public MemoryController() {
         mainMemory = Memory.getInstance();
@@ -28,6 +28,29 @@ public class MemoryController {
      */
     private int validAddr(int addr) {
         return Math.abs(addr % Memory.MEM_SIZE);
+    }
+
+    public short getWordLE(short address) {
+        return mainMemory.read(Short.toUnsignedInt(address));
+    }
+
+    public short getWordBE(short address) {
+        short temp = mainMemory.read(Short.toUnsignedInt(address));
+        return BinaryUtils.swapHighAndLowOrder(temp);
+    }
+
+    /**
+     * Since our data is handled as big-endian internally we have to convert to little-endian in order
+     * to stay correct.
+     * @param word
+     * @param address
+     */
+    public void writeWord(short word, short address) {
+        mainMemory.write(BinaryUtils.swapHighAndLowOrder(word), Short.toUnsignedInt(address));
+    }
+
+    public short getInstruction(int addAddress) {
+        return mainMemory.read((short) (addAddress + codeSegment));
     }
 
 

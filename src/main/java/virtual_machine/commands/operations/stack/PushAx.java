@@ -18,6 +18,6 @@ public class PushAx implements Command {
         ip.setReg((short) (ip.getReg() + 1)); // Increment IP
         sp.setReg((short) (sp.getReg() - 1)); // Decrement SP
 
-        mc.writeStack(ax.getReg(), sp.getReg());
+        mc.writeWord(ax.getReg(), sp.getReg());
     }
 }

@@ -12,6 +12,7 @@ public class Halt implements Command {
     @Override
     public void doOperation(HashMap<OpParameters, Object> args) {
         RegWork ip = (RegWork) args.get(OpParameters.IP);
-        ip.setReg((short) MemoryController.standardDataSegment);
+        RegWork ss = (RegWork) args.get(OpParameters.SS);
+        ip.setReg(ss.getReg());
     }
 }

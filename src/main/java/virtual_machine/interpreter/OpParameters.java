@@ -7,5 +7,9 @@ public enum OpParameters {
     SI,
     IP,
     SR_FLAGS,
-    MEM_CONTROLLER
+    CS,
+    DS,
+    SS,
+    MEM_CONTROLLER,
+    INT_VECTOR
 }

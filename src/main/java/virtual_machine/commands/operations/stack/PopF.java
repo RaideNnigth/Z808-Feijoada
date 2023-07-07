@@ -13,12 +13,14 @@ public class PopF implements Command {
         RegWork sr = (RegWork) args.get(OpParameters.SR_FLAGS);
         RegWork ip = (RegWork) args.get(OpParameters.IP);
         RegWork sp = (RegWork) args.get(OpParameters.SP); // Get stack pointer register
+        RegWork ss = (RegWork) args.get(OpParameters.SS); // Get start of stack segment
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
         ip.setReg((short) (ip.getReg() + 1)); // Increment IP
 
-        sr.setReg((short) (mc.getStack(sp.getReg())));
+        sr.setReg((short) (mc.getWordBE(sp.getReg())));
 
-        sp.setReg((short) (sp.getReg() + 1)); // Increment SP
+        if (sp.getReg() != ss.getReg())
+            sp.setReg((short) (sp.getReg() + 1)); // Increment SP
     }
 }

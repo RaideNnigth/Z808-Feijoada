@@ -10,10 +10,6 @@ import virtual_machine.registers.RegWork;
 import java.util.HashMap;
 
 public class SubAxInd implements Command {
-    private void add( RegWork ax, RegWork dx ) {
-        ax.setReg( (short)(ax.getReg() + dx.getReg()) );
-    }
-
     // Campos do registrador SR afetados pela soma: CF, PF, ZF, SF, OF
     // CF: carry ou borrow
     // PF: flag de paridade
@@ -31,8 +27,9 @@ public class SubAxInd implements Command {
 
         // We must get from the memory the 16 bit constant
         ip.setReg((short) (ip.getReg() + 1)); // Increment IP
-        short indirectAddr = mc.getInstructionBE(ip.getReg()); // Get operand addr in dataMem
-        short cte = mc.getDataBE(mc.getDataBE(indirectAddr));
+
+        short indirectAddr = mc.getWordBE(ip.getReg()); // Get operand addr in dataMem
+        short cte = mc.getWordBE(mc.getWordBE(indirectAddr));
 
         int result = ax.getReg() - cte; // Doing op
 

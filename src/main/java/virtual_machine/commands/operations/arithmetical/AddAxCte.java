@@ -24,7 +24,8 @@ public class AddAxCte implements Command {
 
         // We must get from the memory the 16 bit constant
         ip.setReg((short) (ip.getReg() + 1)); // Increment IP
-        short cte = mc.getInstructionBE(ip.getReg()); // Get constant
+
+        short cte = mc.getWordBE(ip.getReg()); // Get constant
 
         int result = ax.getReg() + cte; // Doing op
 

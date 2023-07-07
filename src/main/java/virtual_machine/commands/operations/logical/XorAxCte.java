@@ -18,7 +18,8 @@ public class XorAxCte implements Command {
 
         // We must get from the memory the 16 bit constant
         ip.setReg((short) (ip.getReg() + 1)); // Increment IP
-        short cte = mc.getInstructionBE(ip.getReg());
+
+        short cte = mc.getWordBE(ip.getReg());
 
         short result = (short) (ax.getReg() ^ cte);
 
