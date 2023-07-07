@@ -3,6 +3,7 @@ package virtual_machine;
 import virtual_machine.commands.operations.flow.Int;
 import virtual_machine.interpreter.Interpreter;
 import virtual_machine.loader.Loader;
+import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
 
 import java.io.IOException;
@@ -41,5 +42,9 @@ public class MainVM {
 
     public static HashMap<Registers, RegWork> getWorkRegisters() {
         return workRegistersHashMap;
+    }
+
+    public static RegFlags getFlagsRegister() {
+        return Interpreter.sr;
     }
 }
