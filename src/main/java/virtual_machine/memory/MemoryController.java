@@ -6,15 +6,27 @@ public class MemoryController {
     private int dataSegment;
     private int stackSegment;
 
-    public static final int standardCodeSegment = 0;
-    public static final int standardDataSegment = 1001;
-    public static final int standardStackSegment = 65_000;
+    public final int standardCodeSegment = 0;
+    public final int standardDataSegment = 1001;
+    public final int standardStackSegment = 65_000;
 
     public MemoryController() {
         mainMemory = Memory.getInstance();
         codeSegment = standardCodeSegment;
         dataSegment = standardDataSegment;
         stackSegment = standardStackSegment;
+    }
+
+    public short getWord(short address) {
+        return mainMemory.read(Short.toUnsignedInt(address));
+    }
+
+    public void writeWord(short address, short word) {
+        mainMemory.write(word, Short.toUnsignedInt(address));
+    }
+
+    public int getCapacity() {
+        return mainMemory.getCapacity();
     }
 
     public short getInstruction(int addAddress) {

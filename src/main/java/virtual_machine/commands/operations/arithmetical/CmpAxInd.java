@@ -18,8 +18,8 @@ public class CmpAxInd implements Command {
 
         // We must get from the memory the 16 bit constant
         ip.setReg((short) (ip.getReg() + 1)); // Increment IP
-        short indirectAddr = mc.getInstruction(ip.getReg()); // Get operand addr in dataMem
-        short cte = mc.getData(mc.getData(indirectAddr));
+        short indirectAddr = mc.getWord(ip.getReg()); // Get operand addr in dataMem
+        short cte = mc.getWord(mc.getWord(indirectAddr));
 
         short result = (short) (ax.getReg() & cte);
 

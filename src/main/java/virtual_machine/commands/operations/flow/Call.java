@@ -17,9 +17,10 @@ public class Call implements Command {
 
         // We must get from the memory the 16 bit constant
         ip.setReg((short) (ip.getReg() + 1)); // Increment IP
-        short jmpAddr = mc.getInstruction(ip.getReg()); // Get operand addr in dataMem
+        sp.setReg((short) (sp.getReg() + 1)); // Increment SP
+        short jmpAddr = mc.getWord(ip.getReg()); // Get operand addr in dataMem
 
-        mc.writeStack((short) (ip.getReg() + 1), sp.getReg()); // Push to stack the next instruction address
+        mc.writeWord((short) (ip.getReg() + 1), sp.getReg()); // Push to stack the next instruction address
 
         ip.setReg(jmpAddr);
     }

@@ -91,6 +91,8 @@ public class CommandExecutor {
 
     private void setOperation(short opCode) {
         this.command = this.opCodeMap.get(opCode);
+        if (this.command == null)
+            this.command = new Halt();
     }
 
     public void doOperation(short opCode, HashMap<OpParameters, Object> args) {

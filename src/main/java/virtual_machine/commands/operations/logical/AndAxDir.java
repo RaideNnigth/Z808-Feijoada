@@ -18,8 +18,8 @@ public class AndAxDir implements Command {
 
         // We must get from the memory the 16 bit constant
         ip.setReg((short) (ip.getReg() + 1)); // Increment IP
-        short operandAddr = mc.getInstruction(ip.getReg()); // Get operand addr in dataMem
-        short cte = mc.getData(operandAddr);
+        short operandAddr = mc.getWord(ip.getReg()); // Get operand addr in dataMem
+        short cte = mc.getWord(operandAddr);
 
         short result = (short) (ax.getReg() & cte);
 

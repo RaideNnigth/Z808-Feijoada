@@ -15,8 +15,8 @@ public class MovDirAx implements Command {
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
         ip.setReg((short) (ip.getReg() + 1)); // Increment IP
-        short operandAddr = mc.getInstruction(ip.getReg()); // Get operand addr in dataMem
+        short operandAddr = mc.getWord(ip.getReg()); // Get operand addr in dataMem
 
-        mc.writeData(ax.getReg(), operandAddr);
+        mc.writeWord(operandAddr, ax.getReg());
     }
 }

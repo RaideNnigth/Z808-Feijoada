@@ -13,6 +13,9 @@ public class MainVM {
 
         System.out.println("Program path: " + args[0]);
 
+        // Creates Interpreter
+        Interpreter vmInterpreter = new Interpreter();
+
         // Creates Loader
         Loader vmLoader = null;
         try {
@@ -21,11 +24,9 @@ public class MainVM {
             System.err.println(e);
             System.exit(-1);
         }
-        // Creates Interpreter
-        Interpreter vmInterpreter = new Interpreter();
 
         // Loads program to main memory
-        vmLoader.loadToMemory();
-        vmInterpreter.startExecution();
+        vmLoader.loadToMemory(vmInterpreter.getMemoryController(), vmInterpreter.getCs(), vmInterpreter.getDs());
+        vmInterpreter.executeProgram();
     }
 }

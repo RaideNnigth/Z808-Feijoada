@@ -18,7 +18,7 @@ public class JmpNotNeg implements Command {
 
         // We must get from the memory the 16 bit constant
         ip.setReg((short) (ip.getReg() + 1)); // Increment IP
-        short jmpAddr = mc.getInstruction(ip.getReg()); // Get operand addr in dataMem
+        short jmpAddr = mc.getWord(ip.getReg()); // Get operand addr in dataMem
 
         if (sr.getSf() == false)
             ip.setReg((short) (ip.getReg() + jmpAddr));

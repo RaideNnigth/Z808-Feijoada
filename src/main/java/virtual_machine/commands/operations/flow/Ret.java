@@ -8,6 +8,11 @@ import virtual_machine.registers.RegWork;
 
 import java.util.HashMap;
 
+/**
+ * Ret Operation:
+ *
+ * The programmer has to be careful when using this, because it will return to the address that is at the top of the stack
+ */
 public class Ret implements Command {
     @Override
     public void doOperation(HashMap<OpParameters, Object> args) {
@@ -15,7 +20,7 @@ public class Ret implements Command {
         RegWork sp = (RegWork) args.get(OpParameters.SP); // Get stack pointer register
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
-        short retAddr = mc.getStack(sp.getReg()); // Pop from stack where sub routine was called
+        short retAddr = mc.getWord(sp.getReg()); // Pop from stack where sub routine was called
         sp.setReg((short) (sp.getReg() - 1));
 
         ip.setReg(retAddr);

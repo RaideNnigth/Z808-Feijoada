@@ -18,6 +18,6 @@ public class PushF implements Command {
         ip.setReg((short) (ip.getReg() + 1)); // Increment IP
         sp.setReg((short) (sp.getReg() - 1)); // Decrement SP
 
-        mc.writeStack(sr.getReg(), sp.getReg());
+        mc.writeWord(sp.getReg(), sr.getReg());
     }
 }
