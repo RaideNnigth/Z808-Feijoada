@@ -7,7 +7,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class UIUtils {
-    public static Image resizeImage(File img, int width, int height, int algorithm) {
+    public static Image resizeImage(String imgPath, int width, int height, int algorithm) {
+        File img = new File(imgPath);
         BufferedImage bufferedImage = null;
 
         try {
