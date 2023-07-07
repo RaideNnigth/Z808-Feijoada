@@ -1,31 +1,45 @@
 package virtual_machine;
 
+import virtual_machine.commands.operations.flow.Int;
 import virtual_machine.interpreter.Interpreter;
 import virtual_machine.loader.Loader;
+import virtual_machine.registers.RegWork;
+
 import java.io.IOException;
+import java.util.HashMap;
 
 public class MainVM {
-    public static void main(String[] args) {
-        if (args.length < 1) {
-            System.err.println("You must give the path of a valid .bin file!");
-            System.exit(-1);
-        }
+    private static final Loader vmLoader = new Loader();
+    private static final Interpreter vmInterpreter = new Interpreter();
+    private static final HashMap<Registers, RegWork> workRegistersHashMap = new HashMap<>();
 
-        System.out.println("Program path: " + args[0]);
+    static {
+        workRegistersHashMap.put(Registers.AX, Interpreter.ax);
+        workRegistersHashMap.put(Registers.DX, Interpreter.dx);
+        workRegistersHashMap.put(Registers.IP, Interpreter.ip);
+        workRegistersHashMap.put(Registers.SP, Interpreter.sp);
+        workRegistersHashMap.put(Registers.SI, Interpreter.si);
+    }
 
-        // Creates Loader
-        Loader vmLoader = null;
+    public enum Registers {
+        AX, DX, IP, SI, SP, SR
+    }
+
+    public static void runEntireProgram(String programPath) {
         try {
-            vmLoader = new Loader(args[0]);
+            vmLoader.setProgramToLoad(programPath);
         } catch (IOException e) {
-            System.err.println(e);
+            System.err.println(e.getMessage());
             System.exit(-1);
         }
-        // Creates Interpreter
-        Interpreter vmInterpreter = new Interpreter();
 
         // Loads program to main memory
         vmLoader.loadToMemory();
+        // Executes
         vmInterpreter.startExecution();
+    }
+
+    public static HashMap<Registers, RegWork> getWorkRegisters() {
+        return workRegistersHashMap;
     }
 }

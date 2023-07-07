@@ -14,12 +14,11 @@ public class Loader {
     private int PC = 0;
     private MemoryController memoryController;
 
-    public Loader(String path) throws IOException {
+    public Loader() {
         memoryController = new MemoryController();
-        setPathToProgram(path);
     }
 
-    public void setPathToProgram(String path) throws IOException {
+    public void setProgramToLoad(String path) throws IOException {
         pathToProgram = path;
 
         try (var programFileReader = new FileInputStream(pathToProgram)) {

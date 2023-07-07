@@ -11,12 +11,12 @@ import java.util.HashMap;
 public class Interpreter {
 
     // Registers
-    private static final RegWork ax = new RegWork();
-    private static final RegWork dx = new RegWork();
-    private static final RegWork sp = new RegWork();
-    private static final RegWork si = new RegWork();
-    private static final RegWork ip = new RegWork();
-    private static final RegFlags sr = new RegFlags();
+    public static final RegWork ax = new RegWork();
+    public static final RegWork dx = new RegWork();
+    public static final RegWork sp = new RegWork();
+    public static final RegWork si = new RegWork();
+    public static final RegWork ip = new RegWork();
+    public static final RegFlags sr = new RegFlags();
 
     private static final MemoryController memoryController = new MemoryController();
     private static final CommandExecutor commandExecutor = new CommandExecutor();
