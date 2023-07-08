@@ -40,7 +40,3 @@ k
 ;src/main/java/virtual_machine/interpreter/OpParameters.java,2\1\21c955ccafef542e3c95a427f666fd7991d23c46
 k
 ;src/main/java/virtual_machine/commands/CommandExecutor.java,3\6\36f21b88ecdf73376196b45693a1565be1b5fca8
-Y
-)src/main/java/virtual_machine/MainVM.java,2\a\2a69c16725d1efd65ed7e14373a9b951c213f5d0
-S
-#src/main/java/z808_gui/MainGUI.java,9\c\9c7d604eb447ac5fea31856d3d2b615e5b8a0437

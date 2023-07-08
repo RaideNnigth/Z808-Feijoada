@@ -1,10 +1,10 @@
 package virtual_machine;
 
-import virtual_machine.commands.operations.flow.Int;
 import virtual_machine.interpreter.Interpreter;
 import virtual_machine.loader.Loader;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
+import virtual_machine.registers.Registers;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,10 +20,6 @@ public class MainVM {
         workRegistersHashMap.put(Registers.IP, Interpreter.ip);
         workRegistersHashMap.put(Registers.SP, Interpreter.sp);
         workRegistersHashMap.put(Registers.SI, Interpreter.si);
-    }
-
-    public enum Registers {
-        AX, DX, IP, SI, SP, SR
     }
 
     public static void runEntireProgram(String programPath) {

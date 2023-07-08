@@ -1,9 +1,9 @@
 package z808_gui;
 
-import com.sun.tools.javac.Main;
 import virtual_machine.MainVM;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
+import virtual_machine.registers.Registers;
 import z808_gui.utils.UIUtils;
 
 import javax.swing.*;
@@ -12,7 +12,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -43,9 +42,7 @@ public class MainGUI extends JFrame {
 
     // Registers labels and stuff
     private static final int noWorkRegs = 5;
-    private static final List<String> workRegistersID = Arrays.asList("AX: ", "DX: ", "IP: ", "SP: ", "SI: ");
     private static final List<JLabel> workRegistersJLabels = new ArrayList<>();
-    private static final String flagRegisterID = "SR: ";
     private static final JLabel flagRegisterJLabel = new JLabel();
     private static final RegFlags flagRegister = MainVM.getFlagsRegister();
 
@@ -136,12 +133,12 @@ public class MainGUI extends JFrame {
 
     // Update registers labels
     private static void updateWorkRegsLabels() {
-        MainVM.Registers[] regsKeys = MainVM.Registers.values();
-        HashMap<MainVM.Registers, RegWork> regMap = MainVM.getWorkRegisters();
+        Registers[] regsKeys = Registers.values();
+        HashMap<Registers, RegWork> regMap = MainVM.getWorkRegisters();
 
         // Update work registers
         for (int i = 0; i < noWorkRegs; i++) {
-            workRegistersJLabels.get(i).setText(workRegistersID.get(i) + regMap.get(regsKeys[i]).getReg());
+            workRegistersJLabels.get(i).setText(regsKeys[i].getGUILabel() + regMap.get(regsKeys[i]).getReg());
         }
         // Upadte flags register
         // to do ...
@@ -176,12 +173,12 @@ public class MainGUI extends JFrame {
         lowerCommands.setPreferredSize(new Dimension(0, 80));
         lowerCommands.setLayout(new BoxLayout(lowerCommands, BoxLayout.LINE_AXIS));
 
-        // Criando o botão play
-        JLabel playButton = new JLabel(PLAY_DEFAULT_IMG);
-        playButton.setPreferredSize(new Dimension(CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE));
+        // Criando o feijao play
+        JLabel feijaoRunButton = new JLabel(PLAY_DEFAULT_IMG);
+        feijaoRunButton.setPreferredSize(new Dimension(CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE));
 
-        // Botao play actions
-        playButton.addMouseListener(new MouseAdapter() {
+        // Feijao play actions
+        feijaoRunButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 mouseExited(e);
@@ -194,28 +191,28 @@ public class MainGUI extends JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (playButton.getVisibleRect().contains(e.getPoint())) mouseEntered(e);
+                if (feijaoRunButton.getVisibleRect().contains(e.getPoint())) mouseEntered(e);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                playButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                playButton.setIcon(PLAY_HOVER_IMG);
+                feijaoRunButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                feijaoRunButton.setIcon(PLAY_HOVER_IMG);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                playButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                playButton.setIcon(PLAY_DEFAULT_IMG);
+                feijaoRunButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                feijaoRunButton.setIcon(PLAY_DEFAULT_IMG);
             }
         });
 
-        // Criando o botão step
-        JLabel stepButton = new JLabel(STEP_DEFAULT_IMG);
-        stepButton.setPreferredSize(new Dimension(CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE));
+        // Criando o feijao step
+        JLabel feijaoStepButton = new JLabel(STEP_DEFAULT_IMG);
+        feijaoStepButton.setPreferredSize(new Dimension(CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE));
 
-        // Botao step actions
-        stepButton.addMouseListener(new MouseAdapter() {
+        // Feijao step actions
+        feijaoStepButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 mouseExited(e);
@@ -223,29 +220,29 @@ public class MainGUI extends JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (stepButton.getVisibleRect().contains(e.getPoint())) mouseEntered(e);
+                if (feijaoStepButton.getVisibleRect().contains(e.getPoint())) mouseEntered(e);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
 //                System.out.println(e.getX() + " " + e.getX());
-//                System.out.println(stepButton.getVisibleRect());
-                stepButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                stepButton.setIcon(STEP_ACTIVE_IMG);
+//                System.out.println(feijaoStepButton.getVisibleRect());
+                feijaoStepButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                feijaoStepButton.setIcon(STEP_ACTIVE_IMG);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                stepButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                stepButton.setIcon(STEP_DEFAULT_IMG);
+                feijaoStepButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                feijaoStepButton.setIcon(STEP_DEFAULT_IMG);
             }
         });
 
         // Populando lowerCommands
         lowerCommands.add(Box.createRigidArea(H_SPACER));
-        lowerCommands.add(playButton);
+        lowerCommands.add(feijaoRunButton);
         lowerCommands.add(Box.createRigidArea(H_SPACER));
-        lowerCommands.add(stepButton);
+        lowerCommands.add(feijaoStepButton);
 
         // ------------------------------ Criando painel central ------------------------------
         JPanel centralPannel = new JPanel();
@@ -281,11 +278,12 @@ public class MainGUI extends JFrame {
             workRegistersJLabels.add(newLabel);
         }
         flagRegisterJLabel.setFont(fonteLabels);
-        
+
+        Registers[] regs = Registers.values();
         for (int i = 0; i < noWorkRegs; ++i) {
-            workRegistersJLabels.get(i).setText(workRegistersID.get(i));
+            workRegistersJLabels.get(i).setText(regs[i].getGUILabel());
         }
-        flagRegisterJLabel.setText(flagRegisterID);
+        flagRegisterJLabel.setText(Registers.SR.getGUILabel());
 
         // Populando com os labels de registradores
         var hGroup = leftPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING);
