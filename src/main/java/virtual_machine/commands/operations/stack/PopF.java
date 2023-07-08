@@ -5,20 +5,27 @@ import java.util.HashMap;
 import virtual_machine.commands.operations.Command;
 import virtual_machine.interpreter.OpParameters;
 import virtual_machine.memory.MemoryController;
+import virtual_machine.registers.BankOfRegisters;
+import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
 
 public class PopF implements Command {
     @Override
     public void doOperation(HashMap<OpParameters, Object> args) {
-        RegWork sr = (RegWork) args.get(OpParameters.SR_FLAGS);
-        RegWork ip = (RegWork) args.get(OpParameters.IP);
-        RegWork sp = (RegWork) args.get(OpParameters.SP); // Get stack pointer register
+        /*
+        RegFlags sr = (RegFlags) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getSr();
+        RegWork ip = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getIp();
+        RegWork sp = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getSp(); // Get stack pointer register
+        RegWork ss = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getSs(); // Get start of stack segment
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
-        ip.setReg((short) (ip.getReg() + 1)); // Increment IP
+        ip.setValue((short) (ip.getValue() + 1)); // Increment IP
 
-        sr.setReg((short) (mc.getStack(sp.getReg())));
+        sr.setValue((short) (mc.getWordBE(sp.getValue())));
 
-        sp.setReg((short) (sp.getReg() + 1)); // Increment SP
+        if (sp.getValue() != ss.getValue())
+            sp.setValue((short) (sp.getValue() + 1)); // Increment SP
+
+         */
     }
 }

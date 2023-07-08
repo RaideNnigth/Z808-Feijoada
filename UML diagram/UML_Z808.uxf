@@ -114,13 +114,13 @@ _+ getInstance() : Memory_
 - regHigh : byte
 - regLow : byte
 -
-+ getRegHigh() : byte
-+ getRegLow() : byte
-+ getReg() : short
-+ getRegLE() : short
-+ setRegHigh(value : int) : void
-+ setRegLow(value : int) : void
-+ setReg(value : short) : void</panel_attributes>
++ getHigh() : byte
++ getLow() : byte
++ getValue() : short
++ getValueLE() : short
++ setHigh(value : int) : void
++ setLow(value : int) : void
++ setValue(value : short) : void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

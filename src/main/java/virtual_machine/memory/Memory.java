@@ -20,10 +20,13 @@ public class Memory {
     }
 
     public void write(short value, int address) {
-        this.mainMemory[address] = value;
+        if (address >= 0 || address < MEM_SIZE)
+            this.mainMemory[address] = value;
     }
 
     public short read(int address) {
-        return this.mainMemory[address];
+        if (address >= 0 || address < MEM_SIZE)
+            return this.mainMemory[address];
+        return (short) 0x0000;
     }
 }

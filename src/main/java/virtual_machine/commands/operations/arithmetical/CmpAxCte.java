@@ -4,6 +4,7 @@ import virtual_machine.commands.operations.Command;
 import virtual_machine.commands.operations.OperationsUtils;
 import virtual_machine.interpreter.OpParameters;
 import virtual_machine.memory.MemoryController;
+import virtual_machine.registers.BankOfRegisters;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
 
@@ -11,16 +12,17 @@ import java.util.HashMap;
 
 public class CmpAxCte implements Command {
     public void doOperation(HashMap<OpParameters, Object> args) {
-        RegWork ax = (RegWork) args.get(OpParameters.AX);
-        RegWork ip = (RegWork) args.get(OpParameters.IP);
-        RegFlags sr = (RegFlags) args.get(OpParameters.SR_FLAGS);
+        RegWork ax = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getAx();
+        RegWork ip = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getIp();
+        RegFlags sr = (RegFlags) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getSr();
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
         // We must get from the memory the 16 bit constant
-        ip.setReg((short) (ip.getReg() + 1)); // Increment IP
-        short cte = mc.getInstructionBE(ip.getReg());
+        ip.setValue((short) (ip.getValue() + 1)); // Increment IP
 
-        short result = (short) (ax.getReg() & cte);
+        short cte = mc.getWordBE(ip.getValue());
+
+        short result = (short) (ax.getValue() & cte);
 
         sr.setCf(false);
         sr.setPf(OperationsUtils.parityBit(result));

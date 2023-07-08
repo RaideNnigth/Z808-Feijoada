@@ -83,14 +83,16 @@ public class CommandExecutor {
 
         // STACK Instructions
         this.opCodeMap.put((short) 0x58FF, new PopAx());
-        this.opCodeMap.put((short) 0x9DFF, new PopF());
+        //this.opCodeMap.put((short) 0x9DFF, new PopF());
         this.opCodeMap.put((short) 0x50FF, new PushAx());
-        this.opCodeMap.put((short) 0x9CFF, new PushF());
+        //this.opCodeMap.put((short) 0x9CFF, new PushF());
 
     }
 
     private void setOperation(short opCode) {
         this.command = this.opCodeMap.get(opCode);
+        if (this.command == null)
+            this.command = new Halt();
     }
 
     public void doOperation(short opCode, HashMap<OpParameters, Object> args) {

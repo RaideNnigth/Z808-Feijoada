@@ -3,6 +3,7 @@ package virtual_machine.commands.operations.logical;
 import virtual_machine.commands.operations.Command;
 import virtual_machine.commands.operations.OperationsUtils;
 import virtual_machine.interpreter.OpParameters;
+import virtual_machine.registers.BankOfRegisters;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
 
@@ -10,11 +11,11 @@ import java.util.HashMap;
 
 public class OrAxDx implements Command {
     public void doOperation(HashMap<OpParameters, Object> args) {
-        RegWork ax = (RegWork) args.get(OpParameters.AX);
-        RegWork dx = (RegWork) args.get(OpParameters.DX);
-        RegFlags sr = (RegFlags) args.get(OpParameters.SR_FLAGS);
+        RegWork ax = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getAx();
+        RegWork dx = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getDx();
+        RegFlags sr = (RegFlags) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getSr();
 
-        short result = (short) (ax.getReg() | dx.getReg());
+        short result = (short) (ax.getValue() | dx.getValue());
 
         sr.setCf(false);
         sr.setPf(OperationsUtils.parityBit(result));
@@ -22,6 +23,6 @@ public class OrAxDx implements Command {
         sr.setSf(OperationsUtils.hasSignal(result));
         sr.setOf(false);
 
-        ax.setReg(result);
+        ax.setValue(result);
     }
 }

@@ -1,5 +1,6 @@
 package virtual_machine.loader;
 
+import virtual_machine.interpreter.Interpreter;
 import virtual_machine.memory.MemoryController;
 import virtual_machine.utils.BinaryUtils;
 
@@ -12,10 +13,9 @@ public class Loader {
     private long programSize;
     private byte[] programBinary;
     private int PC = 0;
-    private MemoryController memoryController;
 
     public Loader() {
-        memoryController = new MemoryController();
+
     }
 
     public void setProgramToLoad(String path) throws IOException {
@@ -62,7 +62,7 @@ public class Loader {
         return ret;
     }
 
-    public void loadToMemory() {
+    public void loadToMemory(MemoryController memoryController, int codeSegment, int dataSegment) {
         int csStart = 0;
         int csEnd = 0;
         int dsStart = 0;
@@ -78,28 +78,12 @@ public class Loader {
         ssStart = read16bitBE();
         ssEnd = read16bitBE();
 
-        // Print segments addresses (test purposes only)
-        System.out.printf("""
-                        csStart: %x
-                        csEnd: %x
-                        dsStart: %x
-                        dsEnd: %x
-                        ssStart: %x
-                        ssEnd: %x
-                        """,
-                csStart, csEnd,
-                dsStart, dsEnd,
-                ssStart, ssEnd);
-
-        System.out.println("Instructions loaded to memory: ");
-
         // Start writing instructions in Code Segment
         PC = csStart;
         int memCounter = 0;
         while (PC <= csEnd) {
-            short temp = read16bitLE();
-            System.out.printf("%04x%n", temp);
-            memoryController.writeInstruction(temp, memCounter++);
+            short temp = read16bitBE();
+            memoryController.writeWord((short) ((memCounter++) + dataSegment), temp);
         }
 
         System.out.println("Data loaded to memory: ");
@@ -108,12 +92,8 @@ public class Loader {
         PC = dsStart;
         memCounter = 0;
         while (PC <= dsEnd) {
-            short temp = read16bitLE();
-            System.out.printf("%04x%n", temp);
-            memoryController.writeData(temp, memCounter++);
+            short temp = read16bitBE();
+            memoryController.writeWord((short) ((memCounter++) + dataSegment), temp);
         }
-
-        // Será q presiza meter o loop da pilha?
-        // - Henrique
     }
 }

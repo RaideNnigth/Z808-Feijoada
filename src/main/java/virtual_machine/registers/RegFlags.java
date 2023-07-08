@@ -1,6 +1,6 @@
 package virtual_machine.registers;
 
-public class RegFlags {
+public class RegFlags implements StatusRegister {
     Boolean of;
     Boolean sf;
     Boolean zf;

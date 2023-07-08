@@ -6,11 +6,11 @@ public class RegWork {
     private byte regHigh;
     private byte regLow;
 
-    public byte getRegHigh() {
+    public byte getHigh() {
         return regHigh;
     }
 
-    public byte getRegLow() {
+    public byte getLow() {
         return regLow;
     }
 
@@ -20,7 +20,7 @@ public class RegWork {
      *
      * @return valor armazenado no registrador
      */
-    public short getReg() {
+    public short getValue() {
         return BinaryUtils.concatBytes(regHigh, regLow);
     }
 
@@ -31,23 +31,23 @@ public class RegWork {
      * Esse valor NÃO pode ser usado para operações! Somente
      * para armazenar na memória.
      * <p>
-     * Para operações, use getReg().
+     * Para operações, use getValue().
      *
      * @return valor armazenado no registrador em Little Endian
      */
-    public short getRegLE() {
+    public short getValueLE() {
         return BinaryUtils.concatBytes(regLow, regHigh);
     }
 
-    public void setRegHigh(int regHigh) {
+    public void setHigh(int regHigh) {
         this.regHigh = (byte) regHigh;
     }
 
-    public void setRegLow(int regLow) {
+    public void setLow(int regLow) {
         this.regLow = (byte) regLow;
     }
 
-    public void setReg(short reg) {
+    public void setValue(short reg) {
         this.regHigh = BinaryUtils.getHighByte(reg);
         this.regLow = BinaryUtils.getLowByte(reg);
     }

@@ -1,7 +1,10 @@
 package virtual_machine.interpreter;
 
 import virtual_machine.commands.CommandExecutor;
+import virtual_machine.memory.Memory;
+import virtual_machine.os_interruptions.OSInterruptionHandler;
 import virtual_machine.memory.MemoryController;
+import virtual_machine.registers.BankOfRegisters;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
 import virtual_machine.utils.BinaryUtils;
@@ -9,39 +12,61 @@ import virtual_machine.utils.BinaryUtils;
 import java.util.HashMap;
 
 public class Interpreter {
+    private final BankOfRegisters registers = new BankOfRegisters();
 
-    // Registers
-    public static final RegWork ax = new RegWork();
-    public static final RegWork dx = new RegWork();
-    public static final RegWork sp = new RegWork();
-    public static final RegWork si = new RegWork();
-    public static final RegWork ip = new RegWork();
-    public static final RegFlags sr = new RegFlags();
-
-    private static final MemoryController memoryController = new MemoryController();
-    private static final CommandExecutor commandExecutor = new CommandExecutor();
-    private static final HashMap<OpParameters, Object> operationParameters = new HashMap<>();
+    private final MemoryController memoryController = new MemoryController();
+    private final CommandExecutor commandExecutor = new CommandExecutor();
+    private final HashMap<Short, Object> interruptionVector = new HashMap<>();
+    private final HashMap<OpParameters, Object> operationParameters = new HashMap<>();
 
     public Interpreter() {
-        operationParameters.put(OpParameters.AX, ax); // Accumulator
-        operationParameters.put(OpParameters.DX, dx); // Data rex
-        operationParameters.put(OpParameters.SP, sp); // Stack Pointer
-        operationParameters.put(OpParameters.SI, si); // Source Index
-        operationParameters.put(OpParameters.IP, ip); // Instruction Pointer
-        operationParameters.put(OpParameters.SR_FLAGS, sr); // Flags Register
-        operationParameters.put(OpParameters.MEM_CONTROLLER, memoryController); // Memory (duh)
+        registers.getCs().setValue((short) 0);
+        registers.getDs().setValue((short) (30000 + 1));
+        registers.getSs().setValue((short) (Memory.MEM_SIZE - 1));
+
+        initializeInterruptionVector();
+        initializeOperationParameters();
     }
 
-    public void startExecution() {
-        while (ip.getReg() < MemoryController.standardDataSegment) {
-            // Get instruction from memory
-            short instruction = Interpreter.memoryController.getInstructionBE(ip.getReg());
+    public Interpreter(int codeSegLength) {
+        registers.getCs().setValue((short) 0);
+        registers.getDs().setValue((short) (codeSegLength + 1));
+        registers.getSs().setValue((short) (Memory.MEM_SIZE - 1));
 
-            // Execute instruction
-            commandExecutor.doOperation(instruction, operationParameters);
+        initializeInterruptionVector();
+        initializeOperationParameters();
+    }
 
-            // Update IP
-            Interpreter.ip.setReg((short) (ip.getReg() + 1));
+    private void initializeInterruptionVector() {
+        interruptionVector.put((short) 0x0021, new OSInterruptionHandler()); // OS Interruption (duh)
+    }
+
+    private void initializeOperationParameters() {
+        operationParameters.put(OpParameters.REGISTERS, registers);
+        operationParameters.put(OpParameters.MEM_CONTROLLER, memoryController); // Memory (duh)
+        operationParameters.put(OpParameters.INT_VECTOR, interruptionVector); // Interruption vector (duh)
+    }
+
+    public void executeProgram() {
+        while (registers.getIp().getValue() < registers.getSs().getValue()) {
+            executeNextInstruction();
         }
+    }
+
+    public void executeNextInstruction() {
+        // Get the instruction that is ponteinted by IP
+        short instruction = memoryController.getWordBE(registers.getIp().getValue());
+        // Execute the instruction
+        commandExecutor.doOperation(instruction, operationParameters);
+        // Update the register IP
+        registers.incrementIp();
+    }
+
+    public BankOfRegisters getRegisters() {
+        return registers;
+    }
+
+    public MemoryController getMemoryController() {
+        return memoryController;
     }
 }

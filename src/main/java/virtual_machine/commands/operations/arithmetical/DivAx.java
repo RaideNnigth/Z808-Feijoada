@@ -2,6 +2,7 @@ package virtual_machine.commands.operations.arithmetical;
 
 import virtual_machine.commands.operations.Command;
 import virtual_machine.interpreter.OpParameters;
+import virtual_machine.registers.BankOfRegisters;
 import virtual_machine.registers.RegWork;
 import virtual_machine.utils.BinaryUtils;
 
@@ -10,14 +11,14 @@ import java.util.HashMap;
 public class DivAx implements Command {
     @Override
     public void doOperation(HashMap<OpParameters, Object> args ) {
-        RegWork ax = (RegWork)args.get(OpParameters.AX);
-        RegWork dx = (RegWork)args.get(OpParameters.DX);
+        RegWork ax = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getAx();
+        RegWork dx = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getDx();
 
-        int dividend = BinaryUtils.concatShorts(dx.getReg(), ax.getReg());
-        int result = dividend / ax.getReg();
-        int remainder = dividend % ax.getReg();
+        int dividend = BinaryUtils.concatShorts(dx.getValue(), ax.getValue());
+        int result = dividend / ax.getValue();
+        int remainder = dividend % ax.getValue();
 
-        ax.setReg((short) result);
-        dx.setReg((short) remainder);
+        ax.setValue((short) result);
+        dx.setValue((short) remainder);
     }
 }
