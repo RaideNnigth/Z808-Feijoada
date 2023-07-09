@@ -14,14 +14,6 @@ public class MainVM {
     private static final Interpreter vmInterpreter = new Interpreter();
     private static final HashMap<Registers, RegWork> workRegistersHashMap = new HashMap<>();
 
-    static {
-        workRegistersHashMap.put(Registers.AX, Interpreter.ax);
-        workRegistersHashMap.put(Registers.DX, Interpreter.dx);
-        workRegistersHashMap.put(Registers.IP, Interpreter.ip);
-        workRegistersHashMap.put(Registers.SP, Interpreter.sp);
-        workRegistersHashMap.put(Registers.SI, Interpreter.si);
-    }
-
     public static void runEntireProgram(String programPath) {
         try {
             vmLoader.setProgramToLoad(programPath);
@@ -37,6 +29,12 @@ public class MainVM {
     }
 
     public static HashMap<Registers, RegWork> getWorkRegisters() {
+        workRegistersHashMap.put(Registers.AX, Interpreter.ax);
+        workRegistersHashMap.put(Registers.DX, Interpreter.dx);
+        workRegistersHashMap.put(Registers.IP, Interpreter.ip);
+        workRegistersHashMap.put(Registers.SP, Interpreter.sp);
+        workRegistersHashMap.put(Registers.SI, Interpreter.si);
+
         return workRegistersHashMap;
     }
 

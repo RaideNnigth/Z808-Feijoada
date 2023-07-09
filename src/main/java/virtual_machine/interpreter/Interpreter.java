@@ -32,7 +32,18 @@ public class Interpreter {
         operationParameters.put(OpParameters.MEM_CONTROLLER, memoryController); // Memory (duh)
     }
 
+    private void resetRegs() {
+        ax.setReg((short)0);
+        dx.setReg((short)0);
+        sp.setReg((short)0);
+        si.setReg((short)0);
+        ip.setReg((short)0);
+        sr.reset();
+    }
+
     public void startExecution() {
+        resetRegs();
+
         while (ip.getReg() < MemoryController.standardDataSegment) {
             // Get instruction from memory
             short instruction = Interpreter.memoryController.getInstructionBE(ip.getReg());
