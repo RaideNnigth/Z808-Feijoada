@@ -56,10 +56,10 @@ public class Interpreter {
     public void executeNextInstruction() {
         // Get the instruction that is ponteinted by IP
         short instruction = memoryController.getWordBE(registers.getIp().getValue());
-        // Execute the instruction
-        commandExecutor.doOperation(instruction, operationParameters);
         // Update the register IP
         registers.incrementIp();
+        // Execute the instruction
+        commandExecutor.doOperation(instruction, operationParameters);
     }
 
     public BankOfRegisters getRegisters() {

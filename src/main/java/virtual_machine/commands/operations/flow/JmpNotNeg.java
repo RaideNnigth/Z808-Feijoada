@@ -18,11 +18,11 @@ public class JmpNotNeg implements Command {
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
         // We must get from the memory the 16 bit constant
-        ip.setValue((short) (ip.getValue() + 1)); // Increment IP
-
         short jmpAddr = mc.getWordBE(ip.getValue()); // Get operand addr in dataMem
 
-        if (sr.getSf() == false)
+        ip.setValue((short) (ip.getValue() + 1)); // Increment IP
+
+        if (!sr.getSf())
             ip.setValue((short) (ip.getValue() + jmpAddr));
     }
 }

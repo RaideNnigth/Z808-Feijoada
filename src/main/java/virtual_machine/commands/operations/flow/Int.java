@@ -22,9 +22,9 @@ public class Int implements Command {
         //System.out.println(intService);
 
         // We must get from the memory the 16 bit constant
-        ip.setValue((short) (ip.getValue() + 1)); // Increment IP
-
         short intCode = mc.getWordBE(ip.getValue()); // Get interruption code
+
+        ip.setValue((short) (ip.getValue() + 1)); // Increment IP
 
         intVector.get(intCode).doOperation(intService, args);
     }

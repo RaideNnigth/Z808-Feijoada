@@ -27,10 +27,10 @@ public class SubAxInd implements Command {
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
         // We must get from the memory the 16 bit constant
-        ip.setValue((short) (ip.getValue() + 1)); // Increment IP
-
         short indirectAddr = mc.getWordBE(ip.getValue()); // Get operand addr in dataMem
         short cte = mc.getWordBE(mc.getWordBE(indirectAddr));
+
+        ip.setValue((short) (ip.getValue() + 1)); // Increment IP
 
         int result = ax.getValue() - cte; // Doing op
 

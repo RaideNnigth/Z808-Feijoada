@@ -16,12 +16,13 @@ public class Call implements Command {
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
         // We must get from the memory the 16 bit constant
-        ip.setValue((short) (ip.getValue() + 1)); // Increment IP
-
         sp.setValue((short) (sp.getValue() + 1)); // Increment SP
         short jmpAddr = mc.getWordBE(ip.getValue()); // Get operand addr in dataMem
 
-        mc.writeWord((short) (ip.getValue() + 1), sp.getValue()); // Push to stack the next instruction address
+        ip.setValue((short) (ip.getValue() + 1)); // Increment IP
+
+        short nextIP = ip.getValue();
+        mc.writeWord((short) (nextIP), (short) (sp.getValue() + nextIP)); // Push to stack the next instruction address
 
         ip.setValue(jmpAddr);
     }

@@ -17,10 +17,10 @@ public class CmpAxCte implements Command {
         RegFlags sr = (RegFlags) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getSr();
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
+        short cte = mc.getWordBE(ip.getValue());
+
         // We must get from the memory the 16 bit constant
         ip.setValue((short) (ip.getValue() + 1)); // Increment IP
-
-        short cte = mc.getWordBE(ip.getValue());
 
         short result = (short) (ax.getValue() & cte);
 

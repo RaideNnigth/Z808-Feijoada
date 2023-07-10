@@ -12,15 +12,16 @@ import java.util.HashMap;
 
 public class AndAxCte implements Command {
     public void doOperation(HashMap<OpParameters, Object> args) {
+        BankOfRegisters br = (BankOfRegisters) args.get(OpParameters.REGISTERS);
         RegWork ax = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getAx();
         RegWork ip = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getIp();
         RegFlags sr = (RegFlags) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getSr();
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
         // We must get from the memory the 16 bit constant
-        ip.setValue((short) (ip.getValue() + 1)); // Increment IP
-
         short cte = mc.getWordBE(ip.getValue());
+
+        br.incrementIp();
 
         short result = (short) (ax.getValue() & cte);
 

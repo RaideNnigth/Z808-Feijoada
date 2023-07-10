@@ -17,8 +17,6 @@ public class PopAx implements Command {
         RegWork ss = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getSs(); // Get start of stack segment
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
-        ip.setValue((short) (ip.getValue() + 1)); // Increment IP
-
         ax.setValue((short) (mc.getWordBE(sp.getValue())));
 
         if (sp.getValue() != ss.getValue())

@@ -23,10 +23,10 @@ public class AddAxCte implements Command {
         // Get memory controller
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
+        short cte = mc.getWordBE(ip.getValue()); // Get constant
+
         // We must get from the memory the 16 bit constant
         ip.setValue((short) (ip.getValue() + 1)); // Increment IP
-
-        short cte = mc.getWordBE(ip.getValue()); // Get constant
 
         int result = ax.getValue() + cte; // Doing op
 
