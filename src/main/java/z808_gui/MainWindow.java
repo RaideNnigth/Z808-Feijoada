@@ -120,14 +120,14 @@ public class MainWindow extends JFrame implements Observer {
         tabs.addTab("Memória", null, new JLabel("Aba de memória..."), "Memória do programa montado");
 
         // ------------------------------ Populando região central ------------------------------
-        centralPanelLayout.setHorizontalGroup(centralPanelLayout.createSequentialGroup().addComponent(tabs, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE).addComponent(separador, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(leftRegistersPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE));
+        //centralPanelLayout.setHorizontalGroup(centralPanelLayout.createSequentialGroup().addComponent(tabs, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE).addComponent(separador, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(leftRegistersPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE));
 
-        centralPanelLayout.setVerticalGroup(centralPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(tabs).addComponent(separador).addComponent(leftRegistersPanel));
+        //centralPanelLayout.setVerticalGroup(centralPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(tabs).addComponent(separador).addComponent(leftRegistersPanel));
 
         // Adicionando os painéis
         this.add(upperTitle, BorderLayout.NORTH);
         this.add(lowerCommands, BorderLayout.SOUTH);
-        this.add(centralPannel, BorderLayout.CENTER);
+        //this.add(centralPannel, BorderLayout.CENTER);
 
         // Appear
         this.setVisible(true);
@@ -147,7 +147,7 @@ public class MainWindow extends JFrame implements Observer {
                 try {
                     vm.loadProgram(PROGRAM_PATH);
                     vm.executeProgram();
-                    updateWorkRegsLabels();
+                    //updateWorkRegsLabels();
                 }
                 catch (IOException ioException) {
                     JOptionPane.showMessageDialog(null, "O arquivo \"" + PROGRAM_PATH + "\" não existe!", "Erro", JOptionPane.ERROR_MESSAGE, null);
@@ -204,7 +204,7 @@ public class MainWindow extends JFrame implements Observer {
             }
         });
     }
-
+    /*
     // Update registers labels
     private void updateWorkRegsLabels() {
         Registers[] regsKeys = Registers.values();
@@ -217,4 +217,6 @@ public class MainWindow extends JFrame implements Observer {
         // Upadte flags register
         // to do ...
     }
+
+     */
 }

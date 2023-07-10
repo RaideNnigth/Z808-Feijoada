@@ -7,7 +7,7 @@ public class Main {
         VirtualMachine vm = new VirtualMachine();
 
         try {
-            vm.loadProgram(args[1]);
+            vm.loadProgram(args[0]);
         } catch (IOException e) {
             System.err.println(e.getMessage());
             System.exit(-1);

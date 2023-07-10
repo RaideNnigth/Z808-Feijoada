@@ -7,15 +7,20 @@ import virtual_machine.registers.RegWork;
 import virtual_machine.registers.Registers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class VirtualMachine {
     private final Loader vmLoader = new Loader();
     private final Interpreter vmInterpreter = new Interpreter();
     private final HashMap<Registers, RegWork> workRegistersHashMap = new HashMap<>();
+    private RegistersObserver ipObserver;
 
     public VirtualMachine() {
-
+        ipObserver = new RegistersObserver("IP", vmInterpreter.getRegisters().getIp());
+        vmInterpreter.getRegisters().getIp().register(ipObserver);
+        ipObserver.setObservable(vmInterpreter.getRegisters().getIp());
+        vmInterpreter.getRegisters().getIp().notifyObservers();
     }
 
     public void loadProgram(String path) throws IOException {
@@ -26,6 +31,7 @@ public class VirtualMachine {
 
     public void executeProgram() {
         vmInterpreter.executeProgram();
+        vmInterpreter.getRegisters().getIp().notifyObservers();
     }
 
     public void executeNextInstruction() {

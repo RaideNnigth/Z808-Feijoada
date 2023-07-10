@@ -13,7 +13,6 @@ import java.util.HashMap;
 
 public class Interpreter {
     private final BankOfRegisters registers = new BankOfRegisters();
-
     private final MemoryController memoryController = new MemoryController();
     private final CommandExecutor commandExecutor = new CommandExecutor();
     private final HashMap<Short, Object> interruptionVector = new HashMap<>();

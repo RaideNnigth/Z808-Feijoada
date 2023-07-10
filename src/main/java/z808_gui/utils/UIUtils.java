@@ -43,7 +43,7 @@ public class UIUtils {
     public static final List<JLabel> workRegistersJLabels = new ArrayList<>();
     public static final String flagRegisterID = "SR: ";
     public static final JLabel flagRegisterJLabel = new JLabel();
-    public static final RegFlags flagRegister = VirtualMachine.getFlagsRegister();
+    //public static final RegFlags flagRegister = VirtualMachine.getFlagsRegister();
     
     public static Image resizeImage(String imgPath, int width, int height, int algorithm) {
         File img = new File(imgPath);
@@ -63,8 +63,9 @@ public class UIUtils {
         File programBin = new File(programPath);
 
         if (programPath.isEmpty()) {
-
             return false;
         }
+
+        return true;
     }
 }

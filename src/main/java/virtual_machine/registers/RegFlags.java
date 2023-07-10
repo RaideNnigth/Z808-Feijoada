@@ -1,12 +1,18 @@
 package virtual_machine.registers;
 
-public class RegFlags implements StatusRegister {
+import virtual_machine.Observable;
+import virtual_machine.Observer;
+
+import java.util.ArrayList;
+
+public class RegFlags implements StatusRegister, Observable {
     Boolean of;
     Boolean sf;
     Boolean zf;
     Boolean ifFlag;
     Boolean pf;
     Boolean cf;
+    private ArrayList<Observer> observers;
 
     public RegFlags() {
         this.of = false;
@@ -15,6 +21,7 @@ public class RegFlags implements StatusRegister {
         this.ifFlag = false;
         this.pf = false;
         this.cf = false;
+        observers = new ArrayList<>();
     }
 
     /**
@@ -65,6 +72,7 @@ public class RegFlags implements StatusRegister {
      */
     public void setOf(Boolean of) {
         this.of = of;
+        notifyObservers();
     }
 
     /**
@@ -73,6 +81,7 @@ public class RegFlags implements StatusRegister {
      */
     public void setSf(Boolean sf) {
         this.sf = sf;
+        notifyObservers();
     }
 
     /**
@@ -81,6 +90,7 @@ public class RegFlags implements StatusRegister {
      */
     public void setZf(Boolean zf) {
         this.zf = zf;
+        notifyObservers();
     }
 
     /**
@@ -89,6 +99,7 @@ public class RegFlags implements StatusRegister {
      */
     public void setIfFlag(Boolean ifFlag) {
         this.ifFlag = ifFlag;
+        notifyObservers();
     }
 
     /**
@@ -97,6 +108,7 @@ public class RegFlags implements StatusRegister {
      */
     public void setPf(Boolean pf) {
         this.pf = pf;
+        notifyObservers();
     }
 
     /**
@@ -105,14 +117,36 @@ public class RegFlags implements StatusRegister {
      */
     public void setCf(Boolean cf) {
         this.cf = cf;
+        notifyObservers();
     }
 
+    // Overhead
     public void reset() {
-        this.of = false;
-        this.sf = false;
-        this.zf = false;
-        this.ifFlag = false;
-        this.pf = false;
-        this.cf = false;
+        setOf(false);
+        setSf(false);
+        setZf(false);
+        setIfFlag(false);
+        setPf(false);
+        setCf(false);
+    }
+
+    public void register(Observer observer) {
+        if (!observers.contains(observer))
+            observers.add(observer);
+    }
+
+    public void unregister(Observer observer) {
+        if (observers.contains(observer))
+            observers.remove(observer);
+    }
+
+    public void notifyObservers() {
+        for (Observer observer : this.observers) {
+            observer.update();
+        }
+    }
+
+    public Object getUpdate(Observer observer) {
+        return null;
     }
 }

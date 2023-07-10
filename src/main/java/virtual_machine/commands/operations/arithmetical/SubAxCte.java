@@ -25,7 +25,7 @@ public class SubAxCte implements Command {
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
         // We must get from the memory the 16 bit constant
-        short cte = mc.getInstructionBE(ip.getValue());
+        short cte = mc.getWordBE(ip.getValue());
 
         ip.setValue((short) (ip.getValue() + 1)); // Increment IP
 
