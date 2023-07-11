@@ -70,4 +70,16 @@ public class BankOfRegisters {
     public RegWork getSs() {
         return ss;
     }
+
+    public void resetAllRegisters() {
+        ax.reset();
+        dx.reset();
+        sp.reset();
+        si.reset();
+        ip.reset();
+        sr.reset();
+        cs.reset();
+        ds.reset();
+        ss.reset();
+    }
 }
