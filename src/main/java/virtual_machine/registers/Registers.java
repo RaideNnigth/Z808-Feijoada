@@ -1,5 +1,17 @@
 package virtual_machine.registers;
 
 public enum Registers {
-    AX, DX, IP, SI, SP, SR, CS, DS, SS
+    AX("AX: "), DX("DX: "), IP("IP: "), SI("SI: "),
+    SP("SP: "), SR("SR: "), CS("CS: "), DS("DS: "),
+    SS("SS: ");
+
+    private String label;
+
+    Registers(String id) {
+        label = id;
+    }
+
+    public String getlabel() {
+        return this.label;
+    }
 }
