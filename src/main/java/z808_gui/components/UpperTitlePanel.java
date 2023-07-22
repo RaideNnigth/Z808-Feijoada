@@ -12,7 +12,7 @@ public class UpperTitlePanel extends JPanel {
         this.setPreferredSize(new Dimension(0, 100));
         this.setBackground(BROWN_COLOR);
         this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
-        //this.add(Box.createRigidArea(H_SPACER));
+        this.add(Box.createRigidArea(H_SPACER));
 
         // Criando o logo
         Image feijoadaLogoIMG = UIUtils.resizeImage(Z808_FEIJOADA_LOGO_IMG_PATH, FEIJOADA_LOGO_SIZE_X, FEIJOADA_LOGO_SIZE_Y, Image.SCALE_SMOOTH);

@@ -1,32 +1,28 @@
 package z808_gui;
 
 import virtual_machine.VirtualMachine;
-import virtual_machine.registers.RegWork;
-import virtual_machine.registers.Registers;
-import z808_gui.components.LowerCommands;
-import z808_gui.components.Menu;
+import z808_gui.components.LowerCommandsPanel;
+import z808_gui.components.MenuBar;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedList;
 
 import z808_gui.components.*;
+import z808_gui.observerpattern.Listener;
+import z808_gui.observerpattern.Observer;
+
 import static z808_gui.utils.UIUtils.*;
 
 public class MainWindow extends JFrame implements Observer {
     private VirtualMachine vm;
     private JPanel upperPanel;
     private JPanel lowerPanel;
-    private JPanel centralPanel;
-    private JPanel registersPanel;
-    private JTabbedPane tabs;
-    private JTextArea assemblyTextEditor;
     private JLabel playButton;
     private JLabel stepButton;
-    private final JSeparator verticalSep = new JSeparator(SwingConstants.VERTICAL);
 
     public MainWindow(VirtualMachine vm) {
         this.vm = vm;
@@ -37,28 +33,25 @@ public class MainWindow extends JFrame implements Observer {
         setSize(startDimension);
         setLayout(new BorderLayout());
         setBackground(Color.white);
+
         // Appear in center
         setLocationRelativeTo(null);
 
         upperPanel = new UpperTitlePanel();
-        centralPanel = new CentralPanel();
-        lowerPanel = new LowerCommands();
+        lowerPanel = new LowerCommandsPanel();
 
-        JMenuBar menuBar = new Menu();
+        JMenuBar menuBar = new MenuBar();
 
         this.setJMenuBar(menuBar);
-
-        // Spacers
-        final Dimension H_SPACER = new Dimension(10, 0);
 
         // Painel superior com o título
         UpperTitlePanel upperTitle = new UpperTitlePanel();
 
         // Painel inferior com os botões
-        LowerCommands lowerCommands = new LowerCommands();
+        LowerCommandsPanel lowerCommands = new LowerCommandsPanel();
 
-        PlayButton playButton = new PlayButton();
-        StepButton stepButton = new StepButton();
+        PlayButton playButton = new PlayButton(PLAY_DEFAULT_IMG, vm);
+        StepButton stepButton = new StepButton(STEP_DEFAULT_IMG, vm);
 
         // Populando lowerCommands
         lowerCommands.add(Box.createRigidArea(H_SPACER));
@@ -67,7 +60,13 @@ public class MainWindow extends JFrame implements Observer {
         lowerCommands.add(stepButton);
 
         // ------------------------------ Criando painel central ------------------------------
+        JPanel centralPanel = new JPanel();
+        GroupLayout centralPanelLayout = new GroupLayout(centralPanel);
+        centralPanel.setLayout(centralPanelLayout);
+        centralPanel.setBackground(Color.white);
 
+        centralPanelLayout.setAutoCreateGaps(true);
+        centralPanelLayout.setAutoCreateContainerGaps(true);
 
         // ------------------------------ Criando a area de texto para o Assembly ------------------------------
         JTextArea assemblyTextEditor = new JTextArea();
@@ -120,90 +119,28 @@ public class MainWindow extends JFrame implements Observer {
         tabs.addTab("Memória", null, new JLabel("Aba de memória..."), "Memória do programa montado");
 
         // ------------------------------ Populando região central ------------------------------
-        //centralPanelLayout.setHorizontalGroup(centralPanelLayout.createSequentialGroup().addComponent(tabs, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE).addComponent(separador, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(leftRegistersPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE));
-
-        //centralPanelLayout.setVerticalGroup(centralPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(tabs).addComponent(separador).addComponent(leftRegistersPanel));
+        centralPanelLayout.setHorizontalGroup(
+                centralPanelLayout.createSequentialGroup()
+                        .addComponent(tabs, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                        .addComponent(verticalSep, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(leftRegistersPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        );
+        centralPanelLayout.setVerticalGroup(
+                centralPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(tabs)
+                        .addComponent(verticalSep)
+                        .addComponent(leftRegistersPanel)
+        );
 
         // Adicionando os painéis
         this.add(upperTitle, BorderLayout.NORTH);
         this.add(lowerCommands, BorderLayout.SOUTH);
-        //this.add(centralPannel, BorderLayout.CENTER);
+        this.add(centralPanel, BorderLayout.CENTER);
 
         // Appear
         this.setVisible(true);
     }
 
-    private void setAdapters() {
-        playButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                mouseExited(e);
-
-                if (PROGRAM_PATH.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Abra um arquivo primeiro!", "Erro", JOptionPane.ERROR_MESSAGE, null);
-                    return;
-                }
-
-                try {
-                    vm.loadProgram(PROGRAM_PATH);
-                    vm.executeProgram();
-                    //updateWorkRegsLabels();
-                }
-                catch (IOException ioException) {
-                    JOptionPane.showMessageDialog(null, "O arquivo \"" + PROGRAM_PATH + "\" não existe!", "Erro", JOptionPane.ERROR_MESSAGE, null);
-                }
-                finally {
-                    PROGRAM_PATH = "";
-                }
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (playButton.getVisibleRect().contains(e.getPoint()))
-                    mouseEntered(e);
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                playButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                playButton.setIcon(PLAY_HOVER_IMG);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                playButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                playButton.setIcon(PLAY_DEFAULT_IMG);
-            }
-        });
-    }
-
-    private void setStepButtonAdapters() {
-        stepButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                mouseExited(e);
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (stepButton.getVisibleRect().contains(e.getPoint())) mouseEntered(e);
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-//                System.out.println(e.getX() + " " + e.getX());
-//                System.out.println(this.getVisibleRect());
-                stepButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                stepButton.setIcon(STEP_ACTIVE_IMG);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                stepButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                stepButton.setIcon(STEP_DEFAULT_IMG);
-            }
-        });
-    }
     /*
     // Update registers labels
     private void updateWorkRegsLabels() {

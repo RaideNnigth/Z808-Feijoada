@@ -28,19 +28,5 @@ Csrc/main/java/virtual_machine/commands/operations/move/MovDxAx.java,b\3\b31962
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
 <
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
-Y
-)src/main/java/z808_gui/utils/UIUtils.java,a\9\a9441b8359b6e1238d1abc552124f404009bdc38
-e
-5src/main/java/virtual_machine/registers/RegFlags.java,c\d\cd55ab351034bdc73630c6d4b0ca7803edf2fd22
-`
-0src/main/java/virtual_machine/loader/Loader.java,6\4\64e0f6f7b25f1ace6905d71781ef62b36d430104
-j
-:src/main/java/virtual_machine/interpreter/Interpreter.java,0\b\0b98f8107923188fbedaf00b6cdb5848a7869141
-k
-;src/main/java/virtual_machine/commands/CommandExecutor.java,3\6\36f21b88ecdf73376196b45693a1565be1b5fca8
 k
 ;src/main/java/virtual_machine/interpreter/OpParameters.java,2\1\21c955ccafef542e3c95a427f666fd7991d23c46
-Y
-)src/main/java/virtual_machine/MainVM.java,2\a\2a69c16725d1efd65ed7e14373a9b951c213f5d0
-S
-#src/main/java/z808_gui/MainGUI.java,9\c\9c7d604eb447ac5fea31856d3d2b615e5b8a0437

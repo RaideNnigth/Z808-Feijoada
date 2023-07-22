@@ -1,12 +1,18 @@
 package z808_gui.components;
 
+import z808_gui.observerpattern.Listener;
+import z808_gui.observerpattern.MessageType;
+
 import javax.swing.*;
 import java.io.File;
+import java.util.LinkedList;
 
 import static z808_gui.utils.UIUtils.*;
 
-public class Menu extends JMenuBar {
-    public Menu() {
+public class MenuBar extends JMenuBar {
+    private static LinkedList<Listener> subscribers = new LinkedList<>();
+
+    public MenuBar() {
         // Itens da barra de menus
         JMenu arquivoMenu = new JMenu("Arquivo");
         JMenu executarMenu = new JMenu("Executar");
@@ -24,6 +30,7 @@ public class Menu extends JMenuBar {
                 File selectedFile = fileChooser.getSelectedFile();
                 PROGRAM_PATH = selectedFile.getAbsolutePath();
                 System.out.println("Selected file: " + PROGRAM_PATH);
+                notifySubscribers(MessageType.PATH_IS_SET);
             }
         });
 
@@ -56,4 +63,16 @@ public class Menu extends JMenuBar {
         this.add(executarMenu);
         this.add(ajudaMenu);
     }
+
+    public static void subscribe(Listener l) {
+        subscribers.add(l);
+    }
+
+    private static void notifySubscribers(MessageType t) {
+        for(Listener l : subscribers) {
+            l.update(t);
+        }
+    }
+
+
 }

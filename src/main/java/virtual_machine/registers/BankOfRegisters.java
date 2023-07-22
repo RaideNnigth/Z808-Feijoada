@@ -1,5 +1,7 @@
 package virtual_machine.registers;
 
+import virtual_machine.observerpattern.RegObsListener;
+
 import java.util.HashMap;
 
 public class BankOfRegisters {
@@ -14,25 +16,8 @@ public class BankOfRegisters {
     private final RegWork ds = new RegWork(); // Data segment register
     private final RegWork ss = new RegWork(); // Stack segment register
 
-    private final HashMap<Registers, RegWork> workRegisters = new HashMap<>();
-
-    public BankOfRegisters() {
-        workRegisters.put(Registers.AX, ax);
-        workRegisters.put(Registers.DX, dx);
-        workRegisters.put(Registers.IP, ip);
-        workRegisters.put(Registers.SP, sp);
-        workRegisters.put(Registers.SI, si);
-        workRegisters.put(Registers.CS, cs);
-        workRegisters.put(Registers.DS, ds);
-        workRegisters.put(Registers.SS, ss);
-    }
-
     public void incrementIp() {
         ip.setValue((short) (ip.getValue() + 1));
-    }
-
-    public HashMap<Registers, RegWork> getWorkRegisters() {
-        return workRegisters;
     }
 
     public RegWork getAx() {
@@ -81,5 +66,24 @@ public class BankOfRegisters {
         cs.reset();
         ds.reset();
         ss.reset();
+    }
+
+    public HashMap<Registers, Short> getWorkRegValues() {
+        HashMap<Registers, Short> regValues = new HashMap<>();
+
+        regValues.put(Registers.AX, ax.getValue());
+        regValues.put(Registers.DX, dx.getValue());
+        regValues.put(Registers.IP, ip.getValue());
+        regValues.put(Registers.SP, sp.getValue());
+        regValues.put(Registers.SI, si.getValue());
+        regValues.put(Registers.CS, cs.getValue());
+        regValues.put(Registers.DS, ds.getValue());
+        regValues.put(Registers.SS, ss.getValue());
+
+        return regValues;
+    }
+
+    public String getRegFlags() {
+        return sr.toString();
     }
 }

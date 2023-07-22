@@ -1,7 +1,5 @@
 package virtual_machine.memory;
 
-import virtual_machine.Observable;
-import virtual_machine.Observer;
 import virtual_machine.utils.BinaryUtils;
 
 import java.util.ArrayList;

@@ -44,7 +44,12 @@ public class UIUtils {
     public static final String flagRegisterID = "SR: ";
     public static final JLabel flagRegisterJLabel = new JLabel();
     //public static final RegFlags flagRegister = VirtualMachine.getFlagsRegister();
-    
+
+    // Spacers
+    public static final Dimension H_SPACER = new Dimension(10, 0);
+    public static final JSeparator verticalSep = new JSeparator(SwingConstants.VERTICAL);
+
+
     public static Image resizeImage(String imgPath, int width, int height, int algorithm) {
         File img = new File(imgPath);
         BufferedImage bufferedImage = null;

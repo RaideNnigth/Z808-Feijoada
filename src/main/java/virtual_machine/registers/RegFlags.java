@@ -1,18 +1,14 @@
 package virtual_machine.registers;
 
-import virtual_machine.Observable;
-import virtual_machine.Observer;
-
 import java.util.ArrayList;
 
-public class RegFlags implements StatusRegister, Observable {
+public class RegFlags implements StatusRegister {
     Boolean of;
     Boolean sf;
     Boolean zf;
     Boolean ifFlag;
     Boolean pf;
     Boolean cf;
-    private ArrayList<Observer> observers;
 
     public RegFlags() {
         this.of = false;
@@ -21,7 +17,6 @@ public class RegFlags implements StatusRegister, Observable {
         this.ifFlag = false;
         this.pf = false;
         this.cf = false;
-        observers = new ArrayList<>();
     }
 
     /**
@@ -72,7 +67,6 @@ public class RegFlags implements StatusRegister, Observable {
      */
     public void setOf(Boolean of) {
         this.of = of;
-        notifyObservers();
     }
 
     /**
@@ -81,7 +75,6 @@ public class RegFlags implements StatusRegister, Observable {
      */
     public void setSf(Boolean sf) {
         this.sf = sf;
-        notifyObservers();
     }
 
     /**
@@ -90,7 +83,6 @@ public class RegFlags implements StatusRegister, Observable {
      */
     public void setZf(Boolean zf) {
         this.zf = zf;
-        notifyObservers();
     }
 
     /**
@@ -99,7 +91,6 @@ public class RegFlags implements StatusRegister, Observable {
      */
     public void setIfFlag(Boolean ifFlag) {
         this.ifFlag = ifFlag;
-        notifyObservers();
     }
 
     /**
@@ -108,7 +99,6 @@ public class RegFlags implements StatusRegister, Observable {
      */
     public void setPf(Boolean pf) {
         this.pf = pf;
-        notifyObservers();
     }
 
     /**
@@ -117,7 +107,6 @@ public class RegFlags implements StatusRegister, Observable {
      */
     public void setCf(Boolean cf) {
         this.cf = cf;
-        notifyObservers();
     }
 
     // Overhead
@@ -130,23 +119,8 @@ public class RegFlags implements StatusRegister, Observable {
         setCf(false);
     }
 
-    public void register(Observer observer) {
-        if (!observers.contains(observer))
-            observers.add(observer);
-    }
-
-    public void unregister(Observer observer) {
-        if (observers.contains(observer))
-            observers.remove(observer);
-    }
-
-    public void notifyObservers() {
-        for (Observer observer : this.observers) {
-            observer.update();
-        }
-    }
-
-    public Object getUpdate(Observer observer) {
-        return null;
+    @Override
+    public String toString() {
+        return String.format("of : %s%nsf: %s%nzf: %s%nif: %s%npf: %s%ncf: %s", of, sf, zf, ifFlag, pf, cf);
     }
 }
