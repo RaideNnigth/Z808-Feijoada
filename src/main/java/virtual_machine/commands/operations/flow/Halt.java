@@ -13,7 +13,7 @@ public class Halt implements Command {
     @Override
     public void doOperation(HashMap<OpParameters, Object> args) {
         RegWork ip = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getIp();
-        RegWork ss = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getSs();
-        ip.setValue(ss.getValue());
+        RegWork ds = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getDs();
+        ip.setValue(ds.getValue());
     }
 }

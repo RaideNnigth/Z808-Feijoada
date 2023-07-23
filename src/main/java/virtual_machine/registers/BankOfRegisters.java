@@ -1,6 +1,6 @@
 package virtual_machine.registers;
 
-import virtual_machine.observerpattern.RegObsListener;
+import virtual_machine.memory.Memory;
 
 import java.util.HashMap;
 
@@ -15,6 +15,14 @@ public class BankOfRegisters {
     private final RegWork cs = new RegWork(); // Code segment register
     private final RegWork ds = new RegWork(); // Data segment register
     private final RegWork ss = new RegWork(); // Stack segment register
+
+    public static final short CODE_SEGMENT_DEFAULT_START = (short) 0;
+    public static final short DATA_SEGMENT_DEFAULT_START = (short) 32_767;
+    public static final short STACK_DEFAULT_START = (short) (Memory.MEM_SIZE - 1);
+
+    public BankOfRegisters() {
+        resetAllRegisters();
+    }
 
     public void incrementIp() {
         ip.setValue((short) (ip.getValue() + 1));
@@ -56,18 +64,6 @@ public class BankOfRegisters {
         return ss;
     }
 
-    public void resetAllRegisters() {
-        ax.reset();
-        dx.reset();
-        sp.reset();
-        si.reset();
-        ip.reset();
-        sr.reset();
-        cs.reset();
-        ds.reset();
-        ss.reset();
-    }
-
     public HashMap<Registers, Short> getWorkRegValues() {
         HashMap<Registers, Short> regValues = new HashMap<>();
 
@@ -83,7 +79,18 @@ public class BankOfRegisters {
         return regValues;
     }
 
-    public String getRegFlags() {
-        return sr.toString();
+    public void resetAllRegisters() {
+        ax.reset();
+        dx.reset();
+        sp.reset();
+        si.reset();
+        ip.reset();
+        sr.reset();
+
+        cs.setValue(CODE_SEGMENT_DEFAULT_START);
+        ds.setValue(DATA_SEGMENT_DEFAULT_START);
+        ss.setValue(STACK_DEFAULT_START);
     }
+
+
 }

@@ -42,7 +42,5 @@ a
 1src/main/java/z808_gui/components/StepButton.java,f\c\fc2efe1084e15a1b2ce1fac7bfa63879f6437e17
 q
 Asrc/main/java/virtual_machine/observerpattern/RegObsListener.java,8\7\87c7cc411d4897b27fc6cdafaa21419ed0a8f449
-d
-4src/main/java/virtual_machine/registers/RegWork.java,f\7\f778101edd2ddae14521228fa64265734204a6dc
 k
 ;src/main/java/virtual_machine/registers/StatusRegister.java,6\f\6fd4a0e9a5686d5c34aa6b45b3c6943dfeaf1ce1
