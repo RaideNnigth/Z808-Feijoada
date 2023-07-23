@@ -12,7 +12,7 @@ public class Loader {
     private String pathToProgram;
     private long programSize;
     private byte[] programBinary;
-    private int PC = 0;
+    private int PC;
 
     public Loader() {
 
@@ -63,6 +63,8 @@ public class Loader {
     }
 
     public void loadToMemory(MemoryController memoryController, int codeSegment, int dataSegment, int stackSegment) {
+        PC = 0;
+
         int csStart = 0;
         int csEnd = 0;
         int dsStart = 0;
