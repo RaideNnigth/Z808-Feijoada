@@ -6,26 +6,16 @@ import z808_gui.components.MenuBar;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.util.LinkedList;
 
 import z808_gui.components.*;
-import z808_gui.observerpattern.Listener;
-import z808_gui.observerpattern.Observer;
 
 import static z808_gui.utils.UIUtils.*;
 
-public class MainWindow extends JFrame implements Observer {
+public class MainWindow extends JFrame {
     private VirtualMachine vm;
-    private JPanel upperPanel;
-    private JPanel lowerPanel;
-    private JLabel playButton;
-    private JLabel stepButton;
 
-    public MainWindow(VirtualMachine vm) {
-        this.vm = vm;
+    public MainWindow(VirtualMachine virtualMachine) {
+        this.vm = virtualMachine;
 
         setTitle("Z808 - Feijoada Edition");
         setIconImage((new ImageIcon(PLAY_DEFAULT_IMG_PATH)).getImage());
@@ -37,12 +27,9 @@ public class MainWindow extends JFrame implements Observer {
         // Appear in center
         setLocationRelativeTo(null);
 
-        upperPanel = new UpperTitlePanel();
-        lowerPanel = new LowerCommandsPanel();
-
+        // Creates menu
         JMenuBar menuBar = new MenuBar();
-
-        this.setJMenuBar(menuBar);
+        setJMenuBar(menuBar);
 
         // Painel superior com o título
         UpperTitlePanel upperTitle = new UpperTitlePanel();
@@ -69,14 +56,10 @@ public class MainWindow extends JFrame implements Observer {
         centralPanelLayout.setAutoCreateContainerGaps(true);
 
         // ------------------------------ Criando a area de texto para o Assembly ------------------------------
-        JTextArea assemblyTextEditor = new JTextArea();
-        assemblyTextEditor.setFont(new Font("Consolas", Font.PLAIN, 22));
-        JScrollPane assemblyArea = new JScrollPane(assemblyTextEditor); // Permite ter scroll no TextArea
+        AssemblyTextArea assemblyArea = new AssemblyTextArea();
 
         // ------------------------------ Red Panel (registradores) ------------------------------
         RegistersPanel rightRegistersPanel = new RegistersPanel();
-
-
 
         // ------------------------------ Criando Abas ------------------------------
         Tabs tabs = new Tabs();

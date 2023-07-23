@@ -4,13 +4,11 @@ import virtual_machine.utils.BinaryUtils;
 
 import java.util.ArrayList;
 
-public class MemoryController implements Observable {
+public class MemoryController {
     private final Memory mainMemory;
-    private ArrayList<Observer> observers;
 
     public MemoryController() {
         mainMemory = Memory.getInstance();
-        observers = new ArrayList<>();
     }
 
     /**
@@ -51,24 +49,5 @@ public class MemoryController implements Observable {
      */
     public void writeWord(short word, short address) {
         mainMemory.write(BinaryUtils.swapHighAndLowOrder(word), Short.toUnsignedInt(address));
-    }
-
-    public void register(Observer observer) {
-        if (!observers.contains(observer))
-            observers.add(observer);
-    }
-
-    public void unregister(Observer observer) {
-        if (observers.contains(observer))
-            observers.remove(observer);
-    }
-
-    public void notifyObservers() {
-        for (Observer observer : observers)
-            observer.update();
-    }
-
-    public Object getUpdate(Observer observer) {
-        return null;
     }
 }

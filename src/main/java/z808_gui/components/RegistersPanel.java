@@ -1,10 +1,11 @@
 package z808_gui.components;
 
+import virtual_machine.registers.Registers;
+
 import javax.swing.*;
 import java.awt.*;
 
 import static z808_gui.utils.UIUtils.*;
-import static z808_gui.utils.UIUtils.flagRegisterJLabel;
 
 public class RegistersPanel extends JPanel {
     public RegistersPanel() {
@@ -19,28 +20,22 @@ public class RegistersPanel extends JPanel {
         // Inicializando labels
         Font fonteLabels = new Font("Arial", Font.PLAIN, 18);
 
-        for (int i = 0; i < noWorkRegs; ++i) {
+        for (Registers r : Registers.values()) {
             var newLabel = new JLabel();
             newLabel.setFont(fonteLabels);
-            workRegistersJLabels.add(newLabel);
+            newLabel.setText(r.getlabel());
+            registersJLabels.add(newLabel);
         }
-        flagRegisterJLabel.setFont(fonteLabels);
 
-        for (int i = 0; i < noWorkRegs; ++i) {
-            workRegistersJLabels.get(i).setText(workRegistersID.get(i));
-        }
-        flagRegisterJLabel.setText(flagRegisterID);
-
-        // Populando com os labels de registradores
+        // Criando os grupos
         var hGroup = rightPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING);
         var vGroup = rightPanelLayout.createSequentialGroup();
 
-        for (JLabel wReg : workRegistersJLabels) {
-            hGroup.addComponent(wReg);
-            vGroup.addComponent(wReg);
+        // Populando com os labels de registradores
+        for (JLabel reg : registersJLabels) {
+            hGroup.addComponent(reg);
+            vGroup.addComponent(reg);
         }
-        hGroup.addComponent(flagRegisterJLabel);
-        vGroup.addComponent(flagRegisterJLabel);
 
         rightPanelLayout.setHorizontalGroup(hGroup);
         rightPanelLayout.setVerticalGroup(vGroup);

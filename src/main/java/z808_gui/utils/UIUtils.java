@@ -1,16 +1,12 @@
 package z808_gui.utils;
 
-import virtual_machine.VirtualMachine;
-import virtual_machine.registers.RegFlags;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class UIUtils {
@@ -38,11 +34,7 @@ public class UIUtils {
     public static String PROGRAM_PATH = "";
 
     // Registers labels and stuff
-    public static final int noWorkRegs = 5;
-    public static final java.util.List<String> workRegistersID = Arrays.asList("AX: ", "DX: ", "IP: ", "SP: ", "SI: ");
-    public static final List<JLabel> workRegistersJLabels = new ArrayList<>();
-    public static final String flagRegisterID = "SR: ";
-    public static final JLabel flagRegisterJLabel = new JLabel();
+    public static final List<JLabel> registersJLabels = new LinkedList<>();
     //public static final RegFlags flagRegister = VirtualMachine.getFlagsRegister();
 
     // Spacers
