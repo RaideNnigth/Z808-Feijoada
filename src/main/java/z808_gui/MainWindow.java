@@ -64,7 +64,8 @@ public class MainWindow extends JFrame {
         // ------------------------------ Criando Abas ------------------------------
         Tabs tabs = new Tabs();
         tabs.addTab("Programa", null, assemblyArea, "Escreva seu programa em FeijoadaZ808 Assembly");
-        tabs.addTab("Memória", null, new JLabel("Aba de memória..."), "Memória do programa montado");
+        //tabs.addTab("Memória", null, new JLabel("Aba de memória..."), "Memória do programa montado");
+        tabs.addTab("Memória", null, new MemoryPane(), "Memória do programa montado");
 
         // ------------------------------ Populando região central ------------------------------
         centralPanelLayout.setHorizontalGroup(
