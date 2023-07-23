@@ -62,7 +62,7 @@ public class Loader {
         return ret;
     }
 
-    public void loadToMemory(MemoryController memoryController, int codeSegment, int dataSegment) {
+    public void loadToMemory(MemoryController memoryController, int codeSegment, int dataSegment, int stackSegment) {
         int csStart = 0;
         int csEnd = 0;
         int dsStart = 0;
@@ -83,10 +83,10 @@ public class Loader {
         int memCounter = 0;
         while (PC <= csEnd) {
             short temp = read16bitBE();
-            memoryController.writeWord((short) ((memCounter++) + dataSegment), temp);
+            memoryController.writeWord((short) ((memCounter++) + codeSegment), temp);
         }
 
-        System.out.println("Data loaded to memory: ");
+        //System.out.println("Data loaded to memory: ");
 
         // Start writing data in Data Segment
         PC = dsStart;
@@ -95,5 +95,13 @@ public class Loader {
             short temp = read16bitBE();
             memoryController.writeWord((short) ((memCounter++) + dataSegment), temp);
         }
+
+        PC = ssStart;
+        memCounter = 0;
+        while (PC <= ssEnd) {
+            short temp = read16bitBE();
+            memoryController.writeWord((short) ((memCounter++) + stackSegment), temp);
+        }
+
     }
 }

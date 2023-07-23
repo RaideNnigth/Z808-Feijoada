@@ -17,10 +17,11 @@ public class VirtualMachine {
     public void loadProgram(String path) throws IOException {
         vmLoader.setProgramToLoad(path);
         // Loads program to main memory
-        vmLoader.loadToMemory(vmInterpreter.getMemoryController(), vmInterpreter.getRegisters().getCs().getValue(), vmInterpreter.getRegisters().getDs().getValue());
+        vmLoader.loadToMemory(vmInterpreter.getMemoryController(), vmInterpreter.getRegisters().getCs().getValue(), vmInterpreter.getRegisters().getDs().getValue(), vmInterpreter.getRegisters().getSs().getValue());
     }
 
     public void executeProgram() {
+        vmInterpreter.getRegisters().resetAllRegisters();
         vmInterpreter.executeProgram();
         notifySubscribers();
     }
@@ -30,7 +31,7 @@ public class VirtualMachine {
         notifySubscribers();
     }
 
-    public static void subscribe(RegObsListener rl) {
+    public void subscribe(RegObsListener rl) {
         subscribers.add(rl);
     }
 
