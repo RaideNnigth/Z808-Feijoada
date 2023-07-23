@@ -20,7 +20,7 @@ public class RegistersPanel extends JPanel implements RegObsListener {
         setBackground(Color.white);
 
         // Inicializando labels
-        Font fonteLabels = new Font("Arial", Font.PLAIN, 18);
+        Font fonteLabels = new Font("Consolas", Font.PLAIN, 22);
 
         for (Registers r : Registers.values()) {
             var newLabel = new JLabel();
@@ -49,7 +49,7 @@ public class RegistersPanel extends JPanel implements RegObsListener {
             if (r != Registers.SR)
                 registersJLabelsMap.get(r).setText(r.getlabel() + " " + workRegs.get(r));
             else
-                registersJLabelsMap.get(r).setText(r.getlabel() + " " + flagReg);
+                registersJLabelsMap.get(r).setText("<html>" + r.getlabel() + "<br>" + flagReg);
         }
     }
 }

@@ -63,6 +63,7 @@ public class RegFlags implements StatusRegister {
 
     /**
      * Used to set the overflow flag
+     *
      * @param of
      */
     public void setOf(Boolean of) {
@@ -71,6 +72,7 @@ public class RegFlags implements StatusRegister {
 
     /**
      * Used to set the signal flag
+     *
      * @param sf
      */
     public void setSf(Boolean sf) {
@@ -79,6 +81,7 @@ public class RegFlags implements StatusRegister {
 
     /**
      * Used to set the zero flag
+     *
      * @param zf
      */
     public void setZf(Boolean zf) {
@@ -87,6 +90,7 @@ public class RegFlags implements StatusRegister {
 
     /**
      * Used to set the interruption flag
+     *
      * @param ifFlag
      */
     public void setIfFlag(Boolean ifFlag) {
@@ -95,6 +99,7 @@ public class RegFlags implements StatusRegister {
 
     /**
      * Used to set the parity bit flag
+     *
      * @param pf
      */
     public void setPf(Boolean pf) {
@@ -103,6 +108,7 @@ public class RegFlags implements StatusRegister {
 
     /**
      * Used to set the carry flag
+     *
      * @param cf
      */
     public void setCf(Boolean cf) {
@@ -121,6 +127,13 @@ public class RegFlags implements StatusRegister {
 
     @Override
     public String toString() {
-        return String.format("of : %s%nsf: %s%nzf: %s%nif: %s%npf: %s%ncf: %s", of, sf, zf, ifFlag, pf, cf);
+        return String.format(
+                "&emsp;of: %s<br>" +
+                "&emsp;sf: %s<br>" +
+                "&emsp;zf: %s<br>" +
+                "&emsp;if: %s<br>" +
+                "&emsp;pf: %s<br>" +
+                "&emsp;cf: %s"
+                , of ? "1" : "0", sf ? "1" : "0", zf ? "1" : "0", ifFlag ? "1" : "0", pf ? "1" : "0", cf ? "1" : "0");
     }
 }
