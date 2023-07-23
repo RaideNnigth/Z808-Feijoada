@@ -15,13 +15,14 @@ public class VirtualMachine {
     private static LinkedList<RegObsListener> subscribers = new LinkedList<>();
 
     public void loadProgram(String path) throws IOException {
+        vmInterpreter.getRegisters().resetAllRegisters();
         vmLoader.setProgramToLoad(path);
+
         // Loads program to main memory
         vmLoader.loadToMemory(vmInterpreter.getMemoryController(), vmInterpreter.getRegisters().getCs().getValue(), vmInterpreter.getRegisters().getDs().getValue(), vmInterpreter.getRegisters().getSs().getValue());
     }
 
     public void executeProgram() {
-        vmInterpreter.getRegisters().resetAllRegisters();
         vmInterpreter.executeProgram();
         notifySubscribers();
     }
@@ -37,7 +38,7 @@ public class VirtualMachine {
 
     private void notifySubscribers() {
         HashMap<Registers, Short> workRegValues = vmInterpreter.getRegisters().getWorkRegValues();
-        String regFlagValue = vmInterpreter.getRegisters().getRegFlags();
+        String regFlagValue = vmInterpreter.getRegisters().getSr().toString();
 
         for(RegObsListener rl : subscribers) {
             rl.updatedRegs(workRegValues, regFlagValue);

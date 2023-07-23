@@ -60,6 +60,7 @@ public class MainWindow extends JFrame {
 
         // ------------------------------ Red Panel (registradores) ------------------------------
         RegistersPanel rightRegistersPanel = new RegistersPanel();
+        vm.subscribe(rightRegistersPanel);
 
         // ------------------------------ Criando Abas ------------------------------
         Tabs tabs = new Tabs();
@@ -89,20 +90,4 @@ public class MainWindow extends JFrame {
         // Appear
         this.setVisible(true);
     }
-
-    /*
-    // Update registers labels
-    private void updateWorkRegsLabels() {
-        Registers[] regsKeys = Registers.values();
-        HashMap<Registers, RegWork> regMap = getWorkRegisters();
-
-        // Update work registers
-        for (int i = 0; i < noWorkRegs; i++) {
-            workRegistersJLabels.get(i).setText(workRegistersID.get(i) + regMap.get(regsKeys[i]).getValue());
-        }
-        // Upadte flags register
-        // to do ...
-    }
-
-     */
 }

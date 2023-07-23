@@ -30,10 +30,6 @@ Csrc/main/java/virtual_machine/commands/operations/move/MovDxAx.java,b\3\b31962
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 k
 ;src/main/java/virtual_machine/interpreter/OpParameters.java,2\1\21c955ccafef542e3c95a427f666fd7991d23c46
-k
-;src/main/java/virtual_machine/commands/CommandExecutor.java,3\6\36f21b88ecdf73376196b45693a1565be1b5fca8
-`
-0src/main/java/virtual_machine/loader/Loader.java,6\4\64e0f6f7b25f1ace6905d71781ef62b36d430104
 P
  src/main/java/z808_gui/Main.java,c\e\ce80d6f3fb1d96bbf7e807033f9ff676bc6edad6
 f
@@ -46,11 +42,5 @@ a
 1src/main/java/z808_gui/components/StepButton.java,f\c\fc2efe1084e15a1b2ce1fac7bfa63879f6437e17
 q
 Asrc/main/java/virtual_machine/observerpattern/RegObsListener.java,8\7\87c7cc411d4897b27fc6cdafaa21419ed0a8f449
-j
-:src/main/java/virtual_machine/interpreter/Interpreter.java,0\b\0b98f8107923188fbedaf00b6cdb5848a7869141
-d
-4src/main/java/virtual_machine/registers/RegWork.java,f\7\f778101edd2ddae14521228fa64265734204a6dc
-a
-1src/main/java/z808_gui/components/PlayButton.java,4\9\49843321d6301ee51b563103d1053d40292b465d
 k
 ;src/main/java/virtual_machine/registers/StatusRegister.java,6\f\6fd4a0e9a5686d5c34aa6b45b3c6943dfeaf1ce1

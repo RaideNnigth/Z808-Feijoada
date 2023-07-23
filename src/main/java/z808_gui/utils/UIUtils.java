@@ -1,13 +1,14 @@
 package z808_gui.utils;
 
+import virtual_machine.registers.Registers;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
 
 public class UIUtils {
     public static final Dimension startDimension = new Dimension(1200, 800);
@@ -34,7 +35,7 @@ public class UIUtils {
     public static String PROGRAM_PATH = "";
 
     // Registers labels and stuff
-    public static final List<JLabel> registersJLabels = new LinkedList<>();
+    public static final HashMap<Registers, JLabel> registersJLabelsMap = new HashMap<>();
     //public static final RegFlags flagRegister = VirtualMachine.getFlagsRegister();
 
     // Spacers

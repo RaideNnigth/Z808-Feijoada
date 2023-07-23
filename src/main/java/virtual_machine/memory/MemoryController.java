@@ -44,10 +44,10 @@ public class MemoryController {
     /**
      * Since our data is handled as big-endian internally we have to convert to little-endian to the memory in order
      * to stay correct.
-     * @param word
      * @param address
+     * @param word
      */
-    public void writeWord(short word, short address) {
+    public void writeWord(short address, short word) {
         mainMemory.write(BinaryUtils.swapHighAndLowOrder(word), Short.toUnsignedInt(address));
     }
 }

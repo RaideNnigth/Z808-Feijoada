@@ -19,19 +19,6 @@ public class Interpreter {
     private final HashMap<OpParameters, Object> operationParameters = new HashMap<>();
 
     public Interpreter() {
-        registers.getCs().setValue((short) 0);
-        registers.getDs().setValue((short) (30000 + 1));
-        registers.getSs().setValue((short) (Memory.MEM_SIZE - 1));
-
-        initializeInterruptionVector();
-        initializeOperationParameters();
-    }
-
-    public Interpreter(int codeSegLength) {
-        registers.getCs().setValue((short) 0);
-        registers.getDs().setValue((short) (codeSegLength + 1));
-        registers.getSs().setValue((short) (Memory.MEM_SIZE - 1));
-
         initializeInterruptionVector();
         initializeOperationParameters();
     }
@@ -47,7 +34,7 @@ public class Interpreter {
     }
 
     public void executeProgram() {
-        while (registers.getIp().getValue() < registers.getSs().getValue()) {
+        while (registers.getIp().getValue() < registers.getDs().getValue()) {
             executeNextInstruction();
         }
     }
@@ -55,8 +42,10 @@ public class Interpreter {
     public void executeNextInstruction() {
         // Get the instruction that is ponteinted by IP
         short instruction = memoryController.getWordBE(registers.getIp().getValue());
+
         // Update the register IP
         registers.incrementIp();
+
         // Execute the instruction
         commandExecutor.doOperation(instruction, operationParameters);
     }
