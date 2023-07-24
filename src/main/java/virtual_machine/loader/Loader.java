@@ -104,6 +104,5 @@ public class Loader {
             short temp = read16bitBE();
             memoryController.writeWord((short) ((memCounter++) + stackSegment), temp);
         }
-
     }
 }
