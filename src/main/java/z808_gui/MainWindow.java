@@ -63,6 +63,7 @@ public class MainWindow extends JFrame {
         Tabs tabs = new Tabs();
         tabs.addTab("Programa", null, assemblyArea, "Escreva seu programa em FeijoadaZ808 Assembly");
         tabs.addTab("Memória", null, new JLabel("Aba de memória..."), "Memória do programa montado");
+        //tabs.addTab("Memória", null, new MemoryPane(), "Memória do programa montado");
 
         // Its size will be at least 2/3 of the start dimension
         tabs.setPreferredSize(new Dimension((int) ((startDimension.getWidth() / 3) * 2), Short.MAX_VALUE));
