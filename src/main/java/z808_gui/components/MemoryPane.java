@@ -6,9 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 
 import static javax.swing.text.StyleConstants.setBackground;
-import static z808_gui.utils.UIUtils.registersJLabels;
+import static z808_gui.utils.UIUtils.registersJLabelsMap;
 import static z808_gui.utils.UIUtils.startDimension;
 
+/*
 public class MemoryPane extends JScrollPane {
     public MemoryPane() {
         setPreferredSize(new Dimension((int) startDimension.getWidth() / 3, Short.MAX_VALUE));
@@ -21,7 +22,7 @@ public class MemoryPane extends JScrollPane {
             var newLabel = new JLabel();
             newLabel.setFont(fonteLabels);
             newLabel.setText(r.getlabel());
-            registersJLabels.add(newLabel);
+            registersJLabelsMap.add(newLabel);
         }
 
         // Criando os grupos
@@ -38,3 +39,4 @@ public class MemoryPane extends JScrollPane {
         rightPanelLayout.setVerticalGroup(vGroup);
     }
 }
+*/
