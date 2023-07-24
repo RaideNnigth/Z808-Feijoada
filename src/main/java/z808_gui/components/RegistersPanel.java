@@ -5,11 +5,14 @@ import virtual_machine.registers.Registers;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
 import static z808_gui.utils.UIUtils.*;
 
 public class RegistersPanel extends JPanel implements RegObsListener {
+    private boolean displayInDecimal = true;
+
     public RegistersPanel() {
         GroupLayout rightPanelLayout = new GroupLayout(this);
         rightPanelLayout.setAutoCreateGaps(true);
@@ -39,6 +42,38 @@ public class RegistersPanel extends JPanel implements RegObsListener {
             vGroup.addComponent(registersJLabelsMap.get(r));
         }
 
+        // Radio buttons of Hex and Decimal
+        JRadioButton decimalRButton = new JRadioButton("Decimal");
+        decimalRButton.setMnemonic(KeyEvent.VK_D);
+        decimalRButton.setSelected(true);
+
+        JRadioButton hexRButton = new JRadioButton("Hex");
+        hexRButton.setMnemonic(KeyEvent.VK_H);
+
+        ButtonGroup radioButtons = new ButtonGroup();
+        radioButtons.add(decimalRButton);
+        radioButtons.add(hexRButton);
+
+        decimalRButton.addActionListener(e -> {
+            displayInDecimal = true;
+        });
+
+        hexRButton.addActionListener(e -> {
+            displayInDecimal = false;
+        });
+
+        hGroup.addGroup(
+                rightPanelLayout.createSequentialGroup()
+                        .addComponent(decimalRButton)
+                        .addComponent(hexRButton)
+        );
+
+        vGroup.addGroup(
+                rightPanelLayout.createParallelGroup()
+                        .addComponent(decimalRButton)
+                        .addComponent(hexRButton)
+        );
+
         rightPanelLayout.setHorizontalGroup(hGroup);
         rightPanelLayout.setVerticalGroup(vGroup);
     }
@@ -46,8 +81,9 @@ public class RegistersPanel extends JPanel implements RegObsListener {
     @Override
     public void updatedRegs(HashMap<Registers, Short> workRegs, String flagReg) {
         for (Registers r : Registers.values()) {
-            if (r != Registers.SR)
-                registersJLabelsMap.get(r).setText(r.getlabel() + " " + workRegs.get(r));
+            if (r != Registers.SR) {
+                registersJLabelsMap.get(r).setText(r.getlabel() + " " + (displayInDecimal ? workRegs.get(r) : Integer.toHexString(workRegs.get(r))));
+            }
             else
                 registersJLabelsMap.get(r).setText("<html>" + r.getlabel() + "<br>" + flagReg);
         }
