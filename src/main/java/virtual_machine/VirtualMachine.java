@@ -36,7 +36,7 @@ public class VirtualMachine {
         subscribers.add(rl);
     }
 
-    private void notifySubscribers() {
+    public void notifySubscribers() {
         HashMap<Registers, Short> workRegValues = vmInterpreter.getRegisters().getWorkRegValues();
         String regFlagValue = vmInterpreter.getRegisters().getSr().toString();
 

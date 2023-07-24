@@ -2,7 +2,7 @@ package virtual_machine;
 
 import java.io.IOException;
 
-public class Main {
+public class VMTestsMain {
     public static void main(String[] args) {
         VirtualMachine vm = new VirtualMachine();
 

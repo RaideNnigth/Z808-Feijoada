@@ -30,8 +30,6 @@ Csrc/main/java/virtual_machine/commands/operations/move/MovDxAx.java,b\3\b31962
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 k
 ;src/main/java/virtual_machine/interpreter/OpParameters.java,2\1\21c955ccafef542e3c95a427f666fd7991d23c46
-P
- src/main/java/z808_gui/Main.java,c\e\ce80d6f3fb1d96bbf7e807033f9ff676bc6edad6
 f
 6src/main/java/z808_gui/components/UpperTitlePanel.java,a\c\ac3d88aa30fd1f5bc7b4a8266fd62788497ad4a9
 7
@@ -52,8 +50,6 @@ W
 .src/main/java/z808_gui/components/MenuBar.java,3\f\3f23c26a1fd94210b9b6ffb3e2862581dd93eefc
 i
 9src/main/java/z808_gui/components/LowerCommandsPanel.java,1\1\11e8827921dde660add75c2fb8c15d32edf8f9e3
-g
-7src/main/java/z808_gui/components/AssemblyTextArea.java,1\a\1af046a67b2946ca233fcbc650411179a113c3a8
 k
 ;src/main/java/virtual_machine/commands/CommandExecutor.java,3\6\36f21b88ecdf73376196b45693a1565be1b5fca8
 o
@@ -68,12 +64,8 @@ j
 :src/main/java/virtual_machine/memory/MemoryController.java,1\1\1126c0efed438f6e505252cb4dfe41501d77bd68
 `
 0src/main/java/virtual_machine/loader/Loader.java,6\4\64e0f6f7b25f1ace6905d71781ef62b36d430104
-Y
-)src/main/java/z808_gui/utils/UIUtils.java,a\9\a9441b8359b6e1238d1abc552124f404009bdc38
 d
 4src/main/java/virtual_machine/registers/RegWork.java,f\7\f778101edd2ddae14521228fa64265734204a6dc
-a
-1src/main/java/virtual_machine/VirtualMachine.java,0\a\0a9800519cf30d9fe053adb916b646ac811e8d74
 l
 <src/main/java/virtual_machine/registers/BankOfRegisters.java,6\c\6c87bf50beb8a95f5d8196dbf87a411265264903
 a
@@ -82,6 +74,14 @@ f
 6src/main/java/virtual_machine/registers/Registers.java,0\5\052b19deb81bb44c7e2b18572af7512319cc6378
 e
 5src/main/java/virtual_machine/registers/RegFlags.java,c\d\cd55ab351034bdc73630c6d4b0ca7803edf2fd22
+a
+1src/main/java/virtual_machine/VirtualMachine.java,0\a\0a9800519cf30d9fe053adb916b646ac811e8d74
+P
+ src/main/java/z808_gui/Main.java,c\e\ce80d6f3fb1d96bbf7e807033f9ff676bc6edad6
+Y
+)src/main/java/z808_gui/utils/UIUtils.java,a\9\a9441b8359b6e1238d1abc552124f404009bdc38
+g
+7src/main/java/z808_gui/components/AssemblyTextArea.java,1\a\1af046a67b2946ca233fcbc650411179a113c3a8
 V
 &src/main/java/z808_gui/MainWindow.java,e\9\e9da8347c6e40279092d3e9ecd5e9734896ee0c0
 e

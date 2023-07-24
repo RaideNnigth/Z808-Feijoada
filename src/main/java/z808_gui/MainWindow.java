@@ -20,12 +20,8 @@ public class MainWindow extends JFrame {
         setTitle("Z808 - Feijoada Edition");
         setIconImage((new ImageIcon(PLAY_DEFAULT_IMG_PATH)).getImage());
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(startDimension);
         setLayout(new BorderLayout());
         setBackground(Color.white);
-
-        // Appear in center
-        setLocationRelativeTo(null);
 
         // Creates menu
         JMenuBar menuBar = new MenuBar();
@@ -61,11 +57,15 @@ public class MainWindow extends JFrame {
         // ------------------------------ Red Panel (registradores) ------------------------------
         RegistersPanel rightRegistersPanel = new RegistersPanel();
         vm.subscribe(rightRegistersPanel);
+        vm.notifySubscribers(); // Display default values
 
         // ------------------------------ Criando Abas ------------------------------
         Tabs tabs = new Tabs();
         tabs.addTab("Programa", null, assemblyArea, "Escreva seu programa em FeijoadaZ808 Assembly");
         tabs.addTab("Memória", null, new JLabel("Aba de memória..."), "Memória do programa montado");
+
+        // Its size will be at least 2/3 of the start dimension
+        tabs.setPreferredSize(new Dimension((int) ((startDimension.getWidth() / 3) * 2), Short.MAX_VALUE));
 
         // ------------------------------ Populando região central ------------------------------
         centralPanelLayout.setHorizontalGroup(
@@ -85,6 +85,13 @@ public class MainWindow extends JFrame {
         this.add(upperTitle, BorderLayout.NORTH);
         this.add(lowerCommands, BorderLayout.SOUTH);
         this.add(centralPanel, BorderLayout.CENTER);
+
+        // Packing UI
+        this.pack();
+        this.setSize(this.getWidth(), (int) startDimension.getHeight());
+
+        // Center window
+        this.setLocationRelativeTo(null);
 
         // Appear
         this.setVisible(true);
