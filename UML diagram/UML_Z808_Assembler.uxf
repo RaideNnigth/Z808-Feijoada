@@ -7,7 +7,7 @@
       <x>280</x>
       <y>184</y>
       <w>232</w>
-      <h>176</h>
+      <h>200</h>
     </coordinates>
     <panel_attributes>Assembler
 -
@@ -19,23 +19,11 @@
 - DS_END: int
 - SS_START: int
 - SS_END: int
+- symbolTable: HashMap&lt;String, Symbol&gt;
+- segmentTable: HashMap&lt;SegmentRegisters, Short&gt;
 -
 + assemble(pathToProgram: String): void
 - assembleLine(): void
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>288</x>
-      <y>432</y>
-      <w>216</w>
-      <h>112</h>
-    </coordinates>
-    <panel_attributes>SymbolTable
--
-- symbols: HashMap&lt;String,Symbol&gt;
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -57,12 +45,12 @@
     <id>Relation</id>
     <coordinates>
       <x>392</x>
-      <y>352</y>
+      <y>376</y>
       <w>24</w>
-      <h>96</h>
+      <h>88</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -111,11 +99,11 @@
       <w>256</w>
       <h>104</h>
     </coordinates>
-    <panel_attributes>AssemblyDirectives
+    <panel_attributes>DirectiveProcessor
 -
-- codeTable: CodeTable
+- directivesTable: CodeTable
 -
-+ isAsmDirective(line: String): boolean
++ isDirective(line: String): boolean
 + processDirective(line:String): unsigned int
 </panel_attributes>
     <additional_attributes/>
@@ -141,9 +129,8 @@
     </coordinates>
     <panel_attributes>LabelProcessor
 -
-- codeTable: CodeTable
 -
-+ isAsmDirective(line: String): boolean
++ isDirective(line: String): boolean
 + processDirective(line:String): unsigned int
 </panel_attributes>
     <additional_attributes/>
@@ -163,7 +150,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>288</x>
-      <y>632</y>
+      <y>448</y>
       <w>216</w>
       <h>112</h>
     </coordinates>
@@ -176,16 +163,5 @@
 
 </panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>392</x>
-      <y>536</y>
-      <w>24</w>
-      <h>112</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>

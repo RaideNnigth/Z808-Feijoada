@@ -1,5 +1,16 @@
 package assembler;
 
 public enum Segments {
-    CODE_SEGMENT, DATA_SEGMENT, STACK_SEGMENT
+    CS( "CS"), DS("DS"), SS("SS");
+
+    private String label;
+
+    Segments(String id) {
+        label = id;
+    }
+
+    @Override
+    public String toString() {
+        return label;
+    }
 }

@@ -1,6 +1,6 @@
 package assembler;
 
-import assembler.mnemonics.ADD;
+import assembler.mnemonics.Add;
 import assembler.mnemonics.Operation;
 
 import java.util.HashMap;
@@ -13,7 +13,7 @@ public class CodeTable {
         codeMap = new HashMap<>();
 
         // Operações
-        codeMap.put(ADD.MNEMONIC, new ADD());
+        codeMap.put(Add.MNEMONIC, new Add());
     }
 
     public static CodeTable getInstance() {
