@@ -26,7 +26,7 @@ public class Assembler {
     public Assembler() {
         symbolTable = new SymbolTable();
         segmentTable = new SegmentTable();
-        operationProcessor = new OperationProcessor();
+        operationProcessor = new OperationProcessor(symbolTable, assembledCode);
     }
 
     public void assemble(String pathToProgram) throws FileNotFoundException {
@@ -46,7 +46,9 @@ public class Assembler {
     }
 
     private void assembleLine() {
-        if(operationProcessor.verifyAndProcessOP(currentLine))
-            return;
+        if(operationProcessor.isOperation(currentLine)) {
+            operationProcessor.assembleOperation(currentLine);
+        }
+
     }
 }
