@@ -2,6 +2,8 @@ package assembler;
 
 import java.io.*;
 import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Assembler {
@@ -9,6 +11,9 @@ public class Assembler {
     private SymbolTable symbolTable;
     private SegmentTable segmentTable;
     private OperationProcessor operationProcessor;
+
+    // Assembled code
+    private List<Short> assembledCode = new LinkedList<>();
 
     private int PC;
     private final int HEADER_SIZE = 0xC;
