@@ -1,52 +1,47 @@
 package assembler;
 
+import java.io.*;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.io.IOException;
 
 public class Assembler {
-    private String filepath;
-    private File assemblyFile;
+    private String currentLine;
     private SymbolTable symbolTable;
     private SegmentTable segmentTable;
+    private OperationProcessor operationProcessor;
+
+    private int PC;
+    private final int HEADER_SIZE = 0xC;
+    private int CS_END;
+    private int DS_START;
+    private int DS_END;
+    private int SS_START;
+    private int SS_END;
 
     public Assembler() {
-        filepath = "";
         symbolTable = new SymbolTable();
         segmentTable = new SegmentTable();
+        operationProcessor = new OperationProcessor();
     }
 
-    public void stepOne() throws IOException {
-        Scanner reader = new Scanner(assemblyFile);
-        String buffer = "";
-        while (reader.hasNext()) {
-            buffer.concat(reader.next());
+    public void assemble(String pathToProgram) throws FileNotFoundException {
+        FileReader fileReader = new FileReader(pathToProgram);
+
+        try (BufferedReader fileIO = new BufferedReader(fileReader)) {
+            do {
+                // Our assembler IS NOT case sensitive!!
+                currentLine = fileIO.readLine().toUpperCase();
+                assembleLine();
+            } while (!currentLine.isEmpty());
+        }
+        catch (IOException e){
+            System.err.println(e.getMessage());
+            System.exit(-1);
         }
     }
 
-    public void stepTwo() {
-
-    }
-
-    public String getFilepath() {
-        return filepath;
-    }
-
-    public void setFilepath(String filepath) throws FileNotFoundException {
-        assemblyFile = new File(filepath);
-
-        if (!assemblyFile.exists())
-            throw new FileNotFoundException("File not found!");
-    }
-
-    public SymbolTable getSymbolTable() {
-        return symbolTable;
-    }
-
-    public SegmentTable getSegmentTable() {
-        return segmentTable;
+    private void assembleLine() {
+        if(operationProcessor.verifyAndProcessOP(currentLine))
+            return;
     }
 }

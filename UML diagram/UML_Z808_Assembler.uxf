@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>13</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>130</x>
+      <y>234</y>
+      <w>377</w>
+      <h>286</h>
+    </coordinates>
+    <panel_attributes>Assembler
+-
+- currentLine: String
+- PC: int
+- HEADER_SIZE: final int
+- CS_END: int
+- DS_START: int
+- DS_END: int
+- SS_START: int
+- SS_END: int
+-
++ assemble(pathToProgram: String): void
+- assembleLine()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>143</x>
+      <y>637</y>
+      <w>351</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>SymbolTable
+-
+- symbols: HashMap&lt;String,Symbol&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>832</x>
+      <y>598</y>
+      <w>507</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>CodeTable
+-
+- codeTable: HashMap&lt;String,Symbol&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>312</x>
+      <y>507</y>
+      <w>39</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>663</x>
+      <y>247</y>
+      <w>377</w>
+      <h>169</h>
+    </coordinates>
+    <panel_attributes>OperationProcessor
+-
+- codeTable: CodeTable
+-
++ isOperation(String token): boolean
++ processLine(String line): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>494</x>
+      <y>351</y>
+      <w>195</w>
+      <h>39</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>130.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>845</x>
+      <y>403</y>
+      <w>273</w>
+      <h>221</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>190.0;150.0;190.0;80.0;10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
