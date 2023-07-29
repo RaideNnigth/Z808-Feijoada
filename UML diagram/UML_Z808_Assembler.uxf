@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>13</zoom_level>
+  <zoom_level>12</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>130</x>
-      <y>234</y>
-      <w>377</w>
-      <h>286</h>
+      <x>204</x>
+      <y>288</y>
+      <w>348</w>
+      <h>264</h>
     </coordinates>
     <panel_attributes>Assembler
 -
@@ -21,17 +21,17 @@
 - SS_END: int
 -
 + assemble(pathToProgram: String): void
-- assembleLine()
+- assembleLine(): void
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>143</x>
-      <y>637</y>
-      <w>351</w>
-      <h>182</h>
+      <x>216</x>
+      <y>660</y>
+      <w>324</w>
+      <h>168</h>
     </coordinates>
     <panel_attributes>SymbolTable
 -
@@ -42,10 +42,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>832</x>
-      <y>598</y>
-      <w>507</w>
-      <h>182</h>
+      <x>852</x>
+      <y>624</y>
+      <w>468</w>
+      <h>168</h>
     </coordinates>
     <panel_attributes>CodeTable
 -
@@ -56,10 +56,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>312</x>
-      <y>507</y>
-      <w>39</w>
-      <h>156</h>
+      <x>372</x>
+      <y>540</y>
+      <w>36</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
@@ -67,40 +67,96 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>663</x>
-      <y>247</y>
-      <w>377</w>
-      <h>169</h>
+      <x>696</x>
+      <y>372</y>
+      <w>384</w>
+      <h>156</h>
     </coordinates>
     <panel_attributes>OperationProcessor
 -
 - codeTable: CodeTable
 -
-+ isOperation(String token): boolean
-+ processLine(String line): void
++ isOperation(line: String): boolean
++ assembleOperation(line:String): unsigned int
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>494</x>
-      <y>351</y>
-      <w>195</w>
-      <h>39</h>
+      <x>540</x>
+      <y>384</y>
+      <w>180</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>130.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>130.0;70.0;70.0;70.0;70.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>845</x>
-      <y>403</y>
-      <w>273</w>
-      <h>221</h>
+      <x>864</x>
+      <y>516</y>
+      <w>252</w>
+      <h>132</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>190.0;150.0;190.0;80.0;10.0;80.0;10.0;10.0</additional_attributes>
+    <additional_attributes>190.0;90.0;190.0;40.0;10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>696</x>
+      <y>192</y>
+      <w>384</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>AssemblyDirectives
+-
+- codeTable: CodeTable
+-
++ isAsmDirective(line: String): boolean
++ processDirective(line:String): unsigned int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>264</y>
+      <w>180</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>130.0;10.0;70.0;10.0;70.0;110.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>696</x>
+      <y>12</y>
+      <w>384</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>LabelProcessor
+-
+- codeTable: CodeTable
+-
++ isAsmDirective(line: String): boolean
++ processDirective(line:String): unsigned int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>84</y>
+      <w>180</w>
+      <h>336</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>130.0;10.0;70.0;10.0;70.0;260.0;10.0;260.0</additional_attributes>
   </element>
 </diagram>
