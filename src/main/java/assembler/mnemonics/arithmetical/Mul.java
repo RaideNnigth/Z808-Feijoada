@@ -7,6 +7,7 @@ import assembler.utils.AssemblerUtils;
 import java.util.LinkedList;
 
 public class Mul extends Operation {
+    public static final String MNEMONIC = "MUL";
     private final short MUL_AX = (short)0xF7E0;
     private final short MUL_SI = (short)0xF7E6;
     @Override

@@ -7,6 +7,7 @@ import assembler.utils.AssemblerUtils;
 import java.util.LinkedList;
 
 public class Sub extends Operation {
+        public static final String MNEMONIC = "SUB";
         private final short SUB_AXAX = 0x2BC0;
         private final short SUB_AXDX = 0x2BC2;
         private final short SUB_AXCTE = 0x2CFF;

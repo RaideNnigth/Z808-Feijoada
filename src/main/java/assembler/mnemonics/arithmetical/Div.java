@@ -7,6 +7,7 @@ import assembler.utils.AssemblerUtils;
 import java.util.LinkedList;
 
 public class Div extends Operation {
+    public static final String MNEMONIC = "DIV";
     private final short DIV_AX = (short)0xF7F0;
     private final short DIV_SI = (short)0xF7F6;
     @Override

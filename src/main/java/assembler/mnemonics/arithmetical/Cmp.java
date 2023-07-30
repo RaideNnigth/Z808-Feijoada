@@ -19,17 +19,13 @@ public class Cmp extends Operation{
         LinkedList<Short> assembledCode = Assembler.getInstance().getAssembledCode();
 
         if (tokens[1].equals(AX_STR)) {
-            if (tokens[2].equals(AX_STR)) {
-                assembledCode.add(CMP_AXDX);
-            }
-            else if (tokens[2].equals(DX_STR)) {
+            if (tokens[2].equals(DX_STR)) {
                 assembledCode.add(CMP_AXDX);
             }
             else if (AssemblerUtils.isNumericConstant(tokens[2])) {
                 assembledCode.add(CMP_AXCTE);
                 assembledCode.add(AssemblerUtils.convertNumber(tokens[2]));
             }
-
             else {
                 assembledCode.add(CMP_AXDIR);
 
