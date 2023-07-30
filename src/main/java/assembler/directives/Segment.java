@@ -8,14 +8,15 @@ import assembler.utils.AssemblerUtils;
 public class Segment implements AssembleableOperation {
     public static final String MNEMONIC = "SEGMENT";
     private final SymbolTable symbolTable;
-    private String name;
+
     public Segment() {
         symbolTable = SymbolTable.getInstance();
     }
     @Override
     public void assemble( String line ) {
+        String name;
         String[] tokens = AssemblerUtils.decomposeInTokens(line);
-        this.name = tokens[0];
-        symbolTable.addSymbol(new Symbol(this.name, true, (short)0));
+        name = tokens[0];
+        symbolTable.addSymbol(new Symbol(name, true, (short)0));
     }
 }
