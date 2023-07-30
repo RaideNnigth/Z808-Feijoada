@@ -35,9 +35,7 @@ public class Assembler {
     // Singleton definition
     private static Assembler instance;
 
-    private Assembler() {
-
-    }
+    private Assembler() {}
 
     public static Assembler getInstance() {
         if (instance == null)

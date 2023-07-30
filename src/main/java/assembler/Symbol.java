@@ -1,16 +1,16 @@
 package assembler;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Symbol {
     private String identificator;
     private boolean isDeclared;
-    private final ArrayList<Short> usedAt;
+    private final LinkedList<Integer> usedAt;
 
     public Symbol (String identificator, boolean isDeclared) {
         this.identificator = identificator;
         this.isDeclared = isDeclared;
-        usedAt = new ArrayList<>();
+        usedAt = new LinkedList<>();
     }
 
     public String getIdentificator() {
@@ -29,7 +29,7 @@ public class Symbol {
         isDeclared = declared;
     }
 
-    public ArrayList<Short> getUsedAt() {
+    public LinkedList<Integer> getUsedAt() {
         return usedAt;
     }
 }

@@ -1,4 +1,4 @@
-package assembler;
+package assembler.tables;
 
 import assembler.mnemonics.Add;
 import assembler.mnemonics.Operation;
