@@ -30,8 +30,6 @@ Csrc/main/java/virtual_machine/commands/operations/move/MovDxAx.java,b\3\b31962
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 k
 ;src/main/java/virtual_machine/interpreter/OpParameters.java,2\1\21c955ccafef542e3c95a427f666fd7991d23c46
-f
-6src/main/java/z808_gui/components/UpperTitlePanel.java,a\c\ac3d88aa30fd1f5bc7b4a8266fd62788497ad4a9
 7
 LICENSE,0\3\0398ccd0f49298b10a3d76a47800d2ebecd49859
 g
@@ -44,8 +42,6 @@ k
 ;src/main/java/virtual_machine/registers/StatusRegister.java,6\f\6fd4a0e9a5686d5c34aa6b45b3c6943dfeaf1ce1
 d
 4src/main/java/z808_gui/observerpattern/Listener.java,b\f\bfad121871783e0eeca1510c430870e3fe1a2951
-^
-.src/main/java/z808_gui/components/MenuBar.java,3\f\3f23c26a1fd94210b9b6ffb3e2862581dd93eefc
 i
 9src/main/java/z808_gui/components/LowerCommandsPanel.java,1\1\11e8827921dde660add75c2fb8c15d32edf8f9e3
 o
@@ -62,14 +58,8 @@ a
 1src/main/java/virtual_machine/VirtualMachine.java,0\a\0a9800519cf30d9fe053adb916b646ac811e8d74
 P
  src/main/java/z808_gui/Main.java,c\e\ce80d6f3fb1d96bbf7e807033f9ff676bc6edad6
-g
-7src/main/java/z808_gui/components/AssemblyTextArea.java,1\a\1af046a67b2946ca233fcbc650411179a113c3a8
-V
-&src/main/java/z808_gui/MainWindow.java,e\9\e9da8347c6e40279092d3e9ecd5e9734896ee0c0
 e
 5src/main/java/z808_gui/components/RegistersPanel.java,2\0\206ab76432cf3fc80654e417b55415b080fe5579
-Y
-)src/main/java/z808_gui/utils/UIUtils.java,a\9\a9441b8359b6e1238d1abc552124f404009bdc38
 `
 0src/main/java/virtual_machine/memory/Memory.java,3\d\3daf65b1f672f4e0de9e00cc13a06287462a22b1
 j

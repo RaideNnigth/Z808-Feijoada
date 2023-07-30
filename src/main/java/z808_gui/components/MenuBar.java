@@ -1,10 +1,14 @@
 package z808_gui.components;
 
+import assembler.Assembler;
 import z808_gui.observerpattern.Listener;
 import z808_gui.observerpattern.MessageType;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import static z808_gui.utils.UIUtils.*;
@@ -41,9 +45,51 @@ public class MenuBar extends JMenuBar {
         arquivoMenu.add(sairMenItem);
 
         // --------------------- Sub-itens menu Executar ---------------------
+        JMenuItem montarMenItem = new JMenuItem("Montar código");
         JMenuItem executarTudoMenItem = new JMenuItem("Executar tudo");
         JMenuItem executarInstMenItem = new JMenuItem("Executar instrução");
 
+        // montar action
+        montarMenItem.addActionListener(e -> {
+            boolean execute = false;
+
+            // Se PROGRAM_PATH está vazia, o programa não foi salvo
+            if (PROGRAM_PATH.isEmpty()) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+
+                int result = fileChooser.showSaveDialog(null);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    PROGRAM_PATH = fileChooser.getSelectedFile().getAbsolutePath() + ".asm";
+                    try (FileWriter fw = new FileWriter(PROGRAM_PATH)) {
+                        fw.write(AssemblyTextArea.getInstance().getText());
+                    } catch (IOException ex) {
+                        System.err.println(ex);
+                    }
+
+                    execute = true;
+                }
+            } else {
+                try (FileWriter fw = new FileWriter(PROGRAM_PATH)) {
+                    fw.write(AssemblyTextArea.getInstance().getText());
+                } catch (IOException ex) {
+                    System.err.println(ex);
+                }
+
+                execute = true;
+            }
+
+            if (execute) {
+                Assembler assembler = Assembler.getInstance();
+                try {
+                    assembler.assembleFile(PROGRAM_PATH);
+                } catch (FileNotFoundException ex) {
+                    System.err.println(ex.toString());
+                }
+            }
+        });
+
+        executarMenu.add(montarMenItem);
         executarMenu.add(executarTudoMenItem);
         executarMenu.add(executarInstMenItem);
 
@@ -69,7 +115,7 @@ public class MenuBar extends JMenuBar {
     }
 
     private static void notifySubscribers(MessageType t) {
-        for(Listener l : subscribers) {
+        for (Listener l : subscribers) {
             l.update(t);
         }
     }

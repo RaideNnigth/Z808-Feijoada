@@ -12,7 +12,9 @@ public class OperationProcessor {
     }
 
     public boolean isOperation(String line) {
-        return codeTable.isValidOperation(line);
+        String[] tokens = AssemblerUtils.decomposeInTokens(line);
+
+        return codeTable.isValidOperation(tokens[0]);
     }
 
     public void assembleOperation(String line) {

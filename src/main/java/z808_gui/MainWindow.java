@@ -52,7 +52,7 @@ public class MainWindow extends JFrame {
         centralPanelLayout.setAutoCreateContainerGaps(true);
 
         // ------------------------------ Criando a area de texto para o Assembly ------------------------------
-        AssemblyTextArea assemblyArea = new AssemblyTextArea();
+        AssemblyTextArea assemblyArea = AssemblyTextArea.getInstance();
 
         // ------------------------------ Red Panel (registradores) ------------------------------
         RegistersPanel rightRegistersPanel = new RegistersPanel();

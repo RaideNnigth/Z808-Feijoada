@@ -6,6 +6,7 @@ import assembler.codeprocessors.OperationProcessor;
 import assembler.tables.symboltable.Symbol;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -56,17 +57,24 @@ public class Assembler {
         FileReader fileReader = new FileReader(filename);
 
         try (BufferedReader fileIO = new BufferedReader(fileReader)) {
-            do {
-                lineCounter += 1;
+            lineCounter += 1;
+            currentLine = fileIO.readLine();
+
+            while (currentLine != null && !loggerInterruption) {
                 // Our assembler IS NOT case sensitive!!
-                currentLine = fileIO.readLine().toUpperCase();
+                currentLine = currentLine.toUpperCase();
                 assembleLine();
-            } while (!currentLine.isEmpty() && !loggerInterruption);
-        }
-        catch (IOException e){
+
+                currentLine = fileIO.readLine();
+            }
+        } catch (IOException e) {
             System.err.println(e.getMessage());
             System.exit(-1);
         }
+
+        // Reset after assembly
+        assembledCode.clear();
+        logger.reset();
     }
 
     private void assembleLine() {
@@ -84,8 +92,12 @@ public class Assembler {
         directiveProcessor.assembleDirective(currentLine);
 
         // Handling operations
-        if(operationProcessor.isOperation(currentLine)) {
+        if (operationProcessor.isOperation(currentLine)) {
             operationProcessor.assembleOperation(currentLine);
+            for (short s : assembledCode) {
+                System.out.print(Integer.toHexString(s) + " ");
+            }
+            System.out.println();
         }
 
     }
