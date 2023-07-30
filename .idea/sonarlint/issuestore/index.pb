@@ -64,10 +64,6 @@ e
 0src/main/java/virtual_machine/memory/Memory.java,3\d\3daf65b1f672f4e0de9e00cc13a06287462a22b1
 j
 :src/main/java/virtual_machine/memory/MemoryController.java,1\1\1126c0efed438f6e505252cb4dfe41501d77bd68
-`
-0src/main/java/virtual_machine/loader/Loader.java,6\4\64e0f6f7b25f1ace6905d71781ef62b36d430104
-j
-:src/main/java/virtual_machine/interpreter/Interpreter.java,0\b\0b98f8107923188fbedaf00b6cdb5848a7869141
 Z
 *src/main/java/assembler/mnemonics/ADD.java,8\a\8a08fa9c609cbaef5d33cffa8acdfb6ca0af0590
 l
@@ -96,16 +92,8 @@ $src/main/java/assembler/LogType.java,b\2\b2e4f5af934d0b87e812d60bb0772ff09871c
 .src/main/java/assembler/directives/Assume.java,8\5\858edaa4b6571b4bb72ee6855467bd0f6fe36601
 f
 6src/main/java/assembler/tables/symboltable/Symbol.java,d\c\dc4aff7f9e22881120474b49beca30eb02fc7c7f
-a
-1src/main/java/assembler/utils/AssemblerUtils.java,7\1\71af608c26e134dc2f95e81ea002ee5e8f7ec3b3
-j
-:src/main/java/assembler/codeprocessors/LabelProcessor.java,f\e\fe7b095f7038436a652a53cf757f69fdbfb7f534
 n
 >src/main/java/assembler/codeprocessors/DirectiveProcessor.java,7\0\70b137d145b3996e57b9fbf04187c6c97b418be2
-V
-&src/main/java/assembler/Assembler.java,e\e\ee9cd0840c10a44921acdaad5310e51b51904a4a
-n
->src/main/java/assembler/codeprocessors/OperationProcessor.java,e\3\e388f32ff91ae7567a897ee7062e1e6e2bf7edc8
 p
 @src/main/java/assembler/tables/symboltable/UndeclaredSymbol.java,e\4\e46198b553428bbafdb5591773252b0ecd48aa77
 b
