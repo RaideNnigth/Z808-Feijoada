@@ -1,16 +1,16 @@
 package assembler;
 
+import assembler.codeprocessors.DirectiveProcessor;
+import assembler.codeprocessors.LabelProcessor;
+import assembler.codeprocessors.OperationProcessor;
+
 import java.io.*;
-import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
 
 // THIS CLASS IS A SINGLETON
 public class Assembler {
     private final HashMap<String, Symbol> symbolTable = new HashMap<>();
-    private final HashMap<Segments, Short> segmentTable = new HashMap<>();
 
     // Defining the processors
     private final LabelProcessor labelProcessor = new LabelProcessor();

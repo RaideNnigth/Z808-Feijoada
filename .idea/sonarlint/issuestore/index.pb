@@ -72,10 +72,6 @@ e
 5src/main/java/z808_gui/components/RegistersPanel.java,2\0\206ab76432cf3fc80654e417b55415b080fe5579
 Y
 )src/main/java/z808_gui/utils/UIUtils.java,a\9\a9441b8359b6e1238d1abc552124f404009bdc38
-U
-%src/main/java/assembler/Segments.java,0\6\0697cbbb07880dc32f47c3e9dacf0435637a0e1b
-k
-;src/main/java/virtual_machine/commands/CommandExecutor.java,3\6\36f21b88ecdf73376196b45693a1565be1b5fca8
 `
 0src/main/java/virtual_machine/memory/Memory.java,3\d\3daf65b1f672f4e0de9e00cc13a06287462a22b1
 j

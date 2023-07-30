@@ -1,4 +1,4 @@
-package assembler;
+package assembler.codeprocessors;
 
 import assembler.mnemonics.Add;
 import assembler.mnemonics.Operation;

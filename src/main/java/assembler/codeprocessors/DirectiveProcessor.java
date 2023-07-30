@@ -1,4 +1,4 @@
-package assembler;
+package assembler.codeprocessors;
 
 public class DirectiveProcessor {
 }
