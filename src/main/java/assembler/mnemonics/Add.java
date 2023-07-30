@@ -1,14 +1,12 @@
 package assembler.mnemonics;
 
 import assembler.Assembler;
-import assembler.Operation;
-import assembler.tables.symboltable.Symbol;
-import assembler.tables.symboltable.SymbolTable;
+import assembler.AssembleableOperation;
 import assembler.utils.AssemblerUtils;
 
 import java.util.LinkedList;
 
-public class Add implements Operation {
+public class Add extends Operation {
     public static final String MNEMONIC = "ADD";
 
     // Gab Bessa: How to define the diferent binary codes for this??
@@ -45,22 +43,9 @@ public class Add implements Operation {
 
             // If none above checks, assume it's a label for a variable
             else {
-                assembledCode.add(ADD_AXDIR);
-                SymbolTable st = SymbolTable.getInstance();
+                assembledCode.add(ADD_AXDIR); // Opcode for add with Direct Addressing
 
-                if (st.symbolExists(tokens[2])) {
-                    var sy = st.getSymbol(tokens[2]);
-                    if (sy.isDeclared()) {
-                        assembledCode.add(sy.getValue());
-                    } else {
-                        st.addOccurrenceOfSymbol(tokens[2], assembledCode.size());
-                    }
-                } else if (AssemblerUtils.isValidName(tokens[2])) {
-                    Symbol s = new Symbol(tokens[2], false);
-
-                    st.addSymbol(s);
-                    st.addOccurrenceOfSymbol(s.getIdentificator(), assembledCode.size());
-                }
+                processDirectAddressing(tokens[2]);
             }
         }
     }

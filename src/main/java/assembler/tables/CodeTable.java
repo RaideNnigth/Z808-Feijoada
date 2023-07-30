@@ -1,12 +1,12 @@
 package assembler.tables;
 
 import assembler.mnemonics.Add;
-import assembler.Operation;
+import assembler.AssembleableOperation;
 
 import java.util.HashMap;
 
 public class CodeTable {
-    private HashMap<String, Operation> codeMap;
+    private HashMap<String, AssembleableOperation> codeMap;
     private static CodeTable instance = null;
 
     private CodeTable() {
@@ -27,7 +27,7 @@ public class CodeTable {
         return codeMap.get(key) != null;
     }
 
-    public Operation getOperation(String key) {
+    public AssembleableOperation getOperation(String key) {
         return codeMap.get(key);
     }
 

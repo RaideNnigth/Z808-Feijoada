@@ -1,8 +1,8 @@
 package assembler.directives;
 
-import assembler.Operation;
+import assembler.AssembleableOperation;
 
-public class End implements Operation {
+public class End implements AssembleableOperation {
     @Override
     public void assemble(String line) {
 

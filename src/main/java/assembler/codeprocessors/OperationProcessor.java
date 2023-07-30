@@ -1,6 +1,6 @@
 package assembler.codeprocessors;
 
-import assembler.Operation;
+import assembler.AssembleableOperation;
 import assembler.tables.CodeTable;
 import assembler.utils.AssemblerUtils;
 
@@ -20,7 +20,7 @@ public class OperationProcessor {
     public void assembleOperation(String line) {
         String[] tokens = AssemblerUtils.decomposeInTokens(line);
 
-        Operation op = codeTable.getOperation(tokens[0]);
+        AssembleableOperation op = codeTable.getOperation(tokens[0]);
         op.assemble(line);
     }
 }

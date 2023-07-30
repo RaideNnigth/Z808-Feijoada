@@ -1,13 +1,13 @@
 package assembler.codeprocessors;
 
-import assembler.Operation;
+import assembler.AssembleableOperation;
 import assembler.directives.*;
 
 import java.util.HashMap;
 
 public class DirectiveProcessor {
     // Hashmap for directives
-    private final HashMap<String, Operation> directivesTable = new HashMap<>();
+    private final HashMap<String, AssembleableOperation> directivesTable = new HashMap<>();
     public DirectiveProcessor() {
         // Look at page 72 for more details
         directivesTable.put("END", new End());
@@ -23,7 +23,7 @@ public class DirectiveProcessor {
     }
     public void assembleDirective(String line) {
         String directive = line.split(" ")[0];
-        Operation op = directivesTable.get(directive);
+        AssembleableOperation op = directivesTable.get(directive);
 
         // If this is not a directive
         if (op == null)

@@ -30,10 +30,12 @@ public class SymbolTable {
         return symbolTable.get(symbol);
     }
 
-    public void addOccurrenceOfSymbol(String symbol, int index) {
+    public void addOccurrenceOfSymbol(String symbol) {
         var symbObj = symbolTable.get(symbol);
-        symbObj.getUsedAt().add(index);
-        Assembler.getInstance().getAssembledCode().add((short) 0);
+        var assembledCode = Assembler.getInstance().getAssembledCode();
+
+        symbObj.getUsedAt().add(assembledCode.size());
+        assembledCode.add((short) 0);
     }
 
     public void addSymbol(Symbol s) {
@@ -46,13 +48,16 @@ public class SymbolTable {
         symbolTable.put(s.getIdentificator(), s);
     }
 
-    public void replaceAllOcorrencesOfDeclaredSymbols() {
+    public void replaceAllOcorrencesOfDeclaredSymbols() throws UndeclaredSymbol {
         for (Symbol s : symbolTable.values()) {
             if (s.isDeclared()) {
                 while (!s.getUsedAt().isEmpty()) {
                     int pos = s.getUsedAt().pop();
                     Assembler.getInstance().getAssembledCode().set(pos, s.getValue());
                 }
+            }
+            else {
+                throw new UndeclaredSymbol(s);
             }
         }
     }

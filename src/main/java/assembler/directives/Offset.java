@@ -1,8 +1,8 @@
 package assembler.directives;
 
-import assembler.Operation;
+import assembler.AssembleableOperation;
 
-public class Offset implements Operation {
+public class Offset implements AssembleableOperation {
     @Override
     public void assemble(String line) {
 

@@ -23,9 +23,12 @@ public class Symbol {
         return identificator;
     }
 
+    // Is this needed? - Henrique
+    /*
     public void setIdentificator(String identificator) {
         this.identificator = identificator;
     }
+     */
 
     public boolean isDeclared() {
         return isDeclared;

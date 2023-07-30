@@ -25,7 +25,6 @@ public class Assembler {
     // Handling files utils
     private String currentLine;
     private int lineCounter;
-    private String filename;
     // Position where the code will be
     private int PC;
 
@@ -52,9 +51,7 @@ public class Assembler {
     }
 
     public void assembleFile(String pathToProgram) throws FileNotFoundException {
-        filename = pathToProgram;
-
-        FileReader fileReader = new FileReader(filename);
+        FileReader fileReader = new FileReader(pathToProgram);
 
         try (BufferedReader fileIO = new BufferedReader(fileReader)) {
             lineCounter += 1;
