@@ -3,6 +3,7 @@ package assembler;
 import assembler.codeprocessors.DirectiveProcessor;
 import assembler.codeprocessors.LabelProcessor;
 import assembler.codeprocessors.OperationProcessor;
+import assembler.tables.symboltable.Symbol;
 
 import java.io.*;
 import java.util.HashMap;
@@ -10,15 +11,13 @@ import java.util.LinkedList;
 
 // THIS CLASS IS A SINGLETON
 public class Assembler {
-    private final HashMap<String, Symbol> symbolTable = new HashMap<>();
-
     // Defining the processors
     private final LabelProcessor labelProcessor = new LabelProcessor();
     private final DirectiveProcessor directiveProcessor = new DirectiveProcessor();
     private final OperationProcessor operationProcessor = new OperationProcessor();
 
     // Assembled code
-    private LinkedList<Short> assembledCode = new LinkedList<>();
+    public LinkedList<Short> assembledCode = new LinkedList<>();
 
     // Handling files utils
     private String currentLine;
