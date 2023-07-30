@@ -56,8 +56,6 @@ d
 4src/main/java/virtual_machine/registers/RegWork.java,f\7\f778101edd2ddae14521228fa64265734204a6dc
 a
 1src/main/java/z808_gui/components/PlayButton.java,4\9\49843321d6301ee51b563103d1053d40292b465d
-f
-6src/main/java/virtual_machine/registers/Registers.java,0\5\052b19deb81bb44c7e2b18572af7512319cc6378
 e
 5src/main/java/virtual_machine/registers/RegFlags.java,c\d\cd55ab351034bdc73630c6d4b0ca7803edf2fd22
 a
@@ -80,8 +78,6 @@ j
 0src/main/java/virtual_machine/loader/Loader.java,6\4\64e0f6f7b25f1ace6905d71781ef62b36d430104
 j
 :src/main/java/virtual_machine/interpreter/Interpreter.java,0\b\0b98f8107923188fbedaf00b6cdb5848a7869141
-l
-<src/main/java/virtual_machine/registers/BankOfRegisters.java,6\c\6c87bf50beb8a95f5d8196dbf87a411265264903
 Y
 )src/main/java/assembler/SegmentTable.java,3\b\3b1dd0a95df24340159dbcda6722876200915697
 X

@@ -8,10 +8,10 @@ public enum Registers {
     private String label;
 
     Registers(String id) {
-        label = id;
+        this.label = id;
     }
 
-    public String getlabel() {
+    public String getLabel() {
         return this.label;
     }
 }

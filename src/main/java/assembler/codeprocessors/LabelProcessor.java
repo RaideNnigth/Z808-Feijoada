@@ -1,7 +1,7 @@
 package assembler.codeprocessors;
 
 import assembler.Assembler;
-import assembler.Symbol;
+import assembler.tables.symboltable.Symbol;
 
 public class LabelProcessor {
     public LabelProcessor() {

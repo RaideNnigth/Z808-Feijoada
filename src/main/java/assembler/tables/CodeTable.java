@@ -30,4 +30,8 @@ public class CodeTable {
     public Operation getOperation(String key) {
         return codeMap.get(key);
     }
+
+    public String[] getKeys() {
+        return codeMap.keySet().toArray(new String[0]);
+    }
 }

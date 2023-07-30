@@ -1,4 +1,4 @@
-package assembler;
+package assembler.tables.symboltable;
 
 import java.util.LinkedList;
 

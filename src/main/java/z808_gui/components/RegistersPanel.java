@@ -99,9 +99,9 @@ public class RegistersPanel extends JPanel implements RegObsListener {
 
         for (Registers r : Registers.values()) {
             if (r != Registers.SR) {
-                registersJLabelsMap.get(r).setText(r.getlabel() + " " + (displayInDecimal ? workRegs.get(r) : Integer.toHexString(workRegs.get(r))));
+                registersJLabelsMap.get(r).setText(r.getLabel() + " " + (displayInDecimal ? workRegs.get(r) : Integer.toHexString(workRegs.get(r))));
             } else
-                registersJLabelsMap.get(r).setText("<html>" + r.getlabel() + "<br>" + flagReg);
+                registersJLabelsMap.get(r).setText("<html>" + r.getLabel() + "<br>" + flagReg);
         }
     }
 
@@ -109,13 +109,13 @@ public class RegistersPanel extends JPanel implements RegObsListener {
         if (displayInDecimal) {
             for (Registers r : Registers.values()) {
                 if (r != Registers.SR) {
-                    registersJLabelsMap.get(r).setText(r.getlabel() + " " + currentWorkRegs.get(r));
+                    registersJLabelsMap.get(r).setText(r.getLabel() + " " + currentWorkRegs.get(r));
                 }
             }
         } else {
             for (Registers r : Registers.values()) {
                 if (r != Registers.SR) {
-                    registersJLabelsMap.get(r).setText(r.getlabel() + " " + Integer.toHexString(currentWorkRegs.get(r)));
+                    registersJLabelsMap.get(r).setText(r.getLabel() + " " + Integer.toHexString(currentWorkRegs.get(r)));
                 }
             }
         }

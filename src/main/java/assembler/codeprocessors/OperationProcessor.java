@@ -1,28 +1,24 @@
 package assembler.codeprocessors;
 
-import assembler.mnemonics.Add;
 import assembler.Operation;
-
-import java.util.HashMap;
+import assembler.tables.CodeTable;
+import assembler.utils.AssemblerUtils;
 
 public class OperationProcessor {
-    //private CodeTable codeTable;
-    private final HashMap<String, Operation> codeTable = new HashMap<>();
+    private CodeTable codeTable;
 
     public OperationProcessor() {
-        // DEFINING MNEMONIC OPERATIONS
-        codeTable.put(Add.MNEMONIC, new Add());
-
-        //codeTable = CodeTable.getInstance();
+        codeTable = CodeTable.getInstance();
     }
 
     public boolean isOperation(String line) {
-        return codeTable.get(line.split(" ")[0]) != null;
-        //return codeTable.isValidOperation(line);
+        return codeTable.isValidOperation(line);
     }
 
     public void assembleOperation(String line) {
-        Operation op = codeTable.get(line.split(" ")[0]);
+        String[] tokens = AssemblerUtils.decomposeInTokens(line);
+
+        Operation op = codeTable.getOperation(tokens[0]);
         op.assemble(line);
     }
 }
