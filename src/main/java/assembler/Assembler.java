@@ -58,7 +58,7 @@ public class Assembler {
             currentLine = fileIO.readLine();
 
             while (currentLine != null && !loggerInterruption) {
-                // Our assembler IS NOT case sensitive!!
+                // Our assembler IS NOT case-sensitive!!
                 currentLine = currentLine.toUpperCase();
                 assembleLine();
 

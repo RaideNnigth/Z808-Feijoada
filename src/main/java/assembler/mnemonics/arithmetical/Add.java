@@ -1,7 +1,8 @@
-package assembler.mnemonics;
+package assembler.mnemonics.arithmetical;
 
 import assembler.Assembler;
 import assembler.AssembleableOperation;
+import assembler.mnemonics.Operation;
 import assembler.utils.AssemblerUtils;
 
 import java.util.LinkedList;
@@ -11,6 +12,7 @@ public class Add extends Operation {
 
     // Gab Bessa: How to define the diferent binary codes for this??
     // Henrique: Here's how baby:
+    // Gustavo I wanna cry
     private final short ADD_AXAX = 0x03c0;
     private final short ADD_AXDX = 0x03c2;
     private final short ADD_AXCTE = 0x04ff;

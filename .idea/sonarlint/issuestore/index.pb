@@ -86,12 +86,6 @@ g
 7src/main/java/z808_gui/components/AssemblyTextArea.java,1\a\1af046a67b2946ca233fcbc650411179a113c3a8
 ^
 .src/main/java/z808_gui/components/MenuBar.java,3\f\3f23c26a1fd94210b9b6ffb3e2862581dd93eefc
-P
- src/main/java/assembler/Log.java,2\f\2f80697f7e193efd213798734a7c0ee2f721f335
-S
-#src/main/java/assembler/Logger.java,e\9\e9d47807e5a877909df1e25effe79a411b18645c
-T
-$src/main/java/assembler/LogType.java,b\2\b2e4f5af934d0b87e812d60bb0772ff09871c72d
 ^
 .src/main/java/assembler/directives/Assume.java,8\5\858edaa4b6571b4bb72ee6855467bd0f6fe36601
 f
@@ -102,8 +96,6 @@ j
 :src/main/java/assembler/codeprocessors/LabelProcessor.java,f\e\fe7b095f7038436a652a53cf757f69fdbfb7f534
 n
 >src/main/java/assembler/codeprocessors/DirectiveProcessor.java,7\0\70b137d145b3996e57b9fbf04187c6c97b418be2
-V
-&src/main/java/assembler/Assembler.java,e\e\ee9cd0840c10a44921acdaad5310e51b51904a4a
 n
 >src/main/java/assembler/codeprocessors/OperationProcessor.java,e\3\e388f32ff91ae7567a897ee7062e1e6e2bf7edc8
 p

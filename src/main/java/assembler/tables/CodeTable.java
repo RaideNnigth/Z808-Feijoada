@@ -1,6 +1,6 @@
 package assembler.tables;
 
-import assembler.mnemonics.Add;
+import assembler.mnemonics.arithmetical.Add;
 import assembler.AssembleableOperation;
 
 import java.util.HashMap;

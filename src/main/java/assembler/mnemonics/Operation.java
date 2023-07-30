@@ -11,7 +11,7 @@ public abstract class Operation implements AssembleableOperation {
     public static final String DX_STR = "DX";
     public static final String SI_STR = "SI";
 
-    void processDirectAddressing(String token) {
+    protected void processDirectAddressing( String token ) {
         var st = SymbolTable.getInstance();
         var assembledCode = Assembler.getInstance().getAssembledCode();
 
