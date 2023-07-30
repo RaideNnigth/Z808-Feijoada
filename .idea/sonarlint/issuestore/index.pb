@@ -17,8 +17,6 @@ v
 Fsrc/main/java/virtual_machine/commands/operations/logical/OrAxCte.java,4\3\437aae1cca3935534a9b672e61c52c5034526e30
 u
 Esrc/main/java/virtual_machine/commands/operations/logical/OrAxDx.java,9\f\9f59fc53836c81361416c1ab19c207a7668abad3
-v
-Fsrc/main/java/virtual_machine/commands/operations/OperationsUtils.java,2\b\2b3dd0dcebbb56041186267ff0e9a098b7cb765b
 {
 Ksrc/main/java/virtual_machine/commands/operations/arithmetical/AddAxDx.java,d\a\da3862d2117180e16b55db42bf583a3479429e97
 s
@@ -70,8 +68,6 @@ l
 <src/main/java/virtual_machine/registers/BankOfRegisters.java,6\c\6c87bf50beb8a95f5d8196dbf87a411265264903
 f
 6src/main/java/virtual_machine/registers/Registers.java,0\5\052b19deb81bb44c7e2b18572af7512319cc6378
-k
-;src/main/java/virtual_machine/commands/CommandExecutor.java,3\6\36f21b88ecdf73376196b45693a1565be1b5fca8
 f
 6src/main/java/z808_gui/components/UpperTitlePanel.java,a\c\ac3d88aa30fd1f5bc7b4a8266fd62788497ad4a9
 Y
