@@ -1,1 +1,2 @@
-add ax , -12
+ADD AX,LABEL
+add ax,dx

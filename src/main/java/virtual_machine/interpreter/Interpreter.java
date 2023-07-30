@@ -1,9 +1,13 @@
 package virtual_machine.interpreter;
 
 import virtual_machine.commands.CommandExecutor;
+import virtual_machine.memory.Memory;
 import virtual_machine.os_interruptions.OSInterruptionHandler;
 import virtual_machine.memory.MemoryController;
 import virtual_machine.registers.BankOfRegisters;
+import virtual_machine.registers.RegFlags;
+import virtual_machine.registers.RegWork;
+import virtual_machine.utils.BinaryUtils;
 
 import java.util.HashMap;
 

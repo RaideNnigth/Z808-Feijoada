@@ -1,5 +1,6 @@
 package virtual_machine.loader;
 
+import virtual_machine.interpreter.Interpreter;
 import virtual_machine.memory.MemoryController;
 import virtual_machine.utils.BinaryUtils;
 
