@@ -92,8 +92,6 @@ S
 #src/main/java/assembler/Logger.java,e\9\e9d47807e5a877909df1e25effe79a411b18645c
 T
 $src/main/java/assembler/LogType.java,b\2\b2e4f5af934d0b87e812d60bb0772ff09871c72d
-\
-,src/main/java/assembler/AssemblerTester.java,b\3\b3dd4bf08a8003316afc58e5422e0dfdf843bc9a
 n
 >src/main/java/assembler/codeprocessors/DirectiveProcessor.java,7\0\70b137d145b3996e57b9fbf04187c6c97b418be2
 ^
@@ -110,13 +108,5 @@ n
 >src/main/java/assembler/codeprocessors/OperationProcessor.java,e\3\e388f32ff91ae7567a897ee7062e1e6e2bf7edc8
 p
 @src/main/java/assembler/tables/symboltable/UndeclaredSymbol.java,e\4\e46198b553428bbafdb5591773252b0ecd48aa77
-k
-;src/main/java/assembler/tables/symboltable/SymbolTable.java,6\7\6780aad7078fd789fecb3d515e070d9d20288d74
 b
 2src/main/java/assembler/AssembleableOperation.java,5\6\56cd457e8e41dc5e4a5ecfa3edf17bf24d82620d
-`
-0src/main/java/assembler/mnemonics/Operation.java,6\e\6ea23d9e7e65f74c1e865f177e9ab9112ec80dec
-Z
-*src/main/java/assembler/mnemonics/Add.java,1\7\1780e116cf71048aaa1920d43d78c185aa0a6624
-]
--src/main/java/assembler/tables/CodeTable.java,9\b\9bf0f0fbd71b5896c3c1270c449584463d0ab795

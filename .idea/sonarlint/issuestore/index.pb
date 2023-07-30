@@ -106,17 +106,7 @@ V
 &src/main/java/assembler/Assembler.java,e\e\ee9cd0840c10a44921acdaad5310e51b51904a4a
 n
 >src/main/java/assembler/codeprocessors/OperationProcessor.java,e\3\e388f32ff91ae7567a897ee7062e1e6e2bf7edc8
-\
-,src/main/java/assembler/AssemblerTester.java,b\3\b3dd4bf08a8003316afc58e5422e0dfdf843bc9a
 p
 @src/main/java/assembler/tables/symboltable/UndeclaredSymbol.java,e\4\e46198b553428bbafdb5591773252b0ecd48aa77
 b
 2src/main/java/assembler/AssembleableOperation.java,5\6\56cd457e8e41dc5e4a5ecfa3edf17bf24d82620d
-Z
-*src/main/java/assembler/mnemonics/Add.java,1\7\1780e116cf71048aaa1920d43d78c185aa0a6624
-k
-;src/main/java/assembler/tables/symboltable/SymbolTable.java,6\7\6780aad7078fd789fecb3d515e070d9d20288d74
-]
--src/main/java/assembler/tables/CodeTable.java,9\b\9bf0f0fbd71b5896c3c1270c449584463d0ab795
-`
-0src/main/java/assembler/mnemonics/Operation.java,6\e\6ea23d9e7e65f74c1e865f177e9ab9112ec80dec

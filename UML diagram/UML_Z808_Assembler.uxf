@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>9</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>72</y>
-      <w>342</w>
-      <h>513</h>
+      <x>210</x>
+      <y>161</y>
+      <w>266</w>
+      <h>399</h>
     </coordinates>
     <panel_attributes>Assembler
 -
@@ -49,10 +49,10 @@ _+ getInstance(): Assembler_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>405</x>
-      <y>684</y>
-      <w>351</w>
-      <h>108</h>
+      <x>525</x>
+      <y>637</y>
+      <w>273</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>CodeTable
 -
@@ -67,10 +67,10 @@ _+ getInstance(): CodeTable_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>171</x>
-      <y>576</y>
-      <w>27</w>
-      <h>126</h>
+      <x>343</x>
+      <y>553</y>
+      <w>21</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
@@ -78,10 +78,10 @@ _+ getInstance(): CodeTable_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>450</x>
-      <y>450</y>
-      <w>288</w>
-      <h>117</h>
+      <x>560</x>
+      <y>455</y>
+      <w>224</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>OperationProcessor
 -
@@ -95,10 +95,10 @@ _+ getInstance(): CodeTable_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>333</x>
-      <y>279</y>
-      <w>135</w>
-      <h>261</h>
+      <x>469</x>
+      <y>322</y>
+      <w>105</w>
+      <h>203</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>130.0;270.0;70.0;270.0;70.0;10.0;10.0;10.0</additional_attributes>
@@ -106,10 +106,10 @@ _+ getInstance(): CodeTable_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>576</x>
-      <y>558</y>
-      <w>27</w>
-      <h>144</h>
+      <x>658</x>
+      <y>539</y>
+      <w>21</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
@@ -117,10 +117,10 @@ _+ getInstance(): CodeTable_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>450</x>
-      <y>225</y>
-      <w>288</w>
-      <h>117</h>
+      <x>560</x>
+      <y>280</y>
+      <w>224</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>DirectiveProcessor
 -
@@ -133,10 +133,10 @@ _+ getInstance(): CodeTable_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>333</x>
-      <y>279</y>
-      <w>135</w>
-      <h>27</h>
+      <x>469</x>
+      <y>322</y>
+      <w>105</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>130.0;10.0;10.0;10.0</additional_attributes>
@@ -144,10 +144,10 @@ _+ getInstance(): CodeTable_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>450</x>
-      <y>0</y>
-      <w>288</w>
-      <h>117</h>
+      <x>560</x>
+      <y>105</y>
+      <w>224</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>LabelProcessor
 -
@@ -159,10 +159,10 @@ _+ getInstance(): CodeTable_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>333</x>
-      <y>54</y>
-      <w>135</w>
-      <h>252</h>
+      <x>469</x>
+      <y>147</y>
+      <w>105</w>
+      <h>196</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>130.0;10.0;70.0;10.0;70.0;260.0;10.0;260.0</additional_attributes>
@@ -170,10 +170,10 @@ _+ getInstance(): CodeTable_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>63</x>
-      <y>684</y>
-      <w>234</w>
-      <h>180</h>
+      <x>259</x>
+      <y>637</y>
+      <w>182</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>Symbol
 -
@@ -195,10 +195,10 @@ _+ getInstance(): CodeTable_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1179</x>
-      <y>495</y>
-      <w>270</w>
-      <h>108</h>
+      <x>1127</x>
+      <y>490</y>
+      <w>210</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Interface&gt;&gt;
 AssembleableOperation
@@ -211,10 +211,10 @@ assemble(line: String): void
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>747</x>
-      <y>594</y>
-      <w>252</w>
-      <h>162</h>
+      <x>791</x>
+      <y>567</y>
+      <w>196</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>260.0;10.0;260.0;60.0;50.0;60.0;50.0;160.0;10.0;160.0</additional_attributes>
@@ -222,10 +222,10 @@ assemble(line: String): void
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>864</x>
-      <y>873</y>
-      <w>270</w>
-      <h>126</h>
+      <x>882</x>
+      <y>784</y>
+      <w>210</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>ConcreteOperation1
 -
@@ -240,10 +240,10 @@ _+ MNEMONIC: String_
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1134</x>
-      <y>873</y>
-      <w>126</w>
-      <h>63</h>
+      <x>1092</x>
+      <y>784</y>
+      <w>98</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>Todas as operações
 seguirão essa ideia.
@@ -253,10 +253,10 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>810</x>
-      <y>414</y>
-      <w>324</w>
-      <h>189</h>
+      <x>840</x>
+      <y>427</y>
+      <w>252</w>
+      <h>147</h>
     </coordinates>
     <panel_attributes>SymbolTable
 -
@@ -277,10 +277,10 @@ _+ getInstance(): SymbolTable_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>747</x>
-      <y>729</y>
-      <w>117</w>
-      <h>27</h>
+      <x>791</x>
+      <y>672</y>
+      <w>91</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
@@ -288,10 +288,10 @@ _+ getInstance(): SymbolTable_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1134</x>
-      <y>594</y>
-      <w>207</w>
-      <h>180</h>
+      <x>1092</x>
+      <y>567</y>
+      <w>161</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>210.0;10.0;210.0;180.0;10.0;180.0</additional_attributes>
@@ -299,10 +299,10 @@ _+ getInstance(): SymbolTable_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>846</x>
-      <y>693</y>
-      <w>297</w>
-      <h>117</h>
+      <x>868</x>
+      <y>644</y>
+      <w>231</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>/Operation/
 -
@@ -317,10 +317,10 @@ _+ SI_STR: String_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>990</x>
-      <y>801</y>
-      <w>27</w>
-      <h>90</h>
+      <x>980</x>
+      <y>728</y>
+      <w>21</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
