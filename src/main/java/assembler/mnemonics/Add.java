@@ -54,14 +54,12 @@ public class Add implements Operation {
                         assembledCode.add(sy.getValue());
                     } else {
                         st.addOccurrenceOfSymbol(tokens[2], assembledCode.size());
-                        assembledCode.add((short) 0);
                     }
                 } else if (AssemblerUtils.isValidName(tokens[2])) {
                     Symbol s = new Symbol(tokens[2], false);
 
                     st.addSymbol(s);
                     st.addOccurrenceOfSymbol(s.getIdentificator(), assembledCode.size());
-                    assembledCode.add((short) 0);
                 }
             }
         }
