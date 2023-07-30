@@ -28,34 +28,40 @@ public class Add implements Operation {
 
         if (tokens[1].equals(AX_STR)) {
             // AX + AX
-            if (tokens[2].equals(AX_STR))
+            if (tokens[2].equals(AX_STR)) {
                 assembledCode.add(ADD_AXAX);
+            }
 
             // AX + DX
-            else if (tokens[2].equals(DX_STR))
+            else if (tokens[2].equals(DX_STR)) {
                 assembledCode.add(ADD_AXDX);
+            }
 
             // Check for immediate numeric value
             else if (AssemblerUtils.isNumericConstant(tokens[2])) {
                 assembledCode.add(ADD_AXCTE);
                 assembledCode.add(AssemblerUtils.convertNumber(tokens[2]));
             }
-            
+
             // If none above checks, assume it's a label for a variable
-            else if (AssemblerUtils.isValidName(tokens[2])) {
+            else {
                 assembledCode.add(ADD_AXDIR);
                 SymbolTable st = SymbolTable.getInstance();
 
-                if(st.symbolExists(tokens[2]))
-                {
-                    st.addOccurrenceOfSymbol(tokens[2], assembledCode.size());
-                }
-                else
-                {
+                if (st.symbolExists(tokens[2])) {
+                    var sy = st.getSymbol(tokens[2]);
+                    if (sy.isDeclared()) {
+                        assembledCode.add(sy.getValue());
+                    } else {
+                        st.addOccurrenceOfSymbol(tokens[2], assembledCode.size());
+                        assembledCode.add((short) 0);
+                    }
+                } else if (AssemblerUtils.isValidName(tokens[2])) {
                     Symbol s = new Symbol(tokens[2], false);
 
                     st.addSymbol(s);
                     st.addOccurrenceOfSymbol(s.getIdentificator(), assembledCode.size());
+                    assembledCode.add((short) 0);
                 }
             }
         }

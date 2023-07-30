@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>18</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>144</x>
-      <y>360</y>
-      <w>648</w>
-      <h>504</h>
+      <x>259</x>
+      <y>336</y>
+      <w>252</w>
+      <h>196</h>
     </coordinates>
     <panel_attributes>Assembler
 -
@@ -19,7 +19,6 @@
 - DS_END: int
 - SS_START: int
 - SS_END: int
-- symbolTable: HashMap&lt;String, Symbol&gt;
 - assembledCode: LinkedList&lt;Short&gt;
 -
 + assembleFile(pathToProgram: String): void
@@ -30,10 +29,10 @@ _+ getInstance(): Assembler_</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1242</x>
-      <y>900</y>
-      <w>702</w>
-      <h>216</h>
+      <x>560</x>
+      <y>588</y>
+      <w>273</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>CodeTable
 -
@@ -47,10 +46,10 @@ _+ getOperation(): Operation_</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
-      <y>846</y>
-      <w>54</w>
-      <h>198</h>
+      <x>378</x>
+      <y>525</y>
+      <w>21</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
@@ -58,10 +57,10 @@ _+ getOperation(): Operation_</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1008</x>
-      <y>540</y>
-      <w>576</w>
-      <h>234</h>
+      <x>595</x>
+      <y>406</y>
+      <w>224</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>OperationProcessor
 -
@@ -75,10 +74,10 @@ _+ getOperation(): Operation_</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>774</x>
-      <y>558</y>
-      <w>270</w>
-      <h>162</h>
+      <x>504</x>
+      <y>413</y>
+      <w>105</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>130.0;70.0;70.0;70.0;70.0;10.0;10.0;10.0</additional_attributes>
@@ -86,21 +85,21 @@ _+ getOperation(): Operation_</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1260</x>
-      <y>756</y>
-      <w>378</w>
-      <h>180</h>
+      <x>693</x>
+      <y>490</y>
+      <w>21</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>190.0;80.0;190.0;40.0;10.0;40.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1008</x>
-      <y>270</y>
-      <w>576</w>
-      <h>234</h>
+      <x>595</x>
+      <y>231</y>
+      <w>224</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>DirectiveProcessor
 -
@@ -114,21 +113,21 @@ _+ getOperation(): Operation_</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>774</x>
-      <y>378</y>
-      <w>270</w>
-      <h>234</h>
+      <x>504</x>
+      <y>273</y>
+      <w>105</w>
+      <h>161</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>130.0;10.0;70.0;10.0;70.0;110.0;10.0;110.0</additional_attributes>
+    <additional_attributes>130.0;10.0;70.0;10.0;70.0;210.0;10.0;210.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1008</x>
-      <y>0</y>
-      <w>576</w>
-      <h>234</h>
+      <x>595</x>
+      <y>56</y>
+      <w>224</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>LabelProcessor
 -
@@ -141,21 +140,21 @@ _+ getOperation(): Operation_</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>774</x>
-      <y>108</y>
-      <w>270</w>
-      <h>504</h>
+      <x>504</x>
+      <y>98</y>
+      <w>105</w>
+      <h>336</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>130.0;10.0;70.0;10.0;70.0;260.0;10.0;260.0</additional_attributes>
+    <additional_attributes>130.0;10.0;70.0;10.0;70.0;460.0;10.0;460.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>216</x>
-      <y>1008</y>
-      <w>486</w>
-      <h>252</h>
+      <x>287</x>
+      <y>588</y>
+      <w>189</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>Symbol
 -
@@ -170,10 +169,10 @@ _+ getOperation(): Operation_</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2052</x>
-      <y>900</y>
-      <w>540</w>
-      <h>216</h>
+      <x>896</x>
+      <y>588</y>
+      <w>210</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Interface&gt;&gt;
 Operation
@@ -186,21 +185,21 @@ assemble(line: String): void
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1926</x>
-      <y>990</y>
-      <w>162</w>
-      <h>54</h>
+      <x>826</x>
+      <y>518</y>
+      <w>196</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>260.0;10.0;260.0;60.0;50.0;60.0;50.0;160.0;10.0;160.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2052</x>
-      <y>1278</y>
-      <w>540</w>
-      <h>270</h>
+      <x>896</x>
+      <y>735</y>
+      <w>210</w>
+      <h>105</h>
     </coordinates>
     <panel_attributes>ConcreteOperation1
 -
@@ -215,10 +214,10 @@ _+ MNEMONIC: String_
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>2592</x>
-      <y>1278</y>
-      <w>252</w>
-      <h>126</h>
+      <x>1106</x>
+      <y>735</y>
+      <w>98</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>Todas as operações
 seguirão essa ideia.
@@ -228,12 +227,43 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2322</x>
-      <y>1098</y>
-      <w>54</w>
-      <h>216</h>
+      <x>1001</x>
+      <y>665</y>
+      <w>21</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>875</x>
+      <y>420</y>
+      <w>252</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>SymbolTable
+-
+- symbolTable: HashMap&lt;String, Symbol&gt;
+-
++ getInstance(): SymbolTable
++ symbolExists(s: String): boolean
++ getSymbol(s: String): Symbol
++ addOccurrenceOfSymbol(s: String, index: int): void
++ addSymbol(sy: Symbol): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>826</x>
+      <y>623</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
