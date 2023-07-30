@@ -11,16 +11,14 @@ public class OperationProcessor {
         codeTable = CodeTable.getInstance();
     }
 
-    public boolean isOperation(String line) {
+    public boolean assembleOperation(String line) {
         String[] tokens = AssemblerUtils.decomposeInTokens(line);
 
-        return codeTable.isValidOperation(tokens[0]);
-    }
-
-    public void assembleOperation(String line) {
-        String[] tokens = AssemblerUtils.decomposeInTokens(line);
+        if(!codeTable.isValidOperation(tokens[0]))
+            return false;
 
         AssembleableOperation op = codeTable.getOperation(tokens[0]);
         op.assemble(line);
+        return true;
     }
 }

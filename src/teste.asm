@@ -1,1 +1,2 @@
-add ax , -12
+GAY:
+add ax,ax

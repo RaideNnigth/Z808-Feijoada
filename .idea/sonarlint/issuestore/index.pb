@@ -1,7 +1,5 @@
 
 y
-Isrc/main/java/virtual_machine/commands/operations/arithmetical/DivAx.java,7\0\70e1e341f5ec2c4e9a2e2a1adc9a5e52de66bdc7
-y
 Isrc/main/java/virtual_machine/commands/operations/arithmetical/DivSi.java,c\5\c5b46eecb9351ae024d23d2e3bf5d6706cdc03d4
 y
 Isrc/main/java/virtual_machine/commands/operations/arithmetical/MulAx.java,d\a\da2436000be0c01978ff1b051b661c7aa7bf393c
@@ -70,8 +68,6 @@ l
 <src/main/java/virtual_machine/registers/BankOfRegisters.java,6\c\6c87bf50beb8a95f5d8196dbf87a411265264903
 f
 6src/main/java/virtual_machine/registers/Registers.java,0\5\052b19deb81bb44c7e2b18572af7512319cc6378
-k
-;src/main/java/virtual_machine/commands/CommandExecutor.java,3\6\36f21b88ecdf73376196b45693a1565be1b5fca8
 f
 6src/main/java/z808_gui/components/UpperTitlePanel.java,a\c\ac3d88aa30fd1f5bc7b4a8266fd62788497ad4a9
 Y
@@ -84,13 +80,5 @@ g
 .src/main/java/z808_gui/components/MenuBar.java,3\f\3f23c26a1fd94210b9b6ffb3e2862581dd93eefc
 ^
 .src/main/java/assembler/directives/Assume.java,8\5\858edaa4b6571b4bb72ee6855467bd0f6fe36601
-f
-6src/main/java/assembler/tables/symboltable/Symbol.java,d\c\dc4aff7f9e22881120474b49beca30eb02fc7c7f
-n
->src/main/java/assembler/codeprocessors/DirectiveProcessor.java,7\0\70b137d145b3996e57b9fbf04187c6c97b418be2
-n
->src/main/java/assembler/codeprocessors/OperationProcessor.java,e\3\e388f32ff91ae7567a897ee7062e1e6e2bf7edc8
 p
 @src/main/java/assembler/tables/symboltable/UndeclaredSymbol.java,e\4\e46198b553428bbafdb5591773252b0ecd48aa77
-b
-2src/main/java/assembler/AssembleableOperation.java,5\6\56cd457e8e41dc5e4a5ecfa3edf17bf24d82620d

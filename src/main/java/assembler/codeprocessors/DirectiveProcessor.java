@@ -17,18 +17,23 @@ public class DirectiveProcessor {
         directivesTable.put("EQU", new Equ());
         directivesTable.put("ORG", new Org());
         directivesTable.put("OFFSET", new Offset());
-        directivesTable.put("ASSUME", new Assume()); // Meio inutil
+
+        directivesTable.put("ASSUME", new Assume());
+        // Gab Bessa: Meio inutil ^
+        // Henrique: Inutil eh tua vida
+
         directivesTable.put("PROC", new Proc());
         directivesTable.put("ENDP", new Endp());
     }
-    public void assembleDirective(String line) {
+    public boolean assembleDirective(String line) {
         String directive = line.split(" ")[0];
         AssembleableOperation op = directivesTable.get(directive);
 
         // If this is not a directive
         if (op == null)
-            return;
+            return false;
 
         op.assemble(line);
+        return true;
     }
 }

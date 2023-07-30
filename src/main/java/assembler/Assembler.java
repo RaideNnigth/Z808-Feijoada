@@ -3,11 +3,8 @@ package assembler;
 import assembler.codeprocessors.DirectiveProcessor;
 import assembler.codeprocessors.LabelProcessor;
 import assembler.codeprocessors.OperationProcessor;
-import assembler.tables.symboltable.Symbol;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 // THIS CLASS IS A SINGLETON
@@ -19,14 +16,17 @@ public class Assembler {
 
     // Assembled code
     private LinkedList<Short> assembledCode = new LinkedList<>();
+
     // Logger
     private final Logger logger = new Logger();
     private boolean loggerInterruption;
+
     // Handling files utils
     private String currentLine;
     private int lineCounter;
+
     // Position where the code will be
-    private int PC;
+    private int PC = 0;
 
     // Defining header metadata
     private final int HEADER_SIZE = 0xC;
@@ -78,29 +78,34 @@ public class Assembler {
         currentLine = currentLine.split(";")[0];
 
         // Line is just a comment
-        if (currentLine.equals("")) {
+        if (currentLine.isEmpty())
             return;
-        }
 
         // Handling labels
-        labelProcessor.assembleLabel(currentLine);
+        if (labelProcessor.assembleLabel(currentLine))
+            return;
 
         // Handling directives
-        directiveProcessor.assembleDirective(currentLine);
+        if (directiveProcessor.assembleDirective(currentLine))
+            return;
 
         // Handling operations
-        if (operationProcessor.isOperation(currentLine)) {
-            operationProcessor.assembleOperation(currentLine);
-            for (short s : assembledCode) {
-                System.out.print(Integer.toHexString(s) + " ");
+        if (operationProcessor.assembleOperation(currentLine)) {
+            for (int i = PC; i < assembledCode.size(); i++) {
+                System.out.print(assembledCode.get(i) + " ");
             }
             System.out.println();
         }
 
+        PC = assembledCode.size() - 1;
     }
 
     public int getPC() {
         return PC;
+    }
+
+    public void incrementPC() {
+        PC += 1;
     }
 
     public boolean isLoggerInterruption() {
