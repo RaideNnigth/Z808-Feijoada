@@ -1,5 +1,10 @@
 package assembler.tables.symboltable;
 
+import assembler.Assembler;
+import assembler.Log;
+import assembler.LogType;
+import assembler.utils.AssemblerUtils;
+
 import java.util.HashMap;
 
 public class SymbolTable {
@@ -28,9 +33,31 @@ public class SymbolTable {
     public void addOccurrenceOfSymbol(String symbol, int index) {
         var symbObj = symbolTable.get(symbol);
         symbObj.getUsedAt().add(index);
+        Assembler.getInstance().getAssembledCode().add((short) 0);
     }
 
     public void addSymbol(Symbol s) {
+        if (!AssemblerUtils.isValidName(s.getIdentificator())) {
+            Log l = new Log(LogType.ERROR, Assembler.getInstance().getLineCounter(),
+                    String.format("%s is not a valid identifier.", s.getIdentificator()));
+            Assembler.getInstance().getLogger().addLog(l);
+        }
+
         symbolTable.put(s.getIdentificator(), s);
+    }
+
+    public void replaceAllOcorrencesOfDeclaredSymbols() {
+        for (Symbol s : symbolTable.values()) {
+            if (s.isDeclared()) {
+                while (!s.getUsedAt().isEmpty()) {
+                    int pos = s.getUsedAt().pop();
+                    Assembler.getInstance().getAssembledCode().set(pos, s.getValue());
+                }
+            }
+        }
+    }
+
+    public void reset() {
+        symbolTable.clear();
     }
 }

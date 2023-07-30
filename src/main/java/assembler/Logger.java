@@ -16,4 +16,8 @@ public class Logger {
             Assembler.getInstance().setLoggerInterruption(true);
         }
     }
+
+    public void reset() {
+        logs.clear();
+    }
 }

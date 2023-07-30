@@ -23,6 +23,8 @@ public class Assembler {
     private boolean loggerInterruption;
     // Handling files utils
     private String currentLine;
+    private int lineCounter;
+    private String filename;
     // Position where the code will be
     private int PC;
 
@@ -39,6 +41,7 @@ public class Assembler {
 
     private Assembler() {
         loggerInterruption = false;
+        lineCounter = 0;
     }
 
     public static Assembler getInstance() {
@@ -48,10 +51,13 @@ public class Assembler {
     }
 
     public void assembleFile(String pathToProgram) throws FileNotFoundException {
-        FileReader fileReader = new FileReader(pathToProgram);
+        filename = pathToProgram;
+
+        FileReader fileReader = new FileReader(filename);
 
         try (BufferedReader fileIO = new BufferedReader(fileReader)) {
             do {
+                lineCounter += 1;
                 // Our assembler IS NOT case sensitive!!
                 currentLine = fileIO.readLine().toUpperCase();
                 assembleLine();
@@ -66,7 +72,7 @@ public class Assembler {
     private void assembleLine() {
         currentLine = currentLine.split(";")[0];
 
-        // Line was just a comment
+        // Line is just a comment
         if (currentLine.equals("")) {
             return;
         }
@@ -98,5 +104,17 @@ public class Assembler {
 
     public LinkedList<Short> getAssembledCode() {
         return assembledCode;
+    }
+
+    public Logger getLogger() {
+        return logger;
+    }
+
+    public String getCurrentLine() {
+        return currentLine;
+    }
+
+    public int getLineCounter() {
+        return lineCounter;
     }
 }

@@ -49,7 +49,6 @@ public class Add implements Operation {
                 if(st.symbolExists(tokens[2]))
                 {
                     st.addOccurrenceOfSymbol(tokens[2], assembledCode.size());
-                    assembledCode.add((short) 0);
                 }
                 else
                 {
