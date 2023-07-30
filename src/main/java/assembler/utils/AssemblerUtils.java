@@ -2,13 +2,15 @@ package assembler.utils;
 
 import assembler.tables.CodeTable;
 
+import java.util.Arrays;
+
 public class AssemblerUtils {
     public static String[] decomposeInTokens(String line) {
-        return line.split("[ ,]");
+        return line.split("\\s*,\\s*|\\s+");
     }
 
     public static boolean isNumericConstant(String element) {
-        return element.matches("[0-9]+[bh]?");
+        return element.matches("[-+]?[0-9]+[bh]?");
     }
 
     public static short convertNumber(String number) {
@@ -17,7 +19,7 @@ public class AssemblerUtils {
             return (short) Integer.parseInt(number.substring(0, number.length() - 1), 2);
         }
         // Hex number
-        else if (number.matches("[0-9A-F]+h")) {
+        else if (number.matches("[+-]?[0-9A-F]+h")) {
             return (short) Integer.parseInt(number.substring(0, number.length() - 1), 16);
         }
         // Decimal number
