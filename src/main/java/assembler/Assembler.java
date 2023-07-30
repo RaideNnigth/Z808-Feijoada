@@ -19,9 +19,12 @@ public class Assembler {
 
     // Assembled code
     private LinkedList<Short> assembledCode = new LinkedList<>();
-
+    // Logger
+    private final Logger logger = new Logger();
+    private boolean loggerInterruption;
     // Handling files utils
     private String currentLine;
+    // Position where the code will be
     private int PC;
 
     // Defining header metadata
@@ -35,7 +38,9 @@ public class Assembler {
     // Singleton definition
     private static Assembler instance;
 
-    private Assembler() {}
+    private Assembler() {
+        loggerInterruption = false;
+    }
 
     public static Assembler getInstance() {
         if (instance == null)
@@ -51,7 +56,7 @@ public class Assembler {
                 // Our assembler IS NOT case sensitive!!
                 currentLine = fileIO.readLine().toUpperCase();
                 assembleLine();
-            } while (!currentLine.isEmpty());
+            } while (!currentLine.isEmpty() && !loggerInterruption);
         }
         catch (IOException e){
             System.err.println(e.getMessage());
@@ -60,9 +65,39 @@ public class Assembler {
     }
 
     private void assembleLine() {
+        currentLine = currentLine.split(";")[0];
+
+        // Line was just a comment
+        if (currentLine.equals("")) {
+            return;
+        }
+
+        // Handling labels
+        labelProcessor.assembleLabel(currentLine);
+
+        // Handling directives
+        directiveProcessor.assembleDirective(currentLine);
+
+        // Handling operations
         if(operationProcessor.isOperation(currentLine)) {
             operationProcessor.assembleOperation(currentLine);
         }
 
+    }
+
+    public int getPC() {
+        return PC;
+    }
+
+    public HashMap<String, Symbol> getSymbolTable() {
+        return symbolTable;
+    }
+
+    public boolean isLoggerInterruption() {
+        return loggerInterruption;
+    }
+
+    public void setLoggerInterruption(boolean loggerInterruption) {
+        this.loggerInterruption = loggerInterruption;
     }
 }

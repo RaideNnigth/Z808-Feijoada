@@ -1,7 +1,7 @@
 package assembler.tables;
 
 import assembler.mnemonics.Add;
-import assembler.mnemonics.Operation;
+import assembler.Operation;
 
 import java.util.HashMap;
 

@@ -1,5 +1,7 @@
 package assembler.mnemonics;
 
+import assembler.Operation;
+
 public class Add implements Operation {
     public static final String MNEMONIC = "ADD";
 
