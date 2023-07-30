@@ -1,8 +1,11 @@
 package assembler.tables;
 
-import assembler.mnemonics.arithmetical.Add;
 import assembler.AssembleableOperation;
-import assembler.mnemonics.flow.Jmp;
+import assembler.mnemonics.arithmetical.*;
+import assembler.mnemonics.flow.*;
+import assembler.mnemonics.logical.*;
+import assembler.mnemonics.move.*;
+import assembler.mnemonics.stack.*;
 
 import java.util.HashMap;
 
@@ -15,7 +18,25 @@ public class CodeTable {
 
         // Operações
         codeMap.put(Add.MNEMONIC, new Add());
+        codeMap.put(Cmp.MNEMONIC, new Cmp());
+        codeMap.put(Div.MNEMONIC, new Div());
+        codeMap.put(Mul.MNEMONIC, new Mul());
+        codeMap.put(Sub.MNEMONIC, new Sub());
+        codeMap.put(Call.MNEMONIC, new Call());
+        codeMap.put(Int.MNEMONIC, new Int());
+        codeMap.put(Je.MNEMONIC, new Je());
         codeMap.put(Jmp.MNEMONIC, new Jmp());
+        codeMap.put(Jnz.MNEMONIC, new Jnz());
+        codeMap.put(Jp.MNEMONIC, new Jp());
+        codeMap.put(Jz.MNEMONIC, new Jz());
+        codeMap.put(Ret.MNEMONIC, new Ret());
+        codeMap.put(And.MNEMONIC, new And());
+        codeMap.put(Not.MNEMONIC, new Not());
+        codeMap.put(Or.MNEMONIC, new Or());
+        codeMap.put(Xor.MNEMONIC, new Xor());
+        codeMap.put(Mov.MNEMONIC, new Mov());
+        codeMap.put(Pop.MNEMONIC, new Pop());
+        codeMap.put(Push.MNEMONIC, new Push());
     }
 
     public static CodeTable getInstance() {

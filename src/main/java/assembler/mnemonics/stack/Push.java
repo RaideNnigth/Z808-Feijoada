@@ -7,6 +7,7 @@ import assembler.utils.AssemblerUtils;
 import java.util.LinkedList;
 
 public class Push extends Operation {
+    public static final String MNEMONIC = "PUSH";
     private final short PUSH_AX = 0x50FF;
     @Override
     public void assemble( String line ) {
