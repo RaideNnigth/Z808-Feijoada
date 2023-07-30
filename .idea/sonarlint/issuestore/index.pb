@@ -60,8 +60,6 @@ e
 0src/main/java/virtual_machine/memory/Memory.java,3\d\3daf65b1f672f4e0de9e00cc13a06287462a22b1
 j
 :src/main/java/virtual_machine/memory/MemoryController.java,1\1\1126c0efed438f6e505252cb4dfe41501d77bd68
-Z
-*src/main/java/assembler/mnemonics/ADD.java,8\a\8a08fa9c609cbaef5d33cffa8acdfb6ca0af0590
 l
 <src/main/java/virtual_machine/registers/BankOfRegisters.java,6\c\6c87bf50beb8a95f5d8196dbf87a411265264903
 f
@@ -74,7 +72,5 @@ V
 &src/main/java/z808_gui/MainWindow.java,e\9\e9da8347c6e40279092d3e9ecd5e9734896ee0c0
 g
 7src/main/java/z808_gui/components/AssemblyTextArea.java,1\a\1af046a67b2946ca233fcbc650411179a113c3a8
-^
-.src/main/java/assembler/directives/Assume.java,8\5\858edaa4b6571b4bb72ee6855467bd0f6fe36601
 p
 @src/main/java/assembler/tables/symboltable/UndeclaredSymbol.java,e\4\e46198b553428bbafdb5591773252b0ecd48aa77
