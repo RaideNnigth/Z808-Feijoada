@@ -14,7 +14,7 @@ public class OperationProcessor {
     public boolean assembleOperation(String line) {
         String[] tokens = AssemblerUtils.decomposeInTokens(line);
 
-        if(!codeTable.isValidOperation(tokens[0]))
+        if (!codeTable.isValidOperation(tokens[0]))
             return false;
 
         AssembleableOperation op = codeTable.getOperation(tokens[0]);

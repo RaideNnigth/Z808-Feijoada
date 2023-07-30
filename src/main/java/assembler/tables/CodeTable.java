@@ -2,6 +2,7 @@ package assembler.tables;
 
 import assembler.mnemonics.arithmetical.Add;
 import assembler.AssembleableOperation;
+import assembler.mnemonics.flow.Jmp;
 
 import java.util.HashMap;
 
@@ -14,6 +15,7 @@ public class CodeTable {
 
         // Operações
         codeMap.put(Add.MNEMONIC, new Add());
+        codeMap.put(Jmp.MNEMONIC, new Jmp());
     }
 
     public static CodeTable getInstance() {

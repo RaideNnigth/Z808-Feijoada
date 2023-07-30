@@ -3,6 +3,8 @@ package assembler;
 import assembler.codeprocessors.DirectiveProcessor;
 import assembler.codeprocessors.LabelProcessor;
 import assembler.codeprocessors.OperationProcessor;
+import assembler.tables.symboltable.SymbolTable;
+import assembler.tables.symboltable.UndeclaredSymbol;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -27,6 +29,8 @@ public class Assembler {
 
     // Position where the code will be
     private int PC = 0;
+    // DELETE AFTER
+    private int lastPrint = 0;
 
     // Defining header metadata
     private final int HEADER_SIZE = 0xC;
@@ -69,9 +73,24 @@ public class Assembler {
             System.exit(-1);
         }
 
+        try {
+            SymbolTable.getInstance().replaceAllOcorrencesOfDeclaredSymbols();
+        } catch (UndeclaredSymbol e) {
+            System.out.println(e.getMessage());
+        }
+
         // Reset after assembly
+        SymbolTable.getInstance().reset();
         assembledCode.clear();
         logger.reset();
+        PC = 0;
+        lastPrint = 0;
+
+        // TODO:
+        // 1- create header
+        // 2- write in binary file
+        // 3- interface with GUI
+        // 4- when assembled -> enable buttons
     }
 
     private void assembleLine() {
@@ -91,21 +110,14 @@ public class Assembler {
 
         // Handling operations
         if (operationProcessor.assembleOperation(currentLine)) {
-            for (int i = PC; i < assembledCode.size(); i++) {
-                System.out.print(assembledCode.get(i) + " ");
+            PC = assembledCode.size() - 1;
+
+            // Print -> Remove later
+            for (; lastPrint < assembledCode.size(); lastPrint++) {
+                System.out.print(Integer.toHexString(assembledCode.get(lastPrint) & 0xFFFF) + " ");
             }
             System.out.println();
         }
-
-        PC = assembledCode.size() - 1;
-    }
-
-    public int getPC() {
-        return PC;
-    }
-
-    public void incrementPC() {
-        PC += 1;
     }
 
     public boolean isLoggerInterruption() {

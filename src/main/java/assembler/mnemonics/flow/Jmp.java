@@ -23,6 +23,5 @@ public class Jmp extends Operation {
 
         assembledCode.add(JMP);
         processDirectAddressing(tokens[1]);
-
     }
 }

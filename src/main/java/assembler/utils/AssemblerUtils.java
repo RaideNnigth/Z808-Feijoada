@@ -5,6 +5,9 @@ import assembler.tables.CodeTable;
 import java.util.Arrays;
 
 public class AssemblerUtils {
+    private static final String nameRegex = "[A-Z@$_][A-Z@$_0-9]*";
+    private static final String labelRegex = nameRegex + ":";
+
     public static String[] decomposeInTokens(String line) {
         return line.split("\\s*,\\s*|\\s+");
     }
@@ -27,12 +30,32 @@ public class AssemblerUtils {
     }
 
     public static boolean isValidName(String name) {
+        if (!name.matches(nameRegex)) {
+            return false;
+        }
+
         // Check if name is a invalid word
-        for(String s : CodeTable.getInstance().getKeys()) {
-            if(name.equals(s))
+        for (String s : CodeTable.getInstance().getKeys()) {
+            if (name.equals(s))
                 return false;
         }
 
-        return name.matches("[A-Z@$_][A-Z@$_0-9]*");
+        return true;
+    }
+
+    public static boolean isValidLabel(String line) {
+        if (!line.matches(labelRegex)) {
+            return false;
+        }
+
+        line = line.substring(0, line.length() - 2);
+
+        // Check if name is a invalid word
+        for (String s : CodeTable.getInstance().getKeys()) {
+            if (line.equals(s))
+                return false;
+        }
+
+        return true;
     }
 }

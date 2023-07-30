@@ -75,8 +75,6 @@ V
 g
 7src/main/java/z808_gui/components/AssemblyTextArea.java,1\a\1af046a67b2946ca233fcbc650411179a113c3a8
 ^
-.src/main/java/z808_gui/components/MenuBar.java,3\f\3f23c26a1fd94210b9b6ffb3e2862581dd93eefc
-^
 .src/main/java/assembler/directives/Assume.java,8\5\858edaa4b6571b4bb72ee6855467bd0f6fe36601
 p
 @src/main/java/assembler/tables/symboltable/UndeclaredSymbol.java,e\4\e46198b553428bbafdb5591773252b0ecd48aa77
