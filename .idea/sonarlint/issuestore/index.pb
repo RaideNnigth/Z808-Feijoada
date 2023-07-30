@@ -15,8 +15,6 @@ v
 Fsrc/main/java/virtual_machine/commands/operations/logical/OrAxCte.java,4\3\437aae1cca3935534a9b672e61c52c5034526e30
 u
 Esrc/main/java/virtual_machine/commands/operations/logical/OrAxDx.java,9\f\9f59fc53836c81361416c1ab19c207a7668abad3
-v
-Fsrc/main/java/virtual_machine/commands/operations/OperationsUtils.java,2\b\2b3dd0dcebbb56041186267ff0e9a098b7cb765b
 {
 Ksrc/main/java/virtual_machine/commands/operations/arithmetical/AddAxDx.java,d\a\da3862d2117180e16b55db42bf583a3479429e97
 s
