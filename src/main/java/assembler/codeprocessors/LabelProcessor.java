@@ -16,6 +16,6 @@ public class LabelProcessor {
             return;
 
         Symbol symbol = new Symbol(label, true, (short) Assembler.getInstance().getPC());
-        Assembler.getInstance().getSymbolTable().put(label, symbol);
+        //Assembler.getInstance().getSymbolTable().put(label, symbol);
     }
 }
