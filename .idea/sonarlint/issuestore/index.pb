@@ -110,7 +110,3 @@ j
 :src/main/java/assembler/codeprocessors/LabelProcessor.java,f\e\fe7b095f7038436a652a53cf757f69fdbfb7f534
 n
 >src/main/java/assembler/codeprocessors/OperationProcessor.java,e\3\e388f32ff91ae7567a897ee7062e1e6e2bf7edc8
-n
->src/main/java/assembler/codeprocessors/DirectiveProcessor.java,7\0\70b137d145b3996e57b9fbf04187c6c97b418be2
-]
--src/main/java/assembler/tables/CodeTable.java,9\b\9bf0f0fbd71b5896c3c1270c449584463d0ab795

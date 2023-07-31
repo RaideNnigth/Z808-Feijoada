@@ -44,6 +44,8 @@ public class Assembler {
     // Singleton definition
     private static Assembler instance;
 
+    private boolean isCodeSegment;
+
     private Assembler() {
         loggerInterruption = false;
         lineCounter = 0;
@@ -109,9 +111,13 @@ public class Assembler {
         if (labelProcessor.assembleLabel(currentLine))
             return;
 
-        // Handling directives
-        if (directiveProcessor.assembleDirective(currentLine))
-            return;
+        try {
+            // Handling directives
+            if (directiveProcessor.assembleDirective(currentLine))
+                return;
+        } catch (Exception e) {
+
+        }
 
         // Handling operations
         if (operationProcessor.assembleOperation(currentLine)) {
@@ -122,6 +128,13 @@ public class Assembler {
                 System.out.print(Integer.toHexString(assembledCode.get(lastPrint) & 0xFFFF) + " ");
             }
             System.out.println();
+        }
+
+        if (isCodeSegment) {
+            CS_END = PC;
+            DS_START = CS_END + 1;
+        } else {
+            DS_END = PC;
         }
     }
 
@@ -147,5 +160,12 @@ public class Assembler {
 
     public int getLineCounter() {
         return lineCounter;
+    }
+
+    public void setSegment(String segment) {
+        switch (segment) {
+            case ".CODE" -> isCodeSegment = true;
+            case ".DATA" -> isCodeSegment = false;
+        }
     }
 }

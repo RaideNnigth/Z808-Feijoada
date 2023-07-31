@@ -34,8 +34,4 @@ j
 k
 ;src/main/java/assembler/tables/symboltable/SymbolTable.java,6\7\6780aad7078fd789fecb3d515e070d9d20288d74
 n
->src/main/java/assembler/codeprocessors/DirectiveProcessor.java,7\0\70b137d145b3996e57b9fbf04187c6c97b418be2
-n
 >src/main/java/assembler/codeprocessors/OperationProcessor.java,e\3\e388f32ff91ae7567a897ee7062e1e6e2bf7edc8
-]
--src/main/java/assembler/tables/CodeTable.java,9\b\9bf0f0fbd71b5896c3c1270c449584463d0ab795
