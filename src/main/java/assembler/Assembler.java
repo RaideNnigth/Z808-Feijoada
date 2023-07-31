@@ -34,7 +34,6 @@ public class Assembler {
 
     // Defining header metadata
     private final int HEADER_SIZE = 0xC;
-    public static int CS_START;
     public static int CS_END;
     public static int DS_START;
     public static int DS_END;
@@ -44,7 +43,10 @@ public class Assembler {
     // Singleton definition
     private static Assembler instance;
 
+    // Interaction with Segment system
     private boolean isCodeSegment;
+    private static boolean codeSegmentSet;
+    private static boolean dataSegmentSet;
 
     private Assembler() {
         loggerInterruption = false;
@@ -96,8 +98,15 @@ public class Assembler {
         // 4- when assembled -> enable buttons
 
         // Writing header
-        OutputStream outputStream = new FileOutputStream(pathToProgram + ".bin");
-        outputStream.write();
+        try(OutputStream outputStream = new FileOutputStream(pathToProgram + ".bin")) {
+            outputStream.write(HEADER_SIZE);
+            outputStream.write(CS_END + HEADER_SIZE);
+            outputStream.write(DS_START + HEADER_SIZE);
+            outputStream.write(DS_END + HEADER_SIZE);
+            outputStream.write();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     private void assembleLine() {
@@ -167,5 +176,13 @@ public class Assembler {
             case ".CODE" -> isCodeSegment = true;
             case ".DATA" -> isCodeSegment = false;
         }
+    }
+
+    public void codeSegmentFound() {
+        codeSegmentSet = true;
+    }
+
+    public void dataSegmentFound() {
+        dataSegmentSet= true;
     }
 }
