@@ -59,7 +59,7 @@ public class Assembler {
         return instance;
     }
 
-    public void assembleFile(String pathToProgram) throws FileNotFoundException {
+    public void assembleFile(String pathToProgram) throws Exception {
         FileReader fileReader = new FileReader(pathToProgram);
 
         try (BufferedReader fileIO = new BufferedReader(fileReader)) {
@@ -84,29 +84,49 @@ public class Assembler {
             System.out.println(e.getMessage());
         }
 
-        // Reset after assembly
-        SymbolTable.getInstance().reset();
-        assembledCode.clear();
-        logger.reset();
-        PC = 0;
-        lastPrint = 0;
-
         // TODO:
         // 1- create header
         // 2- write in binary file
         // 3- interface with GUI
         // 4- when assembled -> enable buttons
 
+        if (!codeSegmentSet) {
+            throw new Exception("É preciso definir um segmento de código!");
+        }
+
+        // Set invalid segment for interpreter ignore
+        if (!dataSegmentSet) {
+            DS_START = HEADER_SIZE;
+            DS_END = CS_END;
+        }
+
         // Writing header
-        try(OutputStream outputStream = new FileOutputStream(pathToProgram + ".bin")) {
-            outputStream.write(HEADER_SIZE);
-            outputStream.write(CS_END + HEADER_SIZE);
-            outputStream.write(DS_START + HEADER_SIZE);
-            outputStream.write(DS_END + HEADER_SIZE);
-            outputStream.write();
+        OutputStream outputStream = new FileOutputStream(pathToProgram + ".bin");
+        try (DataOutputStream dataOutStream = new DataOutputStream(outputStream)) {
+
+            dataOutStream.writeShort(Short.reverseBytes((short) HEADER_SIZE));
+            dataOutStream.writeShort(Short.reverseBytes((short) (CS_END * 2 + HEADER_SIZE + 1)));
+
+            dataOutStream.writeShort(Short.reverseBytes((short) (DS_START * 2 + HEADER_SIZE + 1)));
+            dataOutStream.writeShort(Short.reverseBytes((short) (DS_END * 2 + HEADER_SIZE + 1)));
+
+            dataOutStream.writeShort(Short.reverseBytes((short) (0)));
+            dataOutStream.writeShort(Short.reverseBytes((short) (-5)));
+
+            for (short s : assembledCode) {
+                dataOutStream.writeShort(Short.reverseBytes(s));
+            }
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+        System.out.println("montado karalho");
+
+        // Reset after assembly
+        SymbolTable.getInstance().reset();
+        assembledCode.clear();
+        logger.reset();
+        PC = 0;
+        lastPrint = 0;
     }
 
     private void assembleLine() {
@@ -128,15 +148,19 @@ public class Assembler {
 
         }
 
-        // Handling operations
-        if (operationProcessor.assembleOperation(currentLine)) {
-            PC = assembledCode.size() - 1;
+        try {
+            // Handling operations
+            if (operationProcessor.assembleOperation(currentLine)) {
+                PC = assembledCode.size() - 1;
 
-            // Print -> Remove later
-            for (; lastPrint < assembledCode.size(); lastPrint++) {
-                System.out.print(Integer.toHexString(assembledCode.get(lastPrint) & 0xFFFF) + " ");
+                // Print -> Remove later
+                for (; lastPrint < assembledCode.size(); lastPrint++) {
+                    System.out.print(Integer.toHexString(assembledCode.get(lastPrint) & 0xFFFF) + " ");
+                }
+                System.out.println();
             }
-            System.out.println();
+        } catch (Exception e) {
+            System.err.println(e.toString());
         }
 
         if (isCodeSegment) {
@@ -183,6 +207,6 @@ public class Assembler {
     }
 
     public void dataSegmentFound() {
-        dataSegmentSet= true;
+        dataSegmentSet = true;
     }
 }

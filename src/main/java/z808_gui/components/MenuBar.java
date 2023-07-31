@@ -85,6 +85,8 @@ public class MenuBar extends JMenuBar {
                     assembler.assembleFile(PROGRAM_PATH);
                 } catch (FileNotFoundException ex) {
                     System.err.println(ex.toString());
+                } catch (Exception ex) {
+                    System.err.println(ex.toString());
                 }
             }
         });

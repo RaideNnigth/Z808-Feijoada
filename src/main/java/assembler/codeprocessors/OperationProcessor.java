@@ -11,7 +11,7 @@ public class OperationProcessor {
         codeTable = CodeTable.getInstance();
     }
 
-    public boolean assembleOperation(String line) {
+    public boolean assembleOperation(String line) throws Exception {
         String[] tokens = AssemblerUtils.decomposeInTokens(line);
 
         if (!codeTable.isValidOperation(tokens[0]))

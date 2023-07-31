@@ -48,21 +48,6 @@ public class CodeTable {
         codeMap.put(Mov.MNEMONIC, new Mov());
         codeMap.put(Pop.MNEMONIC, new Pop());
         codeMap.put(Push.MNEMONIC, new Push());
-
-        // Directives
-        codeMap.put(End.MNEMONIC, new End());
-        codeMap.put(Segment.MNEMONIC, new Segment());
-        codeMap.put(Ends.MNEMONIC, new Ends()); // End of segment
-        codeMap.put(Dw.MNEMONIC, new Dw());
-        codeMap.put(Equ.MNEMONIC, new Equ());
-        codeMap.put(Org.MNEMONIC, new Org());
-        codeMap.put(Offset.MNEMONIC, new Offset());
-        codeMap.put(Assume.MNEMONIC, new Assume());
-        // Gab Bessa: Meio inutil ^
-        // Henrique: Inutil eh tua vida
-        // Gustavo: Inutil eh c#
-        codeMap.put(Proc.MNEMONIC, new Proc());
-        codeMap.put(Endp.MNEMONIC, new Endp());
     }
 
     public static CodeTable getInstance() {

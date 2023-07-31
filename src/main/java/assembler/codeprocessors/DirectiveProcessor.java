@@ -1,24 +1,20 @@
 package assembler.codeprocessors;
 
 import assembler.AssembleableOperation;
-import assembler.directives.*;
-import assembler.tables.CodeTable;
-import assembler.tables.symboltable.SymbolTable;
+import assembler.tables.SegmentTable;
 import assembler.utils.AssemblerUtils;
 
-import java.util.HashMap;
-
 public class DirectiveProcessor {
-    private final CodeTable codeTable;
+    private final SegmentTable segmentTable;
     public DirectiveProcessor() {
-        codeTable = CodeTable.getInstance();
+        segmentTable = SegmentTable.getInstance();
     }
 
     public boolean assembleDirective(String line) throws Exception {
         String[] tokens = AssemblerUtils.decomposeInTokens(line);
         for ( String token : tokens ) {
-            if ( codeTable.isValidOperation( token ) ) {
-                AssembleableOperation op = codeTable.getOperation( token );
+            if ( segmentTable.isValidOperation( token ) ) {
+                AssembleableOperation op = segmentTable.getOperation( token );
                 op.assemble( line );
                 return true;
             }
