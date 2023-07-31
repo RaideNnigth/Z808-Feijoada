@@ -13,7 +13,7 @@ public class DirectiveProcessor {
     public DirectiveProcessor() {
         codeTable = CodeTable.getInstance();
     }
-    public boolean assembleDirective(String line) {
+    public boolean assembleDirective(String line) throws Exception {
         String[] tokens = AssemblerUtils.decomposeInTokens(line);
         for ( String token : tokens ) {
             if ( codeTable.isValidOperation( token ) ) {
