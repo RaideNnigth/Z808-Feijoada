@@ -9,13 +9,13 @@ import assembler.Assembler;
 public class Segment implements AssembleableOperation {
     public static final String MNEMONIC = "SEGMENT";
     private final SymbolTable symbolTable;
-    private final Assembler assembler;
+    private final Assembler assembler = Assembler.getInstance();
+
     private Boolean isDataFound = false;
     private Boolean isCodeFound = false;
 
     public Segment() {
         symbolTable = SymbolTable.getInstance();
-        assembler = Assembler.getInstance();
     }
 
     @Override
