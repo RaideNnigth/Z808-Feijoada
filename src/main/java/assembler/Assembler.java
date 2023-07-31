@@ -92,6 +92,10 @@ public class Assembler {
         // 2- write in binary file
         // 3- interface with GUI
         // 4- when assembled -> enable buttons
+
+        // Writing header
+        OutputStream outputStream = new FileOutputStream(pathToProgram + ".bin");
+        outputStream.write();
     }
 
     private void assembleLine() {
