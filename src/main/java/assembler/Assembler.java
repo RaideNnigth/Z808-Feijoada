@@ -34,11 +34,12 @@ public class Assembler {
 
     // Defining header metadata
     private final int HEADER_SIZE = 0xC;
-    private int CS_END;
-    private int DS_START;
-    private int DS_END;
-    private int SS_START;
-    private int SS_END;
+    public static int CS_START;
+    public static int CS_END;
+    public static int DS_START;
+    public static int DS_END;
+    public static int SS_START;
+    public static int SS_END;
 
     // Singleton definition
     private static Assembler instance;
