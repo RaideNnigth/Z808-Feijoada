@@ -9,8 +9,6 @@ j
 Ksrc/main/java/virtual_machine/commands/operations/arithmetical/SubAxAx.java,a\4\a4d66b5cedf0f5fb97c76b04b8be3e5187c9f6fc
 k
 ;src/main/java/virtual_machine/commands/CommandExecutor.java,3\6\36f21b88ecdf73376196b45693a1565be1b5fca8
-g
-7src/main/java/assembler/mnemonics/arithmetical/Add.java,a\c\ac3ac0de6d56dfb78f3f82c0df05781381970da9
 o
 ?src/main/java/virtual_machine/commands/operations/flow/Jmp.java,1\7\17844cd75aa92f21a1c7458b4f42337d1d6fa8ac
 f
@@ -27,8 +25,6 @@ S
 #src/main/java/assembler/Logger.java,e\9\e9d47807e5a877909df1e25effe79a411b18645c
 _
 /src/main/java/assembler/mnemonics/flow/Jmp.java,7\2\72bcf213076ea6b871f128376a31aaf1b758727c
-`
-0src/main/java/assembler/mnemonics/Operation.java,6\e\6ea23d9e7e65f74c1e865f177e9ab9112ec80dec
 j
 :src/main/java/assembler/codeprocessors/LabelProcessor.java,f\e\fe7b095f7038436a652a53cf757f69fdbfb7f534
 k
