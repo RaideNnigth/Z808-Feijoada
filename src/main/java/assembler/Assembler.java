@@ -171,7 +171,7 @@ public class Assembler {
         this.loggerInterruption = loggerInterruption;
     }
 
-    public List<Short> getAssembledCode() {
+    public LinkedList<Short> getAssembledCode() {
         return assembledCode;
     }
 
