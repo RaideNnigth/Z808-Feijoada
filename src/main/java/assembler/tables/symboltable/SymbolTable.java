@@ -39,13 +39,13 @@ public class SymbolTable {
     }
 
     public void addSymbol(Symbol s) {
-        if (!AssemblerUtils.isValidName(s.getIdentificator())) {
+        if (!AssemblerUtils.isValidName(s.getIdentification())) {
             Log l = new Log(LogType.ERROR, Assembler.getInstance().getLineCounter(),
-                    String.format("%s is not a valid identifier.", s.getIdentificator()));
+                    String.format("%s is not a valid identifier.", s.getIdentification()));
             Assembler.getInstance().getLogger().addLog(l);
         }
 
-        symbolTable.put(s.getIdentificator(), s);
+        symbolTable.put(s.getIdentification(), s);
     }
 
     public void replaceAllOcorrencesOfDeclaredSymbols() throws UndeclaredSymbol {

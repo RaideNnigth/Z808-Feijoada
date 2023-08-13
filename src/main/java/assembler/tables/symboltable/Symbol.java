@@ -3,39 +3,29 @@ package assembler.tables.symboltable;
 import java.util.LinkedList;
 
 public class Symbol {
-    private String identificator;
-    private boolean isDeclared;
+    private final String indentification;
+    private final boolean isDeclared;
     private short value;
     private final LinkedList<Integer> usedAt = new LinkedList<>();
 
-    public Symbol (String identificator, boolean isDeclared) {
-        this.identificator = identificator;
+    public Symbol(String identification, boolean isDeclared) {
+        this.indentification = identification;
         this.isDeclared = isDeclared;
     }
 
-    public Symbol(String identificator, boolean isDeclared, short value) {
-        this.identificator = identificator;
+    public Symbol(String identification, boolean isDeclared, short value) {
+        this.indentification = identification;
         this.isDeclared = isDeclared;
         this.value = value;
     }
 
-    public String getIdentificator() {
-        return identificator;
-    }
 
-    // Is this needed? - Henrique
-    /*
-    public void setIdentificator(String identificator) {
-        this.identificator = identificator;
+    public String getIdentification() {
+        return indentification;
     }
-     */
 
     public boolean isDeclared() {
         return isDeclared;
-    }
-
-    public void setDeclared(boolean declared) {
-        isDeclared = declared;
     }
 
     public LinkedList<Integer> getUsedAt() {
@@ -49,4 +39,5 @@ public class Symbol {
     public void setValue(short value) {
         this.value = value;
     }
+
 }

@@ -3,12 +3,15 @@ package assembler;
 import assembler.codeprocessors.DirectiveProcessor;
 import assembler.codeprocessors.LabelProcessor;
 import assembler.codeprocessors.OperationProcessor;
+import assembler.tables.datatable.DataItem;
+import assembler.tables.datatable.DataTable;
+import assembler.tables.symboltable.Symbol;
 import assembler.tables.symboltable.SymbolTable;
 import assembler.tables.symboltable.UndeclaredSymbol;
+import assembler.utils.AssemblerUtils;
 
 import java.io.*;
 import java.util.LinkedList;
-import java.util.List;
 
 // THIS CLASS IS A SINGLETON
 public class Assembler {
@@ -154,12 +157,19 @@ public class Assembler {
             logger.addLog(new Log(LogType.ERROR, lineCounter, "Error on Operation Processor: " + e.getMessage()));
         }
 
-
+        // Handling segments
+        // if it is code segment
         if (isCodeSegment) {
             csEnd = pc;
             dsStart = csEnd + 1;
         } else {
             dsEnd = pc;
+            // if it is data segment
+            try {
+                DataTable.getInstance().processDataItem(this.currentLine);
+            }catch (Exception e){
+                logger.addLog(new Log(LogType.ERROR, lineCounter, "Error on Data Table: " + e.getMessage()));
+            }
         }
     }
 

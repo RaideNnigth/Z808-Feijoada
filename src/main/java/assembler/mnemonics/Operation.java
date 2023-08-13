@@ -27,7 +27,7 @@ public abstract class Operation implements AssembleableOperation {
             Symbol s = new Symbol(token, false);
 
             st.addSymbol(s);
-            st.addOccurrenceOfSymbol(s.getIdentificator());
+            st.addOccurrenceOfSymbol(s.getIdentification());
         }
     }
 }
