@@ -122,13 +122,6 @@ public class Assembler {
         resetAfterAssembly();
     }
 
-    private void resetAfterAssembly() {
-        SymbolTable.getInstance().reset();
-        assembledCode.clear();
-        logger.reset();
-        pc = 0;
-    }
-
     private void assembleLine() {
         currentLine = currentLine.split(";")[0];
 
@@ -171,6 +164,13 @@ public class Assembler {
                 logger.addLog(new Log(LogType.ERROR, lineCounter, "Error on Data Table: " + e.getMessage()));
             }
         }
+    }
+    private void resetAfterAssembly() {
+        SymbolTable.getInstance().reset();
+        DataTable.getInstance().reset();
+        assembledCode.clear();
+        logger.reset();
+        pc = 0;
     }
 
     public boolean isLoggerInterruption() {

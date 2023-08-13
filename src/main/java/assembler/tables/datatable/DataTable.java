@@ -36,21 +36,6 @@ public class DataTable {
                     false, (short) 16, Short.parseShort(tokens[1]), this.nextAvailableAddress));
         }
     }
-    public boolean dataItemNameExist(String symbol) {
-        return dataItemHashMap.containsKey(symbol);
-    }
-
-    public DataItem getDataItem(String symbol) {
-        return dataItemHashMap.get(symbol);
-    }
-
-    public void addOccurrenceOfDataItem(String dataItem) {
-        var symbolObj = dataItemHashMap.get(dataItem);
-        var assembledCode = Assembler.getInstance().getAssembledCode();
-
-        symbolObj.getUsedAt().add(assembledCode.size());
-        assembledCode.add((short) 0);
-    }
 
     public void addDataItem(DataItem d) {
         if (!AssemblerUtils.isValidName(d.getIdentification())) {
@@ -60,6 +45,22 @@ public class DataTable {
         }
         dataItemHashMap.put(d.getIdentification(), d);
         nextAvailableAddress = (short) (nextAvailableAddress + d.getSize());
+    }
+
+    public boolean dataItemNameExist(String dataItem) {
+        return dataItemHashMap.containsKey(dataItem);
+    }
+
+    public DataItem getDataItem(String dataItem) {
+        return dataItemHashMap.get(dataItem);
+    }
+
+    public void addOccurrenceOfDataItem(String dataItem) {
+        var symbolObj = dataItemHashMap.get(dataItem);
+        var assembledCode = Assembler.getInstance().getAssembledCode();
+
+        symbolObj.getUsedAt().add(assembledCode.size());
+        assembledCode.add((short) 0);
     }
 
     public void replaceAllOcorrencesOfDeclaredSymbols() throws UndeclaredDataItem {
