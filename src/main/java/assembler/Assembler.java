@@ -8,6 +8,7 @@ import assembler.tables.symboltable.UndeclaredSymbol;
 
 import java.io.*;
 import java.util.LinkedList;
+import java.util.List;
 
 // THIS CLASS IS A SINGLETON
 public class Assembler {
@@ -17,7 +18,7 @@ public class Assembler {
     private final OperationProcessor operationProcessor = new OperationProcessor();
 
     // Assembled code
-    private LinkedList<Short> assembledCode = new LinkedList<>();
+    private final LinkedList<Short> assembledCode = new LinkedList<>();
 
     // Logger
     private final Logger logger = new Logger();
@@ -28,25 +29,20 @@ public class Assembler {
     private int lineCounter;
 
     // Position where the code will be
-    private int PC = 0;
-    // DELETE AFTER
-    private int lastPrint = 0;
+    private int pc = 0;
 
-    // Defining header metadata
-    private final int HEADER_SIZE = 0xC;
-    public static int CS_END;
-    public static int DS_START;
-    public static int DS_END;
-    public static int SS_START;
-    public static int SS_END;
+    // Header metadata
+    private int csEnd;
+    private int dsStart;
+    private int dsEnd;
 
     // Singleton definition
     private static Assembler instance;
 
     // Interaction with Segment system
     private boolean isCodeSegment;
-    private static boolean codeSegmentSet;
-    private static boolean dataSegmentSet;
+    private boolean codeSegmentSet;
+    private boolean dataSegmentSet;
 
     private Assembler() {
         loggerInterruption = false;
@@ -74,41 +70,37 @@ public class Assembler {
                 currentLine = fileIO.readLine();
             }
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            logger.addLog(new Log(LogType.ERROR, lineCounter, "Error while reading " + pathToProgram + "file: " + e.getMessage()));
             System.exit(-1);
         }
 
         try {
             SymbolTable.getInstance().replaceAllOcorrencesOfDeclaredSymbols();
         } catch (UndeclaredSymbol e) {
-            System.out.println(e.getMessage());
+            logger.addLog(new Log(LogType.ERROR, lineCounter, "Error on Symbol table " + e.getMessage()));
         }
 
-        // TODO:
-        // 1- create header
-        // 2- write in binary file
-        // 3- interface with GUI
-        // 4- when assembled -> enable buttons
-
         if (!codeSegmentSet) {
-            throw new Exception("É preciso definir um segmento de código!");
+            throw new Exception("Code segment not set!");
         }
 
         // Set invalid segment for interpreter ignore
+        // Defining header metadata
+        int headerSize = 0xC;
         if (!dataSegmentSet) {
-            DS_START = HEADER_SIZE;
-            DS_END = CS_END;
+            dsStart = headerSize;
+            dsEnd = csEnd;
         }
 
         // Writing header
         OutputStream outputStream = new FileOutputStream(pathToProgram + ".bin");
         try (DataOutputStream dataOutStream = new DataOutputStream(outputStream)) {
 
-            dataOutStream.writeShort(Short.reverseBytes((short) HEADER_SIZE));
-            dataOutStream.writeShort(Short.reverseBytes((short) (CS_END * 2 + HEADER_SIZE + 1)));
+            dataOutStream.writeShort(Short.reverseBytes((short) headerSize));
+            dataOutStream.writeShort(Short.reverseBytes((short) (csEnd * 2 + headerSize + 1)));
 
-            dataOutStream.writeShort(Short.reverseBytes((short) (DS_START * 2 + HEADER_SIZE + 1)));
-            dataOutStream.writeShort(Short.reverseBytes((short) (DS_END * 2 + HEADER_SIZE + 1)));
+            dataOutStream.writeShort(Short.reverseBytes((short) (dsStart * 2 + headerSize + 1)));
+            dataOutStream.writeShort(Short.reverseBytes((short) (dsEnd * 2 + headerSize + 1)));
 
             dataOutStream.writeShort(Short.reverseBytes((short) (0)));
             dataOutStream.writeShort(Short.reverseBytes((short) (-5)));
@@ -117,16 +109,21 @@ public class Assembler {
                 dataOutStream.writeShort(Short.reverseBytes(s));
             }
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            logger.addLog(new Log(LogType.ERROR, lineCounter, "Error while writing binary file!"));
         }
-        System.out.println("montado karalho");
+
+        // Log success message
+        logger.addLog(new Log(LogType.INFO, 0, "Finish to assemble code file!"));
 
         // Reset after assembly
+        resetAfterAssembly();
+    }
+
+    private void resetAfterAssembly() {
         SymbolTable.getInstance().reset();
         assembledCode.clear();
         logger.reset();
-        PC = 0;
-        lastPrint = 0;
+        pc = 0;
     }
 
     private void assembleLine() {
@@ -140,34 +137,29 @@ public class Assembler {
         if (labelProcessor.assembleLabel(currentLine))
             return;
 
+        // Handling directives
         try {
-            // Handling directives
             if (directiveProcessor.assembleDirective(currentLine))
                 return;
         } catch (Exception e) {
-
+            logger.addLog(new Log(LogType.ERROR, lineCounter, "Error on Directive Processor: " + e.getMessage()));
         }
 
+        // Handling operations
         try {
-            // Handling operations
             if (operationProcessor.assembleOperation(currentLine)) {
-                PC = assembledCode.size() - 1;
-
-                // Print -> Remove later
-                for (; lastPrint < assembledCode.size(); lastPrint++) {
-                    System.out.print(Integer.toHexString(assembledCode.get(lastPrint) & 0xFFFF) + " ");
-                }
-                System.out.println();
+                pc = assembledCode.size() - 1;
             }
         } catch (Exception e) {
-            System.err.println(e.toString());
+            logger.addLog(new Log(LogType.ERROR, lineCounter, "Error on Operation Processor: " + e.getMessage()));
         }
 
+
         if (isCodeSegment) {
-            CS_END = PC;
-            DS_START = CS_END + 1;
+            csEnd = pc;
+            dsStart = csEnd + 1;
         } else {
-            DS_END = PC;
+            dsEnd = pc;
         }
     }
 
@@ -179,7 +171,7 @@ public class Assembler {
         this.loggerInterruption = loggerInterruption;
     }
 
-    public LinkedList<Short> getAssembledCode() {
+    public List<Short> getAssembledCode() {
         return assembledCode;
     }
 
@@ -187,18 +179,15 @@ public class Assembler {
         return logger;
     }
 
-    public String getCurrentLine() {
-        return currentLine;
-    }
-
     public int getLineCounter() {
         return lineCounter;
     }
 
     public void setSegment(String segment) {
-        switch (segment) {
-            case ".CODE" -> isCodeSegment = true;
-            case ".DATA" -> isCodeSegment = false;
+        if (segment.equals(".CODE")) {
+            isCodeSegment = true;
+        } else if (segment.equals(".DATA")) {
+            isCodeSegment = false;
         }
     }
 
