@@ -3,12 +3,9 @@ package assembler;
 import assembler.codeprocessors.DirectiveProcessor;
 import assembler.codeprocessors.LabelProcessor;
 import assembler.codeprocessors.OperationProcessor;
-import assembler.tables.datatable.DataItem;
 import assembler.tables.datatable.DataTable;
-import assembler.tables.symboltable.Symbol;
 import assembler.tables.symboltable.SymbolTable;
 import assembler.tables.symboltable.UndeclaredSymbol;
-import assembler.utils.AssemblerUtils;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -84,6 +81,12 @@ public class Assembler {
             logger.addLog(new Log(LogType.ERROR, lineCounter, "Error on Symbol table " + e.getMessage()));
         }
 
+        try {
+            DataTable.getInstance().replaceAllOcorrencesOfDeclaredDataItems();
+        } catch (Exception e) {
+            logger.addLog(new Log(LogType.ERROR, lineCounter, "Error on Data table " + e.getMessage()));
+        }
+
         if (!codeSegmentSet) {
             throw new Exception("Code segment not set!");
         }
@@ -94,6 +97,8 @@ public class Assembler {
         if (!dataSegmentSet) {
             dsStart = headerSize;
             dsEnd = csEnd;
+        } else {
+            this.dsEnd = DataTable.getInstance().getNextAvailableAddress() + this.csEnd;
         }
 
         // Removes ".asm" extension and append ".bin"
@@ -103,8 +108,6 @@ public class Assembler {
         // Writing header
         OutputStream outputStream = new FileOutputStream(pathToProgram);
         try (DataOutputStream dataOutStream = new DataOutputStream(outputStream)) {
-            // Formato do header: CS_START CS_END DS_START DS_END X X
-
             dataOutStream.writeShort(Short.reverseBytes((short) headerSize));
             dataOutStream.writeShort(Short.reverseBytes((short) (csEnd * 2 + headerSize + 1)));
 
@@ -162,7 +165,6 @@ public class Assembler {
             csEnd = pc;
             dsStart = csEnd + 1;
         } else {
-            dsEnd = pc;
             // if it is data segment
             try {
                 DataTable.getInstance().processDataItem(this.currentLine);

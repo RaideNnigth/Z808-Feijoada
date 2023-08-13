@@ -26,15 +26,16 @@ public class DataTable {
         return instance;
     }
 
-    public void processDataItem(String currentLine) throws Exception{
+    public void processDataItem(String currentLine) throws Exception {
         String[] tokens = AssemblerUtils.decomposeInTokens(currentLine);
         if (tokens.length == 3) {
             DataTable.getInstance().addDataItem(new DataItem(tokens[0], true,
-                    true, (short) 16, Short.parseShort(tokens[2]), this.nextAvailableAddress));
-        } else if (tokens.length == 2){
+                    true, Short.parseShort(tokens[2]), this.nextAvailableAddress));
+        } else if (tokens.length == 2) {
             DataTable.getInstance().addDataItem(new DataItem(null, true,
-                    false, (short) 16, Short.parseShort(tokens[1]), this.nextAvailableAddress));
+                    false, Short.parseShort(tokens[1]), this.nextAvailableAddress));
         }
+        this.nextAvailableAddress = (short) (nextAvailableAddress + Short.parseShort(tokens[1]));
     }
 
     public void addDataItem(DataItem d) {
@@ -63,17 +64,21 @@ public class DataTable {
         assembledCode.add((short) 0);
     }
 
-    public void replaceAllOcorrencesOfDeclaredSymbols() throws UndeclaredDataItem {
-        for (DataItem s : dataItemHashMap.values()) {
-            if (s.isDeclared()) {
-                while (!s.getUsedAt().isEmpty()) {
-                    int pos = s.getUsedAt().pop();
-                    Assembler.getInstance().getAssembledCode().set(pos, s.getValue());
+    public void replaceAllOcorrencesOfDeclaredDataItems() throws UndeclaredDataItem {
+        for (DataItem d : dataItemHashMap.values()) {
+            if (d.isDeclared()) {
+                while (!d.getUsedAt().isEmpty()) {
+                    int pos = d.getUsedAt().pop();
+                    Assembler.getInstance().getAssembledCode().set(pos, d.getAddress());
                 }
             } else {
-                throw new UndeclaredDataItem(s);
+                throw new UndeclaredDataItem(d);
             }
         }
+    }
+
+    public short getNextAvailableAddress() {
+        return this.nextAvailableAddress;
     }
 
     public void reset() {

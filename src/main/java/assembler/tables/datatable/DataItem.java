@@ -11,11 +11,11 @@ public class DataItem {
     private final short address;
     private final LinkedList<Integer> usedAt = new LinkedList<>();
 
-    public DataItem(String identification, boolean isDeclared, boolean isVariable, short size, short value, short address) {
+    public DataItem(String identification, boolean isDeclared, boolean isVariable, short value, short address) {
         this.identification = identification;
         this.isDeclared = isDeclared;
         this.isVariable = isVariable;
-        this.size = size;
+        //this.size = size;
         this.value = value;
         this.address = address;
     }
