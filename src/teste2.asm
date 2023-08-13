@@ -1,0 +1,4 @@
+.CODE SEGMENT
+mov AX, 20
+mov DX, AX
+add AX,DX

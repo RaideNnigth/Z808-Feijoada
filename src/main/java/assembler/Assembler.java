@@ -61,6 +61,7 @@ public class Assembler {
     public void assembleFile(String pathToProgram) throws Exception {
         FileReader fileReader = new FileReader(pathToProgram);
 
+
         try (BufferedReader fileIO = new BufferedReader(fileReader)) {
             lineCounter += 1;
             currentLine = fileIO.readLine();
@@ -95,9 +96,14 @@ public class Assembler {
             dsEnd = csEnd;
         }
 
+        // Removes ".asm" extension and append ".bin"
+        pathToProgram = pathToProgram.substring(0, pathToProgram.length() - 4);
+        pathToProgram += ".bin";
+
         // Writing header
-        OutputStream outputStream = new FileOutputStream(pathToProgram + ".bin");
+        OutputStream outputStream = new FileOutputStream(pathToProgram);
         try (DataOutputStream dataOutStream = new DataOutputStream(outputStream)) {
+            // Formato do header: CS_START CS_END DS_START DS_END X X
 
             dataOutStream.writeShort(Short.reverseBytes((short) headerSize));
             dataOutStream.writeShort(Short.reverseBytes((short) (csEnd * 2 + headerSize + 1)));

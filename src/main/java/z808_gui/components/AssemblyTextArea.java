@@ -23,4 +23,8 @@ public class AssemblyTextArea extends JScrollPane {
     public String getText() {
         return assemblyTextEditor.getText();
     }
+
+    public void setText(String s) {
+        assemblyTextEditor.setText(s);
+    }
 }

@@ -1,5 +1,6 @@
 package z808_gui.components;
 
+import assembler.Assembler;
 import virtual_machine.VirtualMachine;
 import z808_gui.observerpattern.Listener;
 import z808_gui.observerpattern.MessageType;
@@ -9,6 +10,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.CharArrayReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import static z808_gui.utils.UIUtils.*;
@@ -28,10 +30,29 @@ public class PlayButton extends JLabel implements Listener {
 
                 if (isEnabled()) {
                     try {
-                        vm.loadProgram(PROGRAM_PATH);
+                        // Salva arquivo
+                        try (FileWriter fw = new FileWriter(PROGRAM_PATH)) {
+                            // Salva arquivo
+                            fw.write(AssemblyTextArea.getInstance().getText());
+                        } catch (IOException ex) {
+                            System.out.println(ex);
+                        }
+
+                        // Monta o programa
+                        Assembler.getInstance().assembleFile(PROGRAM_PATH);
+
+                        // binPath
+                        String binPath = (PROGRAM_PATH.substring(0, PROGRAM_PATH.length() - 4) + ".bin");
+
+                        // Load bin
+                        vm.loadProgram(binPath);
                         vm.executeProgram();
                     } catch (IOException ioException) {
                         JOptionPane.showMessageDialog(null, "O arquivo \"" + PROGRAM_PATH + "\" não existe!", "Erro", JOptionPane.ERROR_MESSAGE, null);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, ex, "Erro", JOptionPane.ERROR_MESSAGE, null);
+                        System.out.println(ex);
+                        ex.printStackTrace();
                     }
                 }
             }
