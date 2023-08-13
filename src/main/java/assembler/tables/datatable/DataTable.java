@@ -27,15 +27,19 @@ public class DataTable {
     }
 
     public void processDataItem(String currentLine) throws Exception {
-        String[] tokens = AssemblerUtils.decomposeInTokens(currentLine);
-        if (tokens.length == 3) {
-            DataTable.getInstance().addDataItem(new DataItem(tokens[0], true,
-                    true, Short.parseShort(tokens[2]), this.nextAvailableAddress));
-        } else if (tokens.length == 2) {
-            DataTable.getInstance().addDataItem(new DataItem(null, true,
-                    false, Short.parseShort(tokens[1]), this.nextAvailableAddress));
+        try {
+            String[] tokens = AssemblerUtils.decomposeInTokens(currentLine);
+            if (tokens.length == 3) {
+                DataTable.getInstance().addDataItem(new DataItem(tokens[0], true,
+                        true, Short.parseShort(tokens[2]), this.nextAvailableAddress));
+            } else if (tokens.length == 2) {
+                DataTable.getInstance().addDataItem(new DataItem(null, true,
+                        false, Short.parseShort(tokens[1]), this.nextAvailableAddress));
+            }
+            this.nextAvailableAddress = (short) (nextAvailableAddress + Short.parseShort(tokens[1]));
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
-        this.nextAvailableAddress = (short) (nextAvailableAddress + Short.parseShort(tokens[1]));
     }
 
     public void addDataItem(DataItem d) {
