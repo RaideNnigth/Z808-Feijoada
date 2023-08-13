@@ -1,6 +1,4 @@
 package assembler.tables.datatable;
-import assembler.tables.datatable.dataitemtype.DataItemType;
-
 
 import java.util.LinkedList;
 
@@ -13,11 +11,11 @@ public class DataItem {
     private final short address;
     private final LinkedList<Integer> usedAt = new LinkedList<>();
 
-    public DataItem(String identification, boolean isDeclared, boolean isVariable, String dataType, short value, short address) {
+    public DataItem(String identification, boolean isDeclared, boolean isVariable, short size, short value, short address) {
         this.identification = identification;
         this.isDeclared = isDeclared;
         this.isVariable = isVariable;
-        this.size = new DataItemType(dataType).getByteSize(dataType);
+        this.size = size;
         this.value = value;
         this.address = address;
     }

@@ -86,5 +86,3 @@ y
 Isrc/main/java/virtual_machine/commands/operations/arithmetical/DivAx.java,7\0\70e1e341f5ec2c4e9a2e2a1adc9a5e52de66bdc7
 a
 1src/main/java/assembler/utils/AssemblerUtils.java,7\1\71af608c26e134dc2f95e81ea002ee5e8f7ec3b3
-j
-:src/main/java/assembler/codeprocessors/LabelProcessor.java,f\e\fe7b095f7038436a652a53cf757f69fdbfb7f534

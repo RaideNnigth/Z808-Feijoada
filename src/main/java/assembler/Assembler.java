@@ -3,12 +3,9 @@ package assembler;
 import assembler.codeprocessors.DirectiveProcessor;
 import assembler.codeprocessors.LabelProcessor;
 import assembler.codeprocessors.OperationProcessor;
-import assembler.tables.datatable.DataItem;
 import assembler.tables.datatable.DataTable;
-import assembler.tables.symboltable.Symbol;
 import assembler.tables.symboltable.SymbolTable;
 import assembler.tables.symboltable.UndeclaredSymbol;
-import assembler.utils.AssemblerUtils;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -61,6 +58,7 @@ public class Assembler {
     public void assembleFile(String pathToProgram) throws Exception {
         FileReader fileReader = new FileReader(pathToProgram);
 
+
         try (BufferedReader fileIO = new BufferedReader(fileReader)) {
             lineCounter += 1;
             currentLine = fileIO.readLine();
@@ -83,6 +81,12 @@ public class Assembler {
             logger.addLog(new Log(LogType.ERROR, lineCounter, "Error on Symbol table " + e.getMessage()));
         }
 
+        try {
+            DataTable.getInstance().replaceAllOcorrencesOfDeclaredDataItems();
+        } catch (Exception e) {
+            logger.addLog(new Log(LogType.ERROR, lineCounter, "Error on Data table " + e.getMessage()));
+        }
+
         if (!codeSegmentSet) {
             throw new Exception("Code segment not set!");
         }
@@ -93,12 +97,17 @@ public class Assembler {
         if (!dataSegmentSet) {
             dsStart = headerSize;
             dsEnd = csEnd;
+        } else {
+            this.dsEnd = DataTable.getInstance().getNextAvailableAddress() + this.csEnd;
         }
 
-        // Writing header
-        OutputStream outputStream = new FileOutputStream(pathToProgram + ".bin");
-        try (DataOutputStream dataOutStream = new DataOutputStream(outputStream)) {
+        // Removes ".asm" extension and append ".bin"
+        pathToProgram = pathToProgram.substring(0, pathToProgram.length() - 4);
+        pathToProgram += ".bin";
 
+        // Writing header
+        OutputStream outputStream = new FileOutputStream(pathToProgram);
+        try (DataOutputStream dataOutStream = new DataOutputStream(outputStream)) {
             dataOutStream.writeShort(Short.reverseBytes((short) headerSize));
             dataOutStream.writeShort(Short.reverseBytes((short) (csEnd * 2 + headerSize + 1)));
 
@@ -120,13 +129,6 @@ public class Assembler {
 
         // Reset after assembly
         resetAfterAssembly();
-    }
-
-    private void resetAfterAssembly() {
-        SymbolTable.getInstance().reset();
-        assembledCode.clear();
-        logger.reset();
-        pc = 0;
     }
 
     private void assembleLine() {
@@ -163,7 +165,6 @@ public class Assembler {
             csEnd = pc;
             dsStart = csEnd + 1;
         } else {
-            dsEnd = pc;
             // if it is data segment
             try {
                 DataTable.getInstance().processDataItem(this.currentLine);
@@ -171,6 +172,13 @@ public class Assembler {
                 logger.addLog(new Log(LogType.ERROR, lineCounter, "Error on Data Table: " + e.getMessage()));
             }
         }
+    }
+    private void resetAfterAssembly() {
+        SymbolTable.getInstance().reset();
+        DataTable.getInstance().reset();
+        assembledCode.clear();
+        logger.reset();
+        pc = 0;
     }
 
     public boolean isLoggerInterruption() {

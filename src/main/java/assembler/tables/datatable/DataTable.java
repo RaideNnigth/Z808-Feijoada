@@ -26,30 +26,20 @@ public class DataTable {
         return instance;
     }
 
-    public void processDataItem(String currentLine) throws Exception{
-        String[] tokens = AssemblerUtils.decomposeInTokens(currentLine);
-        if (tokens.length == 3) {
-            DataTable.getInstance().addDataItem(new DataItem(tokens[0], true,
-                    true, (short) 16, Short.parseShort(tokens[2]), this.nextAvailableAddress));
-        } else if (tokens.length == 2){
-            DataTable.getInstance().addDataItem(new DataItem(null, true,
-                    false, (short) 16, Short.parseShort(tokens[1]), this.nextAvailableAddress));
+    public void processDataItem(String currentLine) throws Exception {
+        try {
+            String[] tokens = AssemblerUtils.decomposeInTokens(currentLine);
+            if (tokens.length == 3) {
+                DataTable.getInstance().addDataItem(new DataItem(tokens[0], true,
+                        true, Short.parseShort(tokens[2]), this.nextAvailableAddress));
+            } else if (tokens.length == 2) {
+                DataTable.getInstance().addDataItem(new DataItem(null, true,
+                        false, Short.parseShort(tokens[1]), this.nextAvailableAddress));
+            }
+            this.nextAvailableAddress = (short) (nextAvailableAddress + Short.parseShort(tokens[1]));
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
-    }
-    public boolean dataItemNameExist(String symbol) {
-        return dataItemHashMap.containsKey(symbol);
-    }
-
-    public DataItem getDataItem(String symbol) {
-        return dataItemHashMap.get(symbol);
-    }
-
-    public void addOccurrenceOfDataItem(String dataItem) {
-        var symbolObj = dataItemHashMap.get(dataItem);
-        var assembledCode = Assembler.getInstance().getAssembledCode();
-
-        symbolObj.getUsedAt().add(assembledCode.size());
-        assembledCode.add((short) 0);
     }
 
     public void addDataItem(DataItem d) {
@@ -62,17 +52,37 @@ public class DataTable {
         nextAvailableAddress = (short) (nextAvailableAddress + d.getSize());
     }
 
-    public void replaceAllOcorrencesOfDeclaredSymbols() throws UndeclaredDataItem {
-        for (DataItem s : dataItemHashMap.values()) {
-            if (s.isDeclared()) {
-                while (!s.getUsedAt().isEmpty()) {
-                    int pos = s.getUsedAt().pop();
-                    Assembler.getInstance().getAssembledCode().set(pos, s.getValue());
+    public boolean dataItemNameExist(String dataItem) {
+        return dataItemHashMap.containsKey(dataItem);
+    }
+
+    public DataItem getDataItem(String dataItem) {
+        return dataItemHashMap.get(dataItem);
+    }
+
+    public void addOccurrenceOfDataItem(String dataItem) {
+        var symbolObj = dataItemHashMap.get(dataItem);
+        var assembledCode = Assembler.getInstance().getAssembledCode();
+
+        symbolObj.getUsedAt().add(assembledCode.size());
+        assembledCode.add((short) 0);
+    }
+
+    public void replaceAllOcorrencesOfDeclaredDataItems() throws UndeclaredDataItem {
+        for (DataItem d : dataItemHashMap.values()) {
+            if (d.isDeclared()) {
+                while (!d.getUsedAt().isEmpty()) {
+                    int pos = d.getUsedAt().pop();
+                    Assembler.getInstance().getAssembledCode().set(pos, d.getAddress());
                 }
             } else {
-                throw new UndeclaredDataItem(s);
+                throw new UndeclaredDataItem(d);
             }
         }
+    }
+
+    public short getNextAvailableAddress() {
+        return this.nextAvailableAddress;
     }
 
     public void reset() {
