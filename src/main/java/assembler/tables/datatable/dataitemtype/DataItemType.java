@@ -7,14 +7,14 @@ public class DataItemType {
         dataItemTypeMap.put("DW", (byte) 2);
         dataItemTypeMap.put("DD", (byte) 4);
         dataItemTypeMap.put("CHAR", (byte) 1);
-        containsKey(dataType);
+        arrayCheckAndPut(dataType);
     }
 
     public byte getByteSize(String key) {
         return dataItemTypeMap.get(key);
     }
 
-    public void containsKey(String dataType) {
+    public void arrayCheckAndPut(String dataType) {
         if (dataItemTypeMap.containsKey(dataType)) {
             return;
         }

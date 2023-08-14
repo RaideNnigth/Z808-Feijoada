@@ -31,10 +31,10 @@ public class DataTable {
             String[] tokens = AssemblerUtils.decomposeInTokens(currentLine);
             if (tokens.length == 3) {
                 DataTable.getInstance().addDataItem(new DataItem(tokens[0], true,
-                        true, Short.parseShort(tokens[2]), this.nextAvailableAddress));
+                        true, tokens[1] ,Short.parseShort(tokens[2]), this.nextAvailableAddress));
             } else if (tokens.length == 2) {
                 DataTable.getInstance().addDataItem(new DataItem(null, true,
-                        false, Short.parseShort(tokens[1]), this.nextAvailableAddress));
+                        false, tokens[0] , Short.parseShort(tokens[1]), this.nextAvailableAddress));
             }
             this.nextAvailableAddress = (short) (nextAvailableAddress + Short.parseShort(tokens[1]));
         } catch (Exception e) {
