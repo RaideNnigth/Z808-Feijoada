@@ -17,13 +17,14 @@ public class AddAxDir implements Command {
         // Get regs
         RegWork ax = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getAx();
         RegWork ip = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getIp();
+        RegWork ds = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getDs();
         RegFlags sr = (RegFlags) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getSr();
 
         // Get memory controller
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
         short operandAddr = mc.getWordBE(ip.getValue()); // Get operand addr in dataMem
-        short cte = mc.getWordBE(operandAddr); // Get operand from dataMem
+        short cte = mc.getWordBE((short) (operandAddr + ds.getValue())); // Get operand from dataMem
 
         // We must get from the memory the 16 bit constant
         ip.setValue((short) (ip.getValue() + 1)); // Increment IP

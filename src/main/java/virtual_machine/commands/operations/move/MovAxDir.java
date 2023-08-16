@@ -17,7 +17,7 @@ public class MovAxDir implements Command {
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
         short operandAddr = mc.getWordBE(ip.getValue()); // Get operand addr in dataMem
-        short cte = mc.getWordBE(operandAddr);
+        short cte = mc.getWordBE((short) (operandAddr + br.getDs().getValue())); // Get operand value in dataMem
         br.incrementIp();
 
         ax.setValue(cte);

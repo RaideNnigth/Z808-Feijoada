@@ -26,33 +26,57 @@ public class DataTable {
         return instance;
     }
 
-    public void processDataItem(String currentLine) throws Exception {
-        try {
-            String[] tokens = AssemblerUtils.decomposeInTokens(currentLine);
-            if (tokens.length == 3) {
-                DataTable.getInstance().addDataItem(new DataItem(tokens[0], true,
-                        true, tokens[1] ,Short.parseShort(tokens[2]), this.nextAvailableAddress));
-            } else if (tokens.length == 2) {
-                DataTable.getInstance().addDataItem(new DataItem(null, true,
-                        false, tokens[0] , Short.parseShort(tokens[1]), this.nextAvailableAddress));
+    public void processDataItemDeclaration(String currentLine) {
+        String[] tokens = AssemblerUtils.decomposeInTokens(currentLine);
+        DataItem d;
+
+        if (tokens.length == 3) {
+            if (dataItemExist(tokens[0])) {
+                var dataItem = getDataItem(tokens[0]);
+
+                // Check if it's redeclaration
+                if (dataItem.isDeclared())
+                    throw new IllegalArgumentException(String.format("Redeclaring Data Item %s. Line: %d", tokens[0], Assembler.getInstance().getLineCounter()));
+                // If not, we are defining the variable (data segment in the end of file)
+                else {
+                    dataItem.setDeclared(true);
+                    dataItem.setTypeAndInitialValue(tokens[1], tokens[2]);
+                    dataItem.setAddress(this.nextAvailableAddress);
+
+                    this.nextAvailableAddress = (short) (nextAvailableAddress + (AssemblerUtils.roundUpToClosestPower2(dataItem.getSize() / 2)));
+                    return;
+                }
             }
-            this.nextAvailableAddress = (short) (nextAvailableAddress + Short.parseShort(tokens[1]));
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
+
+            // If it's not redeclaration, then it's a new variable
+            d = new DataItem(tokens[0], true, tokens[1],
+                    tokens[2], this.nextAvailableAddress);
+
+            addDataItem(d);
         }
+        // Anonymous data item
+        else if (tokens.length == 2) {
+            d = new DataItem(null, true, tokens[0],
+                    tokens[1], this.nextAvailableAddress);
+            addDataItem(d);
+        } else {
+            throw new IllegalArgumentException("Invalid declaration of Data Item!");
+        }
+
+        nextAvailableAddress = (short) (nextAvailableAddress + (AssemblerUtils.roundUpToClosestPower2(d.getSize() / 2)));
     }
 
-    public void addDataItem(DataItem d) {
+    private void addDataItem(DataItem d) {
         if (!AssemblerUtils.isValidName(d.getIdentification())) {
             Log l = new Log(LogType.ERROR, Assembler.getInstance().getLineCounter(),
                     String.format("%s is not a valid identifier.", d.getIdentification()));
             Assembler.getInstance().getLogger().addLog(l);
+            Assembler.getInstance().setLoggerInterruption(true);
         }
         dataItemHashMap.put(d.getIdentification(), d);
-        nextAvailableAddress = (short) (nextAvailableAddress + d.getSize());
     }
 
-    public boolean dataItemNameExist(String dataItem) {
+    public boolean dataItemExist(String dataItem) {
         return dataItemHashMap.containsKey(dataItem);
     }
 
@@ -60,11 +84,13 @@ public class DataTable {
         return dataItemHashMap.get(dataItem);
     }
 
-    public void addOccurrenceOfDataItem(String dataItem) {
-        var symbolObj = dataItemHashMap.get(dataItem);
+    public void addOccurrenceOfDataItem(DataItem d) {
+        if (!dataItemHashMap.containsKey(d.getIdentification()))
+            addDataItem(d);
+
         var assembledCode = Assembler.getInstance().getAssembledCode();
 
-        symbolObj.getUsedAt().add(assembledCode.size());
+        d.getUsedAt().add(assembledCode.size());
         assembledCode.add((short) 0);
     }
 
@@ -73,6 +99,7 @@ public class DataTable {
             if (d.isDeclared()) {
                 while (!d.getUsedAt().isEmpty()) {
                     int pos = d.getUsedAt().pop();
+                    // Coloca o endereço (na memória de dados) do dado referenciado
                     Assembler.getInstance().getAssembledCode().set(pos, d.getAddress());
                 }
             } else {
@@ -87,5 +114,6 @@ public class DataTable {
 
     public void reset() {
         dataItemHashMap.clear();
+        nextAvailableAddress = 0;
     }
 }

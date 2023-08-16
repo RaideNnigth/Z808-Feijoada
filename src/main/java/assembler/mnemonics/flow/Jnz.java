@@ -20,7 +20,7 @@ public class Jnz extends Operation {
         LinkedList<Short> assembledCode = Assembler.getInstance().getAssembledCode();
 
         assembledCode.add(JNZ);
-        processDirectAddressing(tokens[1]);
+        processJumpAddressing(tokens[1]);
 
     }
 }

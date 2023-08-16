@@ -1,6 +1,7 @@
 package virtual_machine.registers;
 
 import virtual_machine.memory.Memory;
+import virtual_machine.memory.MemoryController;
 
 import java.util.HashMap;
 
@@ -15,10 +16,6 @@ public class BankOfRegisters {
     private final RegWork cs = new RegWork(); // Code segment register
     private final RegWork ds = new RegWork(); // Data segment register
     private final RegWork ss = new RegWork(); // Stack segment register
-
-    public static final short CODE_SEGMENT_DEFAULT_START = (short) 0;
-    public static final short DATA_SEGMENT_DEFAULT_START = (short) 32_767;
-    public static final short STACK_DEFAULT_START = (short) (Memory.MEM_SIZE - 1);
 
     public BankOfRegisters() {
         resetAllRegisters();
@@ -87,9 +84,9 @@ public class BankOfRegisters {
         ip.reset();
         sr.reset();
 
-        cs.setValue(CODE_SEGMENT_DEFAULT_START);
-        ds.setValue(DATA_SEGMENT_DEFAULT_START);
-        ss.setValue(STACK_DEFAULT_START);
+        cs.setValue(MemoryController.CODE_SEGMENT_DEFAULT_START);
+        ds.setValue(MemoryController.DATA_SEGMENT_DEFAULT_START);
+        ss.setValue(MemoryController.STACK_DEFAULT_START);
     }
 
 

@@ -25,6 +25,7 @@ public class SubAxDir implements Command {
     public void doOperation(HashMap<OpParameters, Object> args ) {
         RegWork ax = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getAx();
         RegWork ip = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getIp();
+        RegWork ds = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getDs();
         RegFlags sr = (RegFlags) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getSr();
 
         // Get memory controller
@@ -32,7 +33,7 @@ public class SubAxDir implements Command {
 
         // We must get from the memory the 16 bit constant
         short operandAddr = mc.getWordBE(ip.getValue()); // Get operand addr in dataMem
-        short cte = mc.getWordBE(operandAddr);
+        short cte = mc.getWordBE((short) (operandAddr + ds.getValue()));
 
         ip.setValue((short) (ip.getValue() + 1)); // Increment IP
 

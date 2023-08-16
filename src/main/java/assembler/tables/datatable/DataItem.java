@@ -1,25 +1,34 @@
 package assembler.tables.datatable;
-import assembler.tables.datatable.dataitemtype.DataItemType;
 
 
+import assembler.Assembler;
+import assembler.tables.datatable.dataitemtype.Type;
+import assembler.tables.datatable.dataitemtype.TypeFactory;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class DataItem {
     private final String identification;
-    private final boolean isDeclared;
-    private final boolean isVariable;
-    private final short size;
-    private final short value;
-    private final short address;
+    private boolean isDeclared;
+    private Type type;
+    private ArrayList<Byte> initialValue;
+    private short address;
     private final LinkedList<Integer> usedAt = new LinkedList<>();
 
-    public DataItem(String identification, boolean isDeclared, boolean isVariable, String dataType, short value, short address) {
+    // Used when declarind DataItem in data segment
+    public DataItem(String identification, boolean isDeclared, String dataType, String initialValue, short address) {
         this.identification = identification;
         this.isDeclared = isDeclared;
-        this.isVariable = isVariable;
-        this.size = new DataItemType(dataType).getByteSize(dataType);
-        this.value = value;
         this.address = address;
+
+        setTypeAndInitialValue(dataType, initialValue);
+    }
+
+    // Used when implicit declaring DataItem in code segment
+    public DataItem(String identification, boolean isDeclared) {
+        this.identification = identification;
+        this.isDeclared = isDeclared;
     }
 
     public String getIdentification() {
@@ -34,19 +43,29 @@ public class DataItem {
         return usedAt;
     }
 
-    public short getValue() {
-        return value;
-    }
-
-    public boolean getIsVariable() {
-        return isVariable;
+    public ArrayList<Byte> getInitialValue() {
+        return initialValue;
     }
 
     public short getSize() {
-        return size;
+        return (short) type.getSizeInBytes();
     }
 
     public short getAddress() {
         return address;
+    }
+
+    public void setDeclared(boolean declared) {
+        isDeclared = declared;
+    }
+
+    public void setTypeAndInitialValue(String type, String initialValue) {
+        this.type = TypeFactory.inferType(type);
+        this.initialValue = this.type.parseInitialValue(initialValue);
+        Assembler.getInstance().getAssembledData().addAll(this.initialValue);
+    }
+
+    public void setAddress(short address) {
+        this.address = address;
     }
 }

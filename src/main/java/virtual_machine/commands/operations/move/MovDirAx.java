@@ -14,11 +14,12 @@ public class MovDirAx implements Command {
         BankOfRegisters br = (BankOfRegisters) args.get(OpParameters.REGISTERS);
         RegWork ax = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getAx();
         RegWork ip = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getIp();
+        RegWork ds = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getDs();
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
         short operandAddr = mc.getWordBE(ip.getValue()); // Get operand addr in dataMem
         br.incrementIp();
 
-        mc.writeWord(ax.getValueLE(), operandAddr);
+        mc.writeWord((short) (operandAddr + ds.getValue()), ax.getValue());
     }
 }

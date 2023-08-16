@@ -20,7 +20,7 @@ public class Je extends Operation {
         LinkedList<Short> assembledCode = Assembler.getInstance().getAssembledCode();
 
         assembledCode.add(JE);
-        processDirectAddressing(tokens[1]);
+        processJumpAddressing(tokens[1]);
 
     }
 }

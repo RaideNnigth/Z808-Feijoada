@@ -22,6 +22,6 @@ public class Jmp extends Operation {
         LinkedList<Short> assembledCode = Assembler.getInstance().getAssembledCode();
 
         assembledCode.add(JMP);
-        processDirectAddressing(tokens[1]);
+        processJumpAddressing(tokens[1]);
     }
 }

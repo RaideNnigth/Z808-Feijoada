@@ -53,6 +53,7 @@ public class MainWindow extends JFrame {
 
         // ------------------------------ Criando a area de texto para o Assembly ------------------------------
         AssemblyTextArea assemblyArea = AssemblyTextArea.getInstance();
+        LogTextArea logArea = LogTextArea.getInstance();
 
         // ------------------------------ Red Panel (registradores) ------------------------------
         RegistersPanel rightRegistersPanel = new RegistersPanel();
@@ -60,10 +61,9 @@ public class MainWindow extends JFrame {
         vm.notifySubscribers(); // Display default values
 
         // ------------------------------ Criando Abas ------------------------------
-        Tabs tabs = new Tabs();
+        Tabs tabs = Tabs.getInstance();
         tabs.addTab("Programa", null, assemblyArea, "Escreva seu programa em FeijoadaZ808 Assembly");
-        tabs.addTab("Memória", null, new JLabel("Aba de memória..."), "Memória do programa montado");
-        //tabs.addTab("Memória", null, new MemoryPane(), "Memória do programa montado");
+        tabs.addTab("Log", null, logArea, "Logs de montagem");
 
         // Its size will be at least 2/3 of the start dimension
         tabs.setPreferredSize(new Dimension((int) ((startDimension.getWidth() / 3) * 2), Short.MAX_VALUE));

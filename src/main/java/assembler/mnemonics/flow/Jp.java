@@ -20,7 +20,7 @@ public class Jp extends Operation {
         LinkedList<Short> assembledCode = Assembler.getInstance().getAssembledCode();
 
         assembledCode.add(JP);
-        processDirectAddressing(tokens[1]);
+        processJumpAddressing(tokens[1]);
 
     }
 }

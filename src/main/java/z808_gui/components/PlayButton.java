@@ -47,6 +47,9 @@ public class PlayButton extends JLabel implements Listener {
                         // Load bin
                         vm.loadProgram(binPath);
                         vm.executeProgram();
+
+                        var tabbedPane = Tabs.getInstance();
+                        tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
                     } catch (IOException ioException) {
                         JOptionPane.showMessageDialog(null, "O arquivo \"" + PROGRAM_PATH + "\" não existe!", "Erro", JOptionPane.ERROR_MESSAGE, null);
                     } catch (Exception ex) {

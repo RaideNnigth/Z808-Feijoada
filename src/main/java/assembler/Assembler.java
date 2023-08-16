@@ -8,6 +8,7 @@ import assembler.tables.symboltable.SymbolTable;
 import assembler.tables.symboltable.UndeclaredSymbol;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 // THIS CLASS IS A SINGLETON
@@ -19,6 +20,8 @@ public class Assembler {
 
     // Assembled code
     private final LinkedList<Short> assembledCode = new LinkedList<>();
+    // Assembled data
+    private final ArrayList<Byte> assembledData = new ArrayList<>();
 
     // Logger
     private final Logger logger = new Logger();
@@ -57,48 +60,76 @@ public class Assembler {
 
     public void assembleFile(String pathToProgram) throws Exception {
         FileReader fileReader = new FileReader(pathToProgram);
+        logger.reset();
 
-
+        // Assemble line by line
         try (BufferedReader fileIO = new BufferedReader(fileReader)) {
-            lineCounter += 1;
             currentLine = fileIO.readLine();
+            lineCounter += 1;
 
             while (currentLine != null && !loggerInterruption) {
                 // Our assembler IS NOT case-sensitive!!
                 currentLine = currentLine.toUpperCase();
                 assembleLine();
+                lineCounter += 1;
 
                 currentLine = fileIO.readLine();
             }
         } catch (IOException e) {
             logger.addLog(new Log(LogType.ERROR, lineCounter, "Error while reading " + pathToProgram + "file: " + e.getMessage()));
-            System.exit(-1);
+            logger.printLogs();
+            resetAssembler();
+            return;
+        } catch (Exception e) {
+            logger.addLog(new Log(LogType.ERROR, lineCounter, "ASSEMBLY ERROR\n" + e.getMessage()));
+            logger.printLogs();
+            resetAssembler();
+            return;
+        } finally {
+            fileReader.close();
         }
 
+        // Resolve symbols in symboltable
         try {
             SymbolTable.getInstance().replaceAllOcorrencesOfDeclaredSymbols();
         } catch (UndeclaredSymbol e) {
-            logger.addLog(new Log(LogType.ERROR, lineCounter, "Error on Symbol table " + e.getMessage()));
+            logger.addLog(new Log(LogType.ERROR, lineCounter, "ERROR ON SYMBOL TABLE" + e.getMessage()));
+            logger.printLogs();
+            resetAssembler();
+            return;
         }
 
+        // Resolve symbols in datatable
         try {
             DataTable.getInstance().replaceAllOcorrencesOfDeclaredDataItems();
         } catch (Exception e) {
-            logger.addLog(new Log(LogType.ERROR, lineCounter, "Error on Data table " + e.getMessage()));
+            logger.addLog(new Log(LogType.ERROR, lineCounter, "ERROR ON DATA TABLE\n" + e.getMessage()));
+            logger.printLogs();
+            resetAssembler();
+            return;
         }
 
+        // No code segment was declared
         if (!codeSegmentSet) {
+            resetAssembler();
             throw new Exception("Code segment not set!");
         }
 
-        // Set invalid segment for interpreter ignore
-        // Defining header metadata
+        // -------------------------- Calculating segments of header --------------------------
         int headerSize = 0xC;
+        // Since each short takes 2 bytes, we need to multiply by 2. We need to subtract 1 because the first byte is already counted
+        csEnd = headerSize + (assembledCode.size() * 2) - 1;
+
+        // If no data segment was declared, set invalid segment for interpreter ignore
         if (!dataSegmentSet) {
             dsStart = headerSize;
             dsEnd = csEnd;
-        } else {
-            this.dsEnd = DataTable.getInstance().getNextAvailableAddress() + this.csEnd;
+        }
+        // If data segment was declared,
+        else {
+            dsStart = csEnd + 1;
+            // For the same reason than code segment, we need to subtract 1. But this time we don't need to multiply by 2, since each byte takes 1 byte
+            dsEnd = dsStart + assembledData.size() - 1;
         }
 
         // Removes ".asm" extension and append ".bin"
@@ -109,29 +140,40 @@ public class Assembler {
         OutputStream outputStream = new FileOutputStream(pathToProgram);
         try (DataOutputStream dataOutStream = new DataOutputStream(outputStream)) {
             dataOutStream.writeShort(Short.reverseBytes((short) headerSize));
-            dataOutStream.writeShort(Short.reverseBytes((short) (csEnd * 2 + headerSize + 1)));
+            dataOutStream.writeShort(Short.reverseBytes((short) (csEnd)));
 
-            dataOutStream.writeShort(Short.reverseBytes((short) (dsStart * 2 + headerSize + 1)));
-            dataOutStream.writeShort(Short.reverseBytes((short) (dsEnd * 2 + headerSize + 1)));
+            dataOutStream.writeShort(Short.reverseBytes((short) (dsStart)));
+            dataOutStream.writeShort(Short.reverseBytes((short) (dsEnd)));
 
+            // Henrique: podemos usar essa área antiga da pilha para colocar o endereço de variáveis externas
             dataOutStream.writeShort(Short.reverseBytes((short) (0)));
-            dataOutStream.writeShort(Short.reverseBytes((short) (-5)));
+            dataOutStream.writeShort(Short.reverseBytes((short) (-1)));
 
+            // Writing code segment
             for (short s : assembledCode) {
                 dataOutStream.writeShort(Short.reverseBytes(s));
             }
+
+            // Writing data segment
+            for (int i = 1; i < assembledData.size(); i += (i % 2 == 0) ? 3 : -1) {
+                dataOutStream.writeByte(assembledData.get(i));
+            }
         } catch (IOException e) {
-            logger.addLog(new Log(LogType.ERROR, lineCounter, "Error while writing binary file!"));
+            logger.addLog(new Log(LogType.ERROR, lineCounter, "Error while writing " + pathToProgram + "file: " + e.getMessage()));
+            logger.printLogs();
+            resetAssembler();
+            return;
         }
 
         // Log success message
-        logger.addLog(new Log(LogType.INFO, 0, "Finish to assemble code file!"));
+        logger.addLog(new Log(LogType.INFO, 0, "Code assembled!"));
+        logger.printLogs();
 
         // Reset after assembly
-        resetAfterAssembly();
+        resetAssembler();
     }
 
-    private void assembleLine() {
+    private void assembleLine() throws Exception {
         currentLine = currentLine.split(";")[0];
 
         // Line is just a comment
@@ -147,38 +189,41 @@ public class Assembler {
             if (directiveProcessor.assembleDirective(currentLine))
                 return;
         } catch (Exception e) {
-            logger.addLog(new Log(LogType.ERROR, lineCounter, "Error on Directive Processor: " + e.getMessage()));
+            logger.addLog(new Log(LogType.ERROR, lineCounter, "ERROR ON DIRECTIVE PROCESSOR\n " + e.getMessage()));
+            return;
         }
 
-        // Handling operations
-        try {
-            if (operationProcessor.assembleOperation(currentLine)) {
-                pc = assembledCode.size() - 1;
-            }
-        } catch (Exception e) {
-            logger.addLog(new Log(LogType.ERROR, lineCounter, "Error on Operation Processor: " + e.getMessage()));
-        }
-
-        // Handling segments
-        // if it is code segment
+        // Handling operations and data declarations
         if (isCodeSegment) {
-            csEnd = pc;
-            dsStart = csEnd + 1;
+            // Handle operations
+            operationProcessor.assembleOperation(currentLine);
+            pc = assembledCode.size() - 1;
         } else {
-            // if it is data segment
-            try {
-                DataTable.getInstance().processDataItem(this.currentLine);
-            }catch (Exception e){
-                logger.addLog(new Log(LogType.ERROR, lineCounter, "Error on Data Table: " + e.getMessage()));
-            }
+            // Handle declaration of "variables"
+            DataTable.getInstance().processDataItemDeclaration(this.currentLine);
         }
+
     }
-    private void resetAfterAssembly() {
+
+    private void resetAssembler() {
         SymbolTable.getInstance().reset();
         DataTable.getInstance().reset();
+
+        assembledData.clear();
         assembledCode.clear();
-        logger.reset();
+
+        lineCounter = 0;
+
+        csEnd = 0;
+        dsStart = 0;
+        dsEnd = 0;
         pc = 0;
+
+        isCodeSegment = false;
+        codeSegmentSet = false;
+        dataSegmentSet = false;
+
+        loggerInterruption = false;
     }
 
     public boolean isLoggerInterruption() {
@@ -191,6 +236,10 @@ public class Assembler {
 
     public LinkedList<Short> getAssembledCode() {
         return assembledCode;
+    }
+
+    public ArrayList<Byte> getAssembledData() {
+        return assembledData;
     }
 
     public Logger getLogger() {
@@ -215,5 +264,13 @@ public class Assembler {
 
     public void dataSegmentFound() {
         dataSegmentSet = true;
+    }
+
+    public boolean isCodeSegmentFound() {
+        return codeSegmentSet;
+    }
+
+    public boolean isDataSegmentFound() {
+        return dataSegmentSet;
     }
 }

@@ -33,6 +33,7 @@ public class Interpreter {
         while (registers.getIp().getValue() < registers.getDs().getValue()) {
             executeNextInstruction();
         }
+        memoryController.exportDataMem();
     }
 
     public void executeNextInstruction() {

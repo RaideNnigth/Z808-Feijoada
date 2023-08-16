@@ -1,7 +1,8 @@
 package virtual_machine.memory;
 
 public class Memory {
-    public static final int MEM_SIZE = 65_536;
+    //public static final int MEM_SIZE = 65_536;
+    public static final int MEM_SIZE = 32_768; // Henrique: I think we should use this one
     private final short[] mainMemory;
     private static Memory memoryInstance = null;
 
