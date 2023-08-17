@@ -146,6 +146,7 @@ public class Assembler {
             dataOutStream.writeShort(Short.reverseBytes((short) (dsEnd)));
 
             // Henrique: podemos usar essa área antiga da pilha para colocar o endereço de variáveis externas
+            // Gustavo: você é muito inteligente
             dataOutStream.writeShort(Short.reverseBytes((short) (0)));
             dataOutStream.writeShort(Short.reverseBytes((short) (-1)));
 

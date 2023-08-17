@@ -10,6 +10,7 @@ import java.util.LinkedList;
 public class AssemblerUtils {
     private static final String nameRegex = "[A-Z@$_][A-Z@$_0-9]*";
     private static final String labelRegex = nameRegex + ":";
+    private static final String macroRegex = nameRegex;
 
     public static String[] decomposeInTokens(String line) {
         // Check if it's an array declaration
@@ -145,6 +146,22 @@ public class AssemblerUtils {
         line = line.substring(0, line.length() - 2);
 
         // Check if name is a invalid word
+        for (String s : CodeTable.getInstance().getKeys()) {
+            if (line.equals(s))
+                return false;
+        }
+
+        return true;
+    }
+
+    public static boolean isValidMacro(String line) {
+        if (!line.matches(macroRegex)) {
+            return false;
+        }
+
+        line = line.substring(0, line.length() - 2);
+
+        // Check if name is invalid word
         for (String s : CodeTable.getInstance().getKeys()) {
             if (line.equals(s))
                 return false;
