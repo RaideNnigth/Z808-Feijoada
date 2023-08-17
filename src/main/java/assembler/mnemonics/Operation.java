@@ -50,15 +50,9 @@ public abstract class Operation implements AssembleableOperation {
     // For LABELS!
     protected void processJumpAddressing(String token) {
         var st = SymbolTable.getInstance();
-        var assembledCode = Assembler.getInstance().getAssembledCode();
 
         if (st.symbolExists(token)) {
-            var sy = st.getSymbol(token);
-            if (sy.isDeclared()) {
-                assembledCode.add(sy.getValue());
-            } else {
-                st.addOccurrenceOfSymbol(token);
-            }
+            st.addOccurrenceOfSymbol(token);
         } else if (AssemblerUtils.isValidName(token)) {
             Symbol s = new Symbol(token, false);
 

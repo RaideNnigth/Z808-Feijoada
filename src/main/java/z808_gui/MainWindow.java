@@ -8,11 +8,12 @@ import javax.swing.*;
 import java.awt.*;
 
 import z808_gui.components.*;
+import z808_gui.utils.ActionsListeners;
 
 import static z808_gui.utils.UIUtils.*;
 
 public class MainWindow extends JFrame {
-    private VirtualMachine vm;
+    private final VirtualMachine vm;
 
     public MainWindow(VirtualMachine virtualMachine) {
         this.vm = virtualMachine;
@@ -24,7 +25,7 @@ public class MainWindow extends JFrame {
         setBackground(Color.white);
 
         // Creates menu
-        JMenuBar menuBar = new MenuBar();
+        JMenuBar menuBar = new MenuBar(ActionsListeners.getInstance(virtualMachine));
         setJMenuBar(menuBar);
 
         // Painel superior com o título
@@ -34,13 +35,13 @@ public class MainWindow extends JFrame {
         LowerCommandsPanel lowerCommands = new LowerCommandsPanel();
 
         PlayButton playButton = new PlayButton(PLAY_DEFAULT_IMG, vm);
-        StepButton stepButton = new StepButton(STEP_DEFAULT_IMG, vm);
+        AssembleButton assembleButton = new AssembleButton(ASSEM_DEFAULT_IMG, vm);
 
         // Populando lowerCommands
         lowerCommands.add(Box.createRigidArea(H_SPACER));
-        lowerCommands.add(playButton);
+        lowerCommands.add(assembleButton);
         lowerCommands.add(Box.createRigidArea(H_SPACER));
-        lowerCommands.add(stepButton);
+        lowerCommands.add(playButton);
 
         // ------------------------------ Criando painel central ------------------------------
         JPanel centralPanel = new JPanel();

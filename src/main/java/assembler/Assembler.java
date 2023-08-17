@@ -180,7 +180,7 @@ public class Assembler {
         if (currentLine.isEmpty())
             return;
 
-        // Handling labels
+        // Handling labels declaration
         if (labelProcessor.assembleLabel(currentLine))
             return;
 

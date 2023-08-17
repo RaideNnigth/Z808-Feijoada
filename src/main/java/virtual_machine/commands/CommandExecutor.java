@@ -66,7 +66,7 @@ public class CommandExecutor {
         // MOV Instructions
         this.opCodeMap.put((short) 0xB8FF, new MovAxCte());
         this.opCodeMap.put((short) 0xA1FF, new MovAxDir());
-        this.opCodeMap.put((short) 0x8BD1, new MovDxAx());
+        this.opCodeMap.put((short) 0x8BD1, new MovAxDx());
         this.opCodeMap.put((short) 0x8BD0, new MovDxAx());
         this.opCodeMap.put((short) 0xA3FF, new MovDirAx());
 

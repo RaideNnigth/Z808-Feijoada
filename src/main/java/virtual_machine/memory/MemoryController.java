@@ -1,11 +1,16 @@
 package virtual_machine.memory;
 
 import virtual_machine.utils.BinaryUtils;
+import z808_gui.utils.UIUtils;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static z808_gui.utils.UIUtils.CURRENT_DIRECTORY;
+import static z808_gui.utils.UIUtils.PROGRAM_PATH;
 
 public class MemoryController {
     private final Memory mainMemory;
@@ -66,13 +71,22 @@ public class MemoryController {
      * Write a file with the data info of the memory.
      */
     public void exportDataMem() {
-        try (BufferedWriter bfw = new BufferedWriter(new FileWriter("dataMem.txt"))) {
+        String pathToOutput = CURRENT_DIRECTORY + File.separator + UIUtils.getFileNameNoExtension(PROGRAM_PATH) + "_dataMem.txt";
+
+        try (BufferedWriter bfw = new BufferedWriter(new FileWriter(pathToOutput))) {
             for (int i = DATA_SEGMENT_DEFAULT_START; i < Memory.MEM_SIZE; i++) {
                 bfw.write("[" + i + " | " + (i - DATA_SEGMENT_DEFAULT_START) + " ] = " + getWordBE((short) i) + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Data memory exported to dataMem.txt in location: " + System.getProperty("user.dir"));
+        System.out.println("Data memory exported to :" + CURRENT_DIRECTORY);
+    }
+
+    /**
+     * Resets main memory.
+     */
+    public void resetMemory() {
+        mainMemory.reset();
     }
 }

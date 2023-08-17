@@ -16,15 +16,15 @@ public class UIUtils {
     public static final String PLAY_DEFAULT_IMG_PATH = "src/main/java/z808_gui/imgs/graoFeijao.png";
     public static final String PLAY_ACTIVE_IMG_PATH = "src/main/java/z808_gui/imgs/graoFeijaoActive.png";
     public static final String Z808_FEIJOADA_LOGO_IMG_PATH = "src/main/java/z808_gui/imgs/Z808FEIJOADALOGO.png";
-    public static final String STEP_DEFAULT_IMG_PATH = "src/main/java/z808_gui/imgs/stepFeijao.png";
-    public static final String STEP_ACTIVE_IMG_PATH = "src/main/java/z808_gui/imgs/stepFeijaoActive.png";
+    public static final String ASSEM_DEFAULT_IMG_PATH = "src/main/java/z808_gui/imgs/assemFeijao.png";
+    public static final String ASSEM_ACTIVE_IMG_PATH = "src/main/java/z808_gui/imgs/assemFeijaoActive.png";
 
     // Play and Step icon
     public static final int CONTROLS_BUTTON_SIZE = 60;
     public static final ImageIcon PLAY_DEFAULT_IMG = new ImageIcon(UIUtils.resizeImage(PLAY_DEFAULT_IMG_PATH, CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE, Image.SCALE_SMOOTH));
     public static final ImageIcon PLAY_HOVER_IMG = new ImageIcon(UIUtils.resizeImage(PLAY_ACTIVE_IMG_PATH, CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE, Image.SCALE_SMOOTH));
-    public static final ImageIcon STEP_DEFAULT_IMG = new ImageIcon(UIUtils.resizeImage(STEP_DEFAULT_IMG_PATH, CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE, Image.SCALE_SMOOTH));
-    public static final ImageIcon STEP_ACTIVE_IMG = new ImageIcon(UIUtils.resizeImage(STEP_ACTIVE_IMG_PATH, CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE, Image.SCALE_SMOOTH));
+    public static final ImageIcon ASSEM_DEFAULT_IMG = new ImageIcon(UIUtils.resizeImage(ASSEM_DEFAULT_IMG_PATH, CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE, Image.SCALE_SMOOTH));
+    public static final ImageIcon ASSEM_ACTIVE_IMG = new ImageIcon(UIUtils.resizeImage(ASSEM_ACTIVE_IMG_PATH, CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE, Image.SCALE_SMOOTH));
 
     // Logo Z808
     public static final int FEIJOADA_LOGO_SIZE_X = 455;
@@ -33,6 +33,7 @@ public class UIUtils {
 
     // Path to active program
     public static String PROGRAM_PATH = "";
+    public static String CURRENT_DIRECTORY = "";
 
     // Registers labels and stuff
     public static final HashMap<Registers, JLabel> registersJLabelsMap = new HashMap<>();
@@ -65,5 +66,12 @@ public class UIUtils {
         }
 
         return true;
+    }
+
+    public static String getFileNameNoExtension(String path) {
+        int ind = path.lastIndexOf(File.separatorChar);
+        String fileName = path.substring(ind + 1);
+
+        return fileName.split("\\.")[0];
     }
 }

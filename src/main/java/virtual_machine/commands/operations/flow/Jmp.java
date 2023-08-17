@@ -17,8 +17,7 @@ public class Jmp implements Command {
         RegWork ip = (RegWork) br.getIp();
         MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
-        short jmpDesl = (short) (mc.getWordBE(ip.getValue())); // Get operand addr in dataMem
-        //br.incrementIp(); // Increment IP
+        short jmpDesl = mc.getWordBE(ip.getValue()); // Get operand addr in dataMem
 
         ip.setValue((short) (ip.getValue() + jmpDesl));
     }

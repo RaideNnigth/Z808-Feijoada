@@ -4,6 +4,8 @@ import assembler.Assembler;
 import virtual_machine.VirtualMachine;
 import z808_gui.observerpattern.Listener;
 import z808_gui.observerpattern.MessageType;
+import z808_gui.observerpattern.ProgramPathEventManager;
+import z808_gui.utils.ActionsListeners;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +23,7 @@ public class PlayButton extends JLabel implements Listener {
         setPreferredSize(new Dimension(CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE));
         setEnabled(false);
 
-        MenuBar.subscribe(this);
+        ProgramPathEventManager.getInstance().subscribe(this);
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -29,34 +31,7 @@ public class PlayButton extends JLabel implements Listener {
                 mouseExited(e);
 
                 if (isEnabled()) {
-                    try {
-                        // Salva arquivo
-                        try (FileWriter fw = new FileWriter(PROGRAM_PATH)) {
-                            // Salva arquivo
-                            fw.write(AssemblyTextArea.getInstance().getText());
-                        } catch (IOException ex) {
-                            System.out.println(ex);
-                        }
-
-                        // Monta o programa
-                        Assembler.getInstance().assembleFile(PROGRAM_PATH);
-
-                        // binPath
-                        String binPath = (PROGRAM_PATH.substring(0, PROGRAM_PATH.length() - 4) + ".bin");
-
-                        // Load bin
-                        vm.loadProgram(binPath);
-                        vm.executeProgram();
-
-                        var tabbedPane = Tabs.getInstance();
-                        tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
-                    } catch (IOException ioException) {
-                        JOptionPane.showMessageDialog(null, "O arquivo \"" + PROGRAM_PATH + "\" não existe!", "Erro", JOptionPane.ERROR_MESSAGE, null);
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, ex, "Erro", JOptionPane.ERROR_MESSAGE, null);
-                        System.out.println(ex);
-                        ex.printStackTrace();
-                    }
+                    ActionsListeners.getInstance(vm).getRunAL().actionPerformed(null);
                 }
             }
 

@@ -1,5 +1,7 @@
 package z808_gui.components;
 
+import z808_gui.utils.TextLineNumber;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,7 +11,13 @@ public class AssemblyTextArea extends JScrollPane {
 
     private AssemblyTextArea() {
         assemblyTextEditor = new JTextArea();
+
+        TextLineNumber tln = new TextLineNumber(assemblyTextEditor);
+        tln.setUpdateFont(true);
+
         assemblyTextEditor.setFont(new Font("Consolas", Font.PLAIN, 22));
+
+        setRowHeaderView(tln);
         setViewportView(assemblyTextEditor);
     }
 

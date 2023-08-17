@@ -30,4 +30,10 @@ public class Memory {
             return this.mainMemory[address];
         return (short) 0x0000;
     }
+
+    public void reset() {
+        for (int i = 0; i < MEM_SIZE; i++) {
+            this.mainMemory[i] = 0;
+        }
+    }
 }

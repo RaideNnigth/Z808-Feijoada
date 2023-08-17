@@ -27,11 +27,6 @@ public class VirtualMachine {
         notifySubscribers();
     }
 
-    public void executeNextInstruction() {
-        vmInterpreter.executeNextInstruction();
-        notifySubscribers();
-    }
-
     public void subscribe(RegObsListener rl) {
         subscribers.add(rl);
     }

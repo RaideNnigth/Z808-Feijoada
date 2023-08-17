@@ -3,22 +3,23 @@ package z808_gui.components;
 import virtual_machine.VirtualMachine;
 import z808_gui.observerpattern.Listener;
 import z808_gui.observerpattern.MessageType;
+import z808_gui.observerpattern.ProgramPathEventManager;
+import z808_gui.utils.ActionsListeners;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
 import static z808_gui.utils.UIUtils.*;
 
-public class StepButton extends JLabel implements Listener {
-    public StepButton(ImageIcon IMG, VirtualMachine vm) {
+public class AssembleButton extends JLabel implements Listener {
+    public AssembleButton(ImageIcon IMG, VirtualMachine vm) {
         super(IMG);
         this.setPreferredSize(new Dimension(CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE));
         setEnabled(false);
 
-        MenuBar.subscribe(this);
+        ProgramPathEventManager.getInstance().subscribe(this);
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -26,13 +27,7 @@ public class StepButton extends JLabel implements Listener {
                 mouseExited(e);
 
                 if (isEnabled()) {
-                    try {
-                        vm.loadProgram(PROGRAM_PATH);
-                        vm.executeNextInstruction();
-                        //updateWorkRegsLabels();
-                    } catch (IOException ioException) {
-                        JOptionPane.showMessageDialog(null, "O arquivo \"" + PROGRAM_PATH + "\" não existe!", "Erro", JOptionPane.ERROR_MESSAGE, null);
-                    }
+                    ActionsListeners.getInstance(vm).getMontarAL().actionPerformed(null);
                 }
             }
 
@@ -44,13 +39,13 @@ public class StepButton extends JLabel implements Listener {
             @Override
             public void mouseEntered(MouseEvent e) {
                 setCursor(new Cursor(Cursor.HAND_CURSOR));
-                setIcon(STEP_ACTIVE_IMG);
+                setIcon(ASSEM_ACTIVE_IMG);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                setIcon(STEP_DEFAULT_IMG);
+                setIcon(ASSEM_DEFAULT_IMG);
             }
         });
     }

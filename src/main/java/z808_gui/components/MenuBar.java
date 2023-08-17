@@ -1,13 +1,19 @@
 package z808_gui.components;
 
 import assembler.Assembler;
+import virtual_machine.VirtualMachine;
 import z808_gui.observerpattern.Listener;
 import z808_gui.observerpattern.MessageType;
+import z808_gui.observerpattern.ProgramPathEventManager;
+import z808_gui.utils.ActionsListeners;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -17,26 +23,32 @@ import java.util.LinkedList;
 import static z808_gui.utils.UIUtils.*;
 
 public class MenuBar extends JMenuBar {
-    private static LinkedList<Listener> subscribers = new LinkedList<>();
+    public MenuBar(ActionsListeners al) {
+        ProgramPathEventManager ppm = ProgramPathEventManager.getInstance();
 
-    public MenuBar() {
         // Itens da barra de menus
         JMenu arquivoMenu = new JMenu("Arquivo");
         JMenu executarMenu = new JMenu("Executar");
         JMenu ajudaMenu = new JMenu("Ajuda");
 
+        // Control key mask
+        final var CTRL_MASK = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
+
         // --------------------- Sub-itens menu Arquivo ---------------------
         // Novo
         JMenuItem novoMenItem = new JMenuItem("Novo");
+        novoMenItem.setAccelerator(KeyStroke.getKeyStroke('N', CTRL_MASK));
 
         novoMenItem.addActionListener(e -> {
             PROGRAM_PATH = "";
+            CURRENT_DIRECTORY = "";
             AssemblyTextArea.getInstance().setText("");
-            notifySubscribers(MessageType.PATH_NOT_SET);
+            ppm.notifySubscribers(MessageType.PATH_NOT_SET);
         });
 
         // Abrir
         JMenuItem abrirMenItem = new JMenuItem("Abrir");
+        abrirMenItem.setAccelerator(KeyStroke.getKeyStroke('O', CTRL_MASK));
 
         abrirMenItem.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
@@ -71,7 +83,9 @@ public class MenuBar extends JMenuBar {
                 if (selectedFile.getName().endsWith(".asm")) {
                     // Seta PROGRAM_PATH com o endereço do arquivo selecionado
                     PROGRAM_PATH = selectedFile.getAbsolutePath();
+                    CURRENT_DIRECTORY = PROGRAM_PATH.substring(0, PROGRAM_PATH.length() - selectedFile.getName().length() - 1);
                     System.out.println("Selected file: " + PROGRAM_PATH);
+                    System.out.println("Dir path to selected file: " + CURRENT_DIRECTORY);
 
                     // Carrega texto no textarea
                     try {
@@ -82,7 +96,7 @@ public class MenuBar extends JMenuBar {
                     }
 
                     // Notifica inscritos
-                    notifySubscribers(MessageType.PATH_IS_SET);
+                    ppm.notifySubscribers(MessageType.PATH_IS_SET);
                 } else {
                     JOptionPane.showMessageDialog(null, "Você só pode abrir arquivos Assembly (.asm)!", "Erro", JOptionPane.ERROR_MESSAGE, null);
                 }
@@ -92,48 +106,13 @@ public class MenuBar extends JMenuBar {
 
         // Salvar
         JMenuItem salvarMenItem = new JMenuItem("Salvar");
+        salvarMenItem.setAccelerator(KeyStroke.getKeyStroke('S', CTRL_MASK));
 
-        var saveAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Se PROGRAM_PATH está vazia, o programa não foi salvo
-                if (PROGRAM_PATH.isEmpty()) {
-                    JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-
-                    int result = fileChooser.showSaveDialog(null);
-                    if (result == JFileChooser.APPROVE_OPTION) {
-                        // Coloca extensão se não tiver
-                        PROGRAM_PATH = fileChooser.getSelectedFile().getAbsolutePath();
-                        if (!PROGRAM_PATH.endsWith(".asm")) {
-                            PROGRAM_PATH = fileChooser.getSelectedFile().getAbsolutePath() + ".asm";
-                        }
-
-                        try (FileWriter fw = new FileWriter(PROGRAM_PATH)) {
-                            fw.write(AssemblyTextArea.getInstance().getText());
-                        } catch (IOException ex) {
-                            System.err.println(ex);
-                            System.exit(0);
-                        }
-                    }
-                }
-                // Caso contrário, o arquivo existe e será atualizado com o código novo
-                else {
-                    try (FileWriter fw = new FileWriter(PROGRAM_PATH)) {
-                        fw.write(AssemblyTextArea.getInstance().getText());
-                    } catch (IOException ex) {
-                        System.err.println(ex);
-                        System.exit(0);
-                    }
-                }
-
-                notifySubscribers(MessageType.PATH_IS_SET);
-            }
-        };
-        salvarMenItem.addActionListener(saveAction);
+        salvarMenItem.addActionListener(al.getSaveAL());
 
         // Sair
         JMenuItem sairMenItem = new JMenuItem("Sair");
+        sairMenItem.setAccelerator(KeyStroke.getKeyStroke('Q', CTRL_MASK));
 
         sairMenItem.addActionListener(e -> System.exit(0));
 
@@ -145,32 +124,20 @@ public class MenuBar extends JMenuBar {
 
         // --------------------- Sub-itens menu Executar ---------------------
         JMenuItem montarMenItem = new JMenuItem("Montar código");
+        montarMenItem.setAccelerator(KeyStroke.getKeyStroke('M', CTRL_MASK));
+        montarMenItem.addActionListener(al.getMontarAL());
+
         JMenuItem executarTudoMenItem = new JMenuItem("Executar tudo");
-        JMenuItem executarInstMenItem = new JMenuItem("Executar instrução");
-
-        // montar action
-        montarMenItem.addActionListener(e -> {
-            // Salva arquivo .asm
-            saveAction.actionPerformed(e);
-
-            Assembler assembler = Assembler.getInstance();
-
-            try {
-                assembler.assembleFile(PROGRAM_PATH);
-            } catch (FileNotFoundException ex) {
-                System.err.println(ex.toString());
-            } catch (Exception ex) {
-                System.err.println(ex.toString());
-            }
-        });
+        executarTudoMenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
+        executarTudoMenItem.addActionListener(al.getRunAL());
 
         executarMenu.add(montarMenItem);
         executarMenu.add(executarTudoMenItem);
-        executarMenu.add(executarInstMenItem);
 
         // --------------------- Sub-itens menu Sobre ---------------------
         JMenuItem devsMenItem = new JMenuItem("Desenvolvedores");
         JMenuItem sobreMenItem = new JMenuItem("Sobre");
+        sobreMenItem.setMnemonic(KeyEvent.VK_F1);
         JMenuItem comoUsarMenItem = new JMenuItem("Como usar");
         comoUsarMenItem.addActionListener(e -> JOptionPane.showMessageDialog(null, "Te vira.", "Como usar", JOptionPane.INFORMATION_MESSAGE, null));
 
@@ -184,16 +151,4 @@ public class MenuBar extends JMenuBar {
         this.add(executarMenu);
         this.add(ajudaMenu);
     }
-
-    public static void subscribe(Listener l) {
-        subscribers.add(l);
-    }
-
-    private static void notifySubscribers(MessageType t) {
-        for (Listener l : subscribers) {
-            l.update(t);
-        }
-    }
-
-
 }

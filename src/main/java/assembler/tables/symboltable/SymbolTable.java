@@ -13,10 +13,11 @@ public class SymbolTable {
     // Singleton pattern
     private static SymbolTable instance = null;
 
-    private SymbolTable() {}
+    private SymbolTable() {
+    }
 
-    public static SymbolTable getInstance(){
-        if(instance == null)
+    public static SymbolTable getInstance() {
+        if (instance == null)
             instance = new SymbolTable();
 
         return instance;
@@ -53,10 +54,9 @@ public class SymbolTable {
             if (s.isDeclared()) {
                 while (!s.getUsedAt().isEmpty()) {
                     int pos = s.getUsedAt().pop();
-                    Assembler.getInstance().getAssembledCode().set(pos, s.getValue());
+                    Assembler.getInstance().getAssembledCode().set(pos, (short) (s.getValue() - pos));
                 }
-            }
-            else {
+            } else {
                 throw new UndeclaredSymbol(s);
             }
         }
