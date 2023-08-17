@@ -1,27 +1,29 @@
 package assembler.tables.macrotable;
-
+import java.lang.reflect.Array;
+import java.lang.reflect.Parameter;
 import java.util.LinkedList;
 
 public class Macro {
-    private final String indentification;
+    private final String macroName;
+    private Array paramName;
+    private String macroCode;
     private final boolean isDeclared;
-    private final String value;
     private final LinkedList<Integer> usedAt = new LinkedList<>();
 
-    public Macro(String identification, boolean isDeclared) {
-        this.indentification = identification;
+    public Macro(String macroName, boolean isDeclared) {
+        this.macroName = macroName;
         this.isDeclared = isDeclared;
     }
 
-    public Symbol(String identification, boolean isDeclared, String value) {
-        this.indentification = identification;
+    public Macro(String macroName, boolean isDeclared, String value) {
+        this.macroName = macroName;
         this.isDeclared = isDeclared;
-        this.value = value;
+        this.macroCode = value;
     }
 
 
     public String getIdentification() {
-        return indentification;
+        return macroName;
     }
 
     public boolean isDeclared() {
@@ -32,12 +34,12 @@ public class Macro {
         return usedAt;
     }
 
-    public short getValue() {
-        return value;
+    public String getValue() {
+        return macroCode;
     }
 
-    public void setValue(short value) {
-        this.value = value;
+    public void setValue(String macroCode) {
+        this.macroCode = macroCode;
     }
 
 }

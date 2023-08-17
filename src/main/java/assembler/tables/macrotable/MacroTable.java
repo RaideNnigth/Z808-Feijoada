@@ -1,12 +1,10 @@
 package assembler.tables.macrotable;
-
 import assembler.Assembler;
 import assembler.Log;
 import assembler.LogType;
 import assembler.tables.symboltable.Symbol;
 import assembler.tables.symboltable.UndeclaredSymbol;
 import assembler.utils.AssemblerUtils;
-
 import java.util.HashMap;
 
 //Singleton class
@@ -16,7 +14,7 @@ public class MacroTable {
     private static MacroTable instance = null;
     private MacroTable() {}
 
-    public MacroTable getInstance() {
+    public static MacroTable getInstance() {
         if (instance == null) {
             instance = new MacroTable();
         }
@@ -40,7 +38,7 @@ public class MacroTable {
         var macroObj = macroTableDefinitions.get(macro);
         var assembledCode = Assembler.getInstance().getAssembledCode();
 
-        macro.getUsedAt().add(assembledCode.size());
+        macroObj.getUsedAt().add(assembledCode.size());
         assembledCode.add((short) 0);
     }
 
@@ -56,13 +54,13 @@ public class MacroTable {
 
     public void replaceAllOcorrencesOfDeclaredSymbols() throws UndeclaredSymbol {
         for (Macro macro : macroTableDefinitions.values()) {
-            if (macro.isDeclared()) { // Bessa viadinho
+            if (macro.isDeclared()) {
                 while (!macro.getUsedAt().isEmpty()) {
                     int pos = macro.getUsedAt().pop();
                     Assembler.getInstance().getAssembledCode().set(pos, (short) (macro.getValue() - pos));
                 }
             } else {
-                throw new UndeclaredSymbol(macro);
+                throw new UndeclaredMacro(Macro);
             }
         }
     }
@@ -71,3 +69,10 @@ public class MacroTable {
         this.macroTableDefinitions.clear();
     }
 }
+/* Alguém bota isso numa classe eu não tenho permissão
+public class UndeclaredMacro extends Exception {
+    public UndeclaredMacro(Macro macro) {
+        super("The symbol \"" + macro.getIdentification() + "\" is used but never declared!");
+    }
+}
+*/

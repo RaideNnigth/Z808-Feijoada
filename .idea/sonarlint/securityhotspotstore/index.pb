@@ -63,8 +63,6 @@ t
 Dsrc/main/java/virtual_machine/commands/operations/move/MovAxDir.java,1\5\1587c34cbf061e8e356bac021c6eb3d73d6c1b08
 _
 /src/main/java/assembler/mnemonics/move/Mov.java,c\0\c0bdf40abfd3f4f208bd200351ee8b89dd1cc97d
-n
->src/main/java/assembler/codeprocessors/DirectiveProcessor.java,7\0\70b137d145b3996e57b9fbf04187c6c97b418be2
 `
 0src/main/java/assembler/mnemonics/Operation.java,6\e\6ea23d9e7e65f74c1e865f177e9ab9112ec80dec
 n

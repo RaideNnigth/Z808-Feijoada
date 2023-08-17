@@ -1,12 +1,20 @@
 package assembler.codeprocessors;
 
 import assembler.Assembler;
-import assembler.tables.symboltable.Symbol;
+import assembler.tables.macrotable.Macro;
+import assembler.tables.macrotable.MacroTable;
 import assembler.tables.symboltable.SymbolTable;
 import assembler.utils.AssemblerUtils;
 import java.util.Arrays;
 
 public class MacroProcessor {
+
+    private MacroTable macroTable;
+
+    public MacroProcessor () {
+        MacroTable.getInstance();
+    }
+
     public boolean assembleMacro(String line) {
 
         // Line does not contain macro
@@ -22,9 +30,8 @@ public class MacroProcessor {
         // Macro parameters
         String[] macroParams = Arrays.copyOfRange(tokens, 2, tokens.length);
 
+        // Macro being added to the macro table
         Macro macro = new Macro(macroName, macroParams, Assembler.getInstance().getLineCounter());
-
-        s = new Symbol(line, true, (short) Assembler.getInstance().getAssembledCode().size());
 
         /*
         if (Assembler.getInstance().getPC() == 0)
