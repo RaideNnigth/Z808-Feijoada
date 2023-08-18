@@ -6,16 +6,24 @@ import java.util.LinkedList;
 
 public class Logger {
     private final LinkedList<Log> logs = new LinkedList<>();
+    private static Logger instance = null;
+    private boolean interrupted;
 
-    public Logger() {
+    private Logger() {
+        interrupted = false;
+    }
 
+    public static Logger getInstance() {
+        if (instance == null)
+            instance = new Logger();
+        return instance;
     }
 
     public void addLog(Log log) {
         logs.add(log);
 
         if (log.getLogType() == LogType.ERROR) {
-            Assembler.getInstance().setLoggerInterruption(true);
+            interrupted = true;
         }
     }
 
@@ -24,6 +32,10 @@ public class Logger {
         for (Log log : logs) {
             logArea.appendText(log.getMessage());
         }
+    }
+
+    public boolean isInterrupted() {
+        return interrupted;
     }
 
     public void reset() {

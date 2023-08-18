@@ -1,8 +1,5 @@
 package assembler.utils;
-
 import assembler.tables.CodeTable;
-
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -20,9 +17,9 @@ public class AssemblerUtils {
                 throw new IllegalArgumentException("Invalid array declaration: " + line);
             }
 
-            int spltInd = line.indexOf('{');
-            String firstHalf = line.substring(0, spltInd);
-            String secondHalf = line.substring(spltInd + 1, line.length() - 1);
+            int splitInd = line.indexOf('{');
+            String firstHalf = line.substring(0, splitInd);
+            String secondHalf = line.substring(splitInd + 1, line.length() - 1);
 
             // Remove all spaces from the first half
             LinkedList<String> tokens = new LinkedList<>(Arrays.asList(firstHalf.split("\\s*,\\s*|\\s+")));

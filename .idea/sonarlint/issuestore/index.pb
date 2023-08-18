@@ -128,8 +128,6 @@ u
 Esrc/main/java/virtual_machine/commands/operations/flow/JmpNotNeg.java,5\1\510199814bebc26dfe347fea5880ecdbc9f943a6
 o
 ?src/main/java/virtual_machine/commands/operations/flow/Jmp.java,1\7\17844cd75aa92f21a1c7458b4f42337d1d6fa8ac
-P
- src/main/java/z808_gui/Main.java,c\e\ce80d6f3fb1d96bbf7e807033f9ff676bc6edad6
 s
 Csrc/main/java/z808_gui/observerpattern/ProgramPathEventManager.java,a\d\adf3e047c17e8c2515c79d26f055aba16649605d
 i
@@ -148,8 +146,6 @@ g
 0src/main/java/virtual_machine/memory/Memory.java,3\d\3daf65b1f672f4e0de9e00cc13a06287462a22b1
 `
 0src/main/java/virtual_machine/loader/Loader.java,6\4\64e0f6f7b25f1ace6905d71781ef62b36d430104
-V
-&src/main/java/z808_gui/MainWindow.java,e\9\e9da8347c6e40279092d3e9ecd5e9734896ee0c0
 a
 1src/main/java/virtual_machine/VirtualMachine.java,0\a\0a9800519cf30d9fe053adb916b646ac811e8d74
 b
@@ -158,11 +154,7 @@ b
 .src/main/java/z808_gui/components/MenuBar.java,3\f\3f23c26a1fd94210b9b6ffb3e2862581dd93eefc
 P
  src/main/java/assembler/Log.java,2\f\2f80697f7e193efd213798734a7c0ee2f721f335
-S
-#src/main/java/assembler/Logger.java,e\9\e9d47807e5a877909df1e25effe79a411b18645c
 j
 :src/main/java/virtual_machine/interpreter/Interpreter.java,0\b\0b98f8107923188fbedaf00b6cdb5848a7869141
 j
 :src/main/java/virtual_machine/memory/MemoryController.java,1\1\1126c0efed438f6e505252cb4dfe41501d77bd68
-Y
-)src/main/java/z808_gui/utils/UIUtils.java,a\9\a9441b8359b6e1238d1abc552124f404009bdc38

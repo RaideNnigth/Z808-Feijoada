@@ -1,5 +1,4 @@
 package assembler.codeprocessors;
-
 import assembler.Assembler;
 import assembler.tables.symboltable.Symbol;
 import assembler.tables.symboltable.SymbolTable;

@@ -6,6 +6,7 @@ import assembler.codeprocessors.OperationProcessor;
 import assembler.tables.datatable.DataTable;
 import assembler.tables.symboltable.SymbolTable;
 import assembler.tables.symboltable.UndeclaredSymbol;
+import macroprocessor.MacroProcessor;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -17,15 +18,12 @@ public class Assembler {
     private final LabelProcessor labelProcessor = new LabelProcessor();
     private final DirectiveProcessor directiveProcessor = new DirectiveProcessor();
     private final OperationProcessor operationProcessor = new OperationProcessor();
+    private final MacroProcessor macroProcessor = new MacroProcessor();
 
     // Assembled code
     private final LinkedList<Short> assembledCode = new LinkedList<>();
     // Assembled data
     private final ArrayList<Byte> assembledData = new ArrayList<>();
-
-    // Logger
-    private final Logger logger = new Logger();
-    private boolean loggerInterruption;
 
     // Handling files utils
     private String currentLine;
@@ -48,7 +46,6 @@ public class Assembler {
     private boolean dataSegmentSet;
 
     private Assembler() {
-        loggerInterruption = false;
         lineCounter = 0;
     }
 
@@ -59,15 +56,17 @@ public class Assembler {
     }
 
     public void assembleFile(String pathToProgram) throws Exception {
+        // Handling macros and returns intermediate file path to new file soo we do not change user one
+        pathToProgram = macroProcessor.parseMacros(pathToProgram);
         FileReader fileReader = new FileReader(pathToProgram);
-        logger.reset();
+        Logger.getInstance().reset();
 
         // Assemble line by line
         try (BufferedReader fileIO = new BufferedReader(fileReader)) {
             currentLine = fileIO.readLine();
             lineCounter += 1;
 
-            while (currentLine != null && !loggerInterruption) {
+            while (currentLine != null && !Logger.getInstance().isInterrupted()) {
                 // Our assembler IS NOT case-sensitive!!
                 currentLine = currentLine.toUpperCase();
                 assembleLine();
@@ -76,13 +75,13 @@ public class Assembler {
                 currentLine = fileIO.readLine();
             }
         } catch (IOException e) {
-            logger.addLog(new Log(LogType.ERROR, lineCounter, "Error while reading " + pathToProgram + "file: " + e.getMessage()));
-            logger.printLogs();
+            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, "Error while reading " + pathToProgram + "file: " + e.getMessage()));
+            Logger.getInstance().printLogs();
             resetAssembler();
             return;
         } catch (Exception e) {
-            logger.addLog(new Log(LogType.ERROR, lineCounter, "ASSEMBLY ERROR\n" + e.getMessage()));
-            logger.printLogs();
+            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, "ASSEMBLY ERROR\n" + e.getMessage()));
+            Logger.getInstance().printLogs();
             resetAssembler();
             return;
         } finally {
@@ -93,8 +92,8 @@ public class Assembler {
         try {
             SymbolTable.getInstance().replaceAllOcorrencesOfDeclaredSymbols();
         } catch (UndeclaredSymbol e) {
-            logger.addLog(new Log(LogType.ERROR, lineCounter, "ERROR ON SYMBOL TABLE" + e.getMessage()));
-            logger.printLogs();
+            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, "ERROR ON SYMBOL TABLE" + e.getMessage()));
+            Logger.getInstance().printLogs();
             resetAssembler();
             return;
         }
@@ -103,8 +102,8 @@ public class Assembler {
         try {
             DataTable.getInstance().replaceAllOcorrencesOfDeclaredDataItems();
         } catch (Exception e) {
-            logger.addLog(new Log(LogType.ERROR, lineCounter, "ERROR ON DATA TABLE\n" + e.getMessage()));
-            logger.printLogs();
+            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, "ERROR ON DATA TABLE\n" + e.getMessage()));
+            Logger.getInstance().printLogs();
             resetAssembler();
             return;
         }
@@ -160,15 +159,15 @@ public class Assembler {
                 dataOutStream.writeByte(assembledData.get(i));
             }
         } catch (IOException e) {
-            logger.addLog(new Log(LogType.ERROR, lineCounter, "Error while writing " + pathToProgram + "file: " + e.getMessage()));
-            logger.printLogs();
+            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, "Error while writing " + pathToProgram + "file: " + e.getMessage()));
+            Logger.getInstance().printLogs();
             resetAssembler();
             return;
         }
 
         // Log success message
-        logger.addLog(new Log(LogType.INFO, 0, "Code assembled!"));
-        logger.printLogs();
+        Logger.getInstance().addLog(new Log(LogType.INFO, 0, "Code assembled!"));
+        Logger.getInstance().printLogs();
 
         // Reset after assembly
         resetAssembler();
@@ -190,7 +189,7 @@ public class Assembler {
             if (directiveProcessor.assembleDirective(currentLine))
                 return;
         } catch (Exception e) {
-            logger.addLog(new Log(LogType.ERROR, lineCounter, "ERROR ON DIRECTIVE PROCESSOR\n " + e.getMessage()));
+            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, "ERROR ON DIRECTIVE PROCESSOR\n " + e.getMessage()));
             return;
         }
 
@@ -223,16 +222,6 @@ public class Assembler {
         isCodeSegment = false;
         codeSegmentSet = false;
         dataSegmentSet = false;
-
-        loggerInterruption = false;
-    }
-
-    public boolean isLoggerInterruption() {
-        return loggerInterruption;
-    }
-
-    public void setLoggerInterruption(boolean loggerInterruption) {
-        this.loggerInterruption = loggerInterruption;
     }
 
     public LinkedList<Short> getAssembledCode() {
@@ -241,10 +230,6 @@ public class Assembler {
 
     public ArrayList<Byte> getAssembledData() {
         return assembledData;
-    }
-
-    public Logger getLogger() {
-        return logger;
     }
 
     public int getLineCounter() {

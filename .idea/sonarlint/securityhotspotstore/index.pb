@@ -85,8 +85,6 @@ o
 ?src/main/java/virtual_machine/commands/operations/flow/Ret.java,1\6\163a54e34a8a1b815bb762a0d77a00cfdfea5c7c
 s
 Csrc/main/java/virtual_machine/commands/operations/flow/JmpZero.java,7\0\7063ac03b8a1e7f7b6254b821319054d14b86564
-P
- src/main/java/z808_gui/Main.java,c\e\ce80d6f3fb1d96bbf7e807033f9ff676bc6edad6
 s
 Csrc/main/java/z808_gui/observerpattern/ProgramPathEventManager.java,a\d\adf3e047c17e8c2515c79d26f055aba16649605d
 i
@@ -97,8 +95,6 @@ e
 5src/main/java/z808_gui/components/AssembleButton.java,c\3\c3b357e22b23350adb48f89d7c88f07ec218fc43
 f
 6src/main/java/z808_gui/components/UpperTitlePanel.java,a\c\ac3d88aa30fd1f5bc7b4a8266fd62788497ad4a9
-V
-&src/main/java/z808_gui/MainWindow.java,e\9\e9da8347c6e40279092d3e9ecd5e9734896ee0c0
 `
 0src/main/java/z808_gui/utils/TextLineNumber.java,6\e\6e90c39cc0a73f7b84015f118f20d713c26c2ce3
 g
@@ -117,9 +113,5 @@ b
 2src/main/java/z808_gui/utils/ActionsListeners.java,5\2\52d6b83002893fb4f7da6bdba538e2a97b6a2a83
 P
  src/main/java/assembler/Log.java,2\f\2f80697f7e193efd213798734a7c0ee2f721f335
-S
-#src/main/java/assembler/Logger.java,e\9\e9d47807e5a877909df1e25effe79a411b18645c
 j
 :src/main/java/virtual_machine/memory/MemoryController.java,1\1\1126c0efed438f6e505252cb4dfe41501d77bd68
-Y
-)src/main/java/z808_gui/utils/UIUtils.java,a\9\a9441b8359b6e1238d1abc552124f404009bdc38

@@ -3,6 +3,7 @@ package assembler.tables.symboltable;
 import assembler.Assembler;
 import assembler.Log;
 import assembler.LogType;
+import assembler.Logger;
 import assembler.utils.AssemblerUtils;
 
 import java.util.HashMap;
@@ -43,7 +44,7 @@ public class SymbolTable {
         if (!AssemblerUtils.isValidName(s.getIdentification())) {
             Log l = new Log(LogType.ERROR, Assembler.getInstance().getLineCounter(),
                     String.format("%s is not a valid identifier.", s.getIdentification()));
-            Assembler.getInstance().getLogger().addLog(l);
+            Logger.getInstance().addLog(l);
         }
 
         symbolTable.put(s.getIdentification(), s);
