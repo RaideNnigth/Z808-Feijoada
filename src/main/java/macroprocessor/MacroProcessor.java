@@ -8,6 +8,7 @@ import macroprocessor.macrotable.MacroTable;
 import assembler.utils.AssemblerUtils;
 
 import java.io.*;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ public class MacroProcessor {
     // Macro processor
     private final MacroTable macroTable;
     private boolean isInsideMacroDefinition = false;
+    private int macroAlignmentLevel = 0;
 
     // New file output lines for assembler
     private final LinkedList<String> newFileLines = new LinkedList<>();
@@ -23,9 +25,13 @@ public class MacroProcessor {
     // Handling files utils
     private String currentLine;
     private int lineCounter;
-    private String[] lines;
+    private LinkedList<String> lines;
 
-    public MacroProcessor () {
+    // Macros defines
+    private static final String MACRODEF = "MACRODEF";
+    private static final String MACROEND = "ENDM";
+
+    public MacroProcessor() {
         this.macroTable = MacroTable.getInstance();
     }
 
@@ -35,8 +41,15 @@ public class MacroProcessor {
 
         // Parse line by line
         try (BufferedReader fileIO = new BufferedReader(fileReader)) {
-            this.lines = (String[]) fileIO.lines().map(String::toUpperCase).collect(Collectors.toList()).toArray();
-            while (lineCounter < lines.length && (this.currentLine = lines[this.lineCounter]) != null) {
+            for (String s : fileIO.lines().toList()) {
+                if (!s.isEmpty()) {
+                    if (s.trim().charAt(0) != ';') {
+                        this.lines.add(s);
+                    }
+                }
+            }
+
+            while (lineCounter < lines.length && (this.currentLine = lines.get(this.lineCounter)) != null) {
                 // Check for macros
                 parseLine();
                 // Next Line
@@ -74,7 +87,7 @@ public class MacroProcessor {
         String[] tokens = AssemblerUtils.decomposeInTokens(this.currentLine);
 
         // is macro declaration?
-        if (tokens[1].equalsIgnoreCase("MACRO"))
+        if (tokens[1].equalsIgnoreCase(MACRODEF))
             return false;
 
         // Macro name is valid?
@@ -103,17 +116,31 @@ public class MacroProcessor {
             // Ai gustavo no cu nao - Ferrao
             // no cu sim! - Gustavo
             // Cala a boca e senta - Bessa
-            // Se eu ofender a mae de alguem no looping vai ser multiplicada a ofensa? - Rav
             // Semata - Nicolas
+            // Get macro code
 
-            String macroCode = "";
-            for (int i = ++lineCounter; i < this.lines.length; i++) {
-                macroCode.concat(this.lines[i] + "\n"
+            int startMacroDef = lineCounter;
+            StringBuilder macroCode = new StringBuilder();
+            while (!lines[lineCounter].equals(MACROEND)) {
+                this.currentLine = lines[lineCounter];
+
+                // Check if it's a nested macro definition
+                if (this.currentLine.equalsIgnoreCase(MACRODEF)) {
+                    this.macroAlignmentLevel += 1;
+                    try {
+                        parseLine();
+                    } catch (StackOverflowError e) {
+                        Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, "Maximum nested macro level reached!"));
+                    }
+                }
+                macroCode.append(lines[lineCounter]).append("\n");
+                lineCounter += 1;
             }
-
+            int endMacroDef = lineCounter;
+            
 
             // Macro being added to the macro table
-            Macro macro = new Macro(macroName, true, "", macroParams);
+            Macro macro = new Macro(macroName, macroCode.toString(), macroParams, );
 
         } else {
             throw new Exception("Macro already exists");
@@ -130,6 +157,7 @@ public class MacroProcessor {
         this.newFileLines.clear();
         // Handling files utils
         this.currentLine = "";
+        this.lines.clear();
         // Gay é o henrique
         this.lineCounter = 0;
     }

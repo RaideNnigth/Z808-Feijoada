@@ -6,6 +6,7 @@ public class Macro {
     private final String[] paramters;
     private final int alignmentLevel;
     private Macro parentMacro;
+    private boolean wasCalled = false;
 
     public Macro(String macroName, String macroCode, String[] parameters, int alignmentLevel) {
         this.macroName = macroName;
@@ -35,5 +36,9 @@ public class Macro {
     public Macro getParentMacro() {return parentMacro;}
 
     public int getAlignmentLevel() {return alignmentLevel;}
+
+    public void setWasCalled() { this.wasCalled = true; }
+
+    public boolean getWasCalled() { return this.wasCalled; }
 
 }
