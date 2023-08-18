@@ -1,9 +1,9 @@
 package assembler.tables.symboltable;
 
 import assembler.Assembler;
-import assembler.Log;
-import assembler.LogType;
-import assembler.Logger;
+import logger.Log;
+import logger.LogType;
+import logger.Logger;
 import assembler.utils.AssemblerUtils;
 
 import java.util.HashMap;

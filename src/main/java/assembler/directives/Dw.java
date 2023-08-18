@@ -1,14 +1,11 @@
 package assembler.directives;
 
-import assembler.AssembleableOperation;
-import assembler.Assembler;
+import assembler.AssembleOperation;
 import assembler.tables.symboltable.Symbol;
 import assembler.tables.symboltable.SymbolTable;
 import assembler.utils.AssemblerUtils;
 
-import java.util.LinkedList;
-
-public class Dw implements AssembleableOperation {
+public class Dw implements AssembleOperation {
     public static final String MNEMONIC = "DW";
     private final SymbolTable symbolTable;
 

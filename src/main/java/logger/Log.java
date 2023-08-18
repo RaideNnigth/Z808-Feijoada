@@ -1,4 +1,4 @@
-package assembler;
+package logger;
 
 public class Log {
     private LogType logType;

@@ -1,8 +1,8 @@
 package macroprocessor;
 
-import assembler.Log;
-import assembler.LogType;
-import assembler.Logger;
+import logger.Log;
+import logger.LogType;
+import logger.Logger;
 import macroprocessor.macrotable.Macro;
 import macroprocessor.macrotable.MacroTable;
 import assembler.utils.AssemblerUtils;
@@ -11,7 +11,6 @@ import java.io.*;
 
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.stream.Collectors;
 
 public class MacroProcessor {
     // Macro processor
@@ -35,6 +34,7 @@ public class MacroProcessor {
         this.macroTable = MacroTable.getInstance();
     }
 
+    /*
     public String parseMacros(String pathToProgram) throws Exception {
         FileReader fileReader = new FileReader(pathToProgram);
         Logger.getInstance().reset();
@@ -147,7 +147,7 @@ public class MacroProcessor {
         }
 
         return true;
-    }
+    }*/
 
     private void resetMacroProcessor() {
         // Macro processor

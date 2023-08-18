@@ -1,6 +1,7 @@
 package assembler.mnemonics.arithmetical;
 
 import assembler.Assembler;
+import assembler.AssemblerError;
 import assembler.mnemonics.Operation;
 import assembler.utils.AssemblerUtils;
 
@@ -13,7 +14,7 @@ public class Sub extends Operation {
         private final short SUB_AXCTE = 0x2CFF;
         private final short SUB_AXDIR = 0x2DFF;
     @Override
-    public void assemble(String line) {
+    public void assemble(String line) throws AssemblerError {
         String[] tokens = AssemblerUtils.decomposeInTokens(line);
 
         LinkedList<Short> assembledCode = Assembler.getInstance().getAssembledCode();

@@ -1,5 +1,5 @@
 package assembler;
 
-public interface AssembleableOperation {
+public interface AssembleOperation {
     void assemble(String line) throws Exception;
 }

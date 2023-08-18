@@ -1,21 +1,12 @@
 package assembler.tables;
 
-import assembler.AssembleableOperation;
+import assembler.AssembleOperation;
 import assembler.directives.*;
-import assembler.mnemonics.arithmetical.*;
-import assembler.mnemonics.flow.*;
-import assembler.mnemonics.logical.And;
-import assembler.mnemonics.logical.Not;
-import assembler.mnemonics.logical.Or;
-import assembler.mnemonics.logical.Xor;
-import assembler.mnemonics.move.Mov;
-import assembler.mnemonics.stack.Pop;
-import assembler.mnemonics.stack.Push;
 
 import java.util.HashMap;
 
 public class SegmentTable {
-    private HashMap<String, AssembleableOperation> codeMap;
+    private HashMap<String, AssembleOperation> codeMap;
     private static SegmentTable instance = null;
 
     private SegmentTable() {
@@ -48,7 +39,7 @@ public class SegmentTable {
         return codeMap.get(key) != null;
     }
 
-    public AssembleableOperation getOperation(String key) {
+    public AssembleOperation getOperation(String key) {
         return codeMap.get(key);
     }
 

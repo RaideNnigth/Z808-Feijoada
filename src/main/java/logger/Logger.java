@@ -1,15 +1,17 @@
-package assembler;
+package logger;
 
 import z808_gui.components.LogTextArea;
 
 import java.util.LinkedList;
 
-public class Logger {
+public class Logger extends Observable {
     private final LinkedList<Log> logs = new LinkedList<>();
+    private Log lastLog;
     private static Logger instance = null;
     private boolean interrupted;
 
     private Logger() {
+        super();
         interrupted = false;
     }
 
@@ -20,19 +22,23 @@ public class Logger {
     }
 
     public void addLog(Log log) {
-        logs.add(log);
+        this.logs.add(log);
+        this.lastLog = log;
 
         if (log.getLogType() == LogType.ERROR) {
             interrupted = true;
         }
+
+        this.notifyObservers();
     }
 
+    /*
     public void printLogs() {
         var logArea = LogTextArea.getInstance();
         for (Log log : logs) {
             logArea.appendText(log.getMessage());
         }
-    }
+    }*/
 
     public boolean isInterrupted() {
         return interrupted;
@@ -40,6 +46,21 @@ public class Logger {
 
     public void reset() {
         logs.clear();
-        LogTextArea.getInstance().clearText();
+        lastLog = null;
+        //LogTextArea.getInstance().clearText();
+    }
+
+    @Override
+    public void notifyObservers() {
+        if (this.lastLog == null)
+            return;
+
+        for (Observer observer : this.observers) {
+            observer.update(String.format("%s (at line %d) : %s", this.lastLog.getLogType(), this.lastLog.getLine(), this.lastLog.getMessage()));
+        }
+    }
+
+    public LinkedList<Log> getLogs() {
+        return logs;
     }
 }

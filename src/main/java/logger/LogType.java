@@ -1,4 +1,4 @@
-package assembler;
+package logger;
 
 public enum LogType {
     WARNING("WARNING"),

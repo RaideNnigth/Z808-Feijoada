@@ -1,27 +1,16 @@
 package assembler.tables;
 
-import assembler.AssembleableOperation;
-import assembler.directives.Assume;
-import assembler.directives.Dw;
-import assembler.directives.End;
-import assembler.directives.Endp;
-import assembler.directives.Ends;
-import assembler.directives.Equ;
-import assembler.directives.Offset;
-import assembler.directives.Org;
-import assembler.directives.Proc;
-import assembler.directives.Segment;
+import assembler.AssembleOperation;
 import assembler.mnemonics.arithmetical.*;
 import assembler.mnemonics.flow.*;
 import assembler.mnemonics.logical.*;
 import assembler.mnemonics.move.*;
 import assembler.mnemonics.stack.*;
-import assembler.directives.*;
 
 import java.util.HashMap;
 
 public class CodeTable {
-    private HashMap<String, AssembleableOperation> codeMap;
+    private HashMap<String, AssembleOperation> codeMap;
     private static CodeTable instance = null;
 
     private CodeTable() {
@@ -61,7 +50,7 @@ public class CodeTable {
         return codeMap.get(key) != null;
     }
 
-    public AssembleableOperation getOperation(String key) {
+    public AssembleOperation getOperation(String key) {
         return codeMap.get(key);
     }
 

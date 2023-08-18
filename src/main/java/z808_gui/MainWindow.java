@@ -1,5 +1,6 @@
 package z808_gui;
 
+import logger.Logger;
 import virtual_machine.VirtualMachine;
 import z808_gui.components.LowerCommandsPanel;
 import z808_gui.components.MenuBar;
@@ -54,7 +55,9 @@ public class MainWindow extends JFrame {
 
         // ------------------------------ Criando a area de texto para o Assembly ------------------------------
         AssemblyTextArea assemblyArea = AssemblyTextArea.getInstance();
-        LogTextArea logArea = LogTextArea.getInstance();
+        //LogTextArea logArea = LogTextArea.getInstance();
+        LogTextArea logArea = new LogTextArea();
+        Logger.getInstance().subscribe(logArea);
 
         // ------------------------------ Red Panel (registradores) ------------------------------
         RegistersPanel rightRegistersPanel = new RegistersPanel();

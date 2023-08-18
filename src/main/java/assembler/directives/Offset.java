@@ -1,9 +1,9 @@
 package assembler.directives;
 
-import assembler.AssembleableOperation;
+import assembler.AssembleOperation;
 import assembler.tables.symboltable.SymbolTable;
 
-public class Offset implements AssembleableOperation {
+public class Offset implements AssembleOperation {
     // Gustavo: We jumped guys from now
     public static final String MNEMONIC = "OFFSET";
     private final SymbolTable symbolTable;

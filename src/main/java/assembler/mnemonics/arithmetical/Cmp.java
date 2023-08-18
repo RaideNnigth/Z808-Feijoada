@@ -1,9 +1,9 @@
 package assembler.mnemonics.arithmetical;
 
 import assembler.Assembler;
+import assembler.AssemblerError;
 import assembler.mnemonics.Operation;
 import assembler.utils.AssemblerUtils;
-import assembler.AssembleableOperation;
 
 import java.util.LinkedList;
 public class Cmp extends Operation{
@@ -13,7 +13,7 @@ public class Cmp extends Operation{
     private final short CMP_AXDIR = 0x3CFF;
 
     @Override
-    public void assemble(String line) {
+    public void assemble(String line) throws AssemblerError {
         String[] tokens = AssemblerUtils.decomposeInTokens(line);
 
         LinkedList<Short> assembledCode = Assembler.getInstance().getAssembledCode();

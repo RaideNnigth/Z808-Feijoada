@@ -1,6 +1,6 @@
 package assembler.codeprocessors;
 
-import assembler.AssembleableOperation;
+import assembler.AssembleOperation;
 import assembler.tables.SegmentTable;
 import assembler.utils.AssemblerUtils;
 
@@ -14,7 +14,7 @@ public class DirectiveProcessor {
         String[] tokens = AssemblerUtils.decomposeInTokens(line);
         for ( String token : tokens ) {
             if ( segmentTable.isValidOperation( token ) ) {
-                AssembleableOperation op = segmentTable.getOperation( token );
+                AssembleOperation op = segmentTable.getOperation( token );
                 op.assemble( line );
                 return true;
             }

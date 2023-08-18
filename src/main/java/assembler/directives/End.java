@@ -1,11 +1,8 @@
 package assembler.directives;
 
-import assembler.AssembleableOperation;
-import assembler.tables.symboltable.Symbol;
-import assembler.tables.symboltable.SymbolTable;
-import assembler.utils.AssemblerUtils;
+import assembler.AssembleOperation;
 
-public class End implements AssembleableOperation {
+public class End implements AssembleOperation {
     // Gustavo: This need to be implemented later
 
     public static final String MNEMONIC = "END";

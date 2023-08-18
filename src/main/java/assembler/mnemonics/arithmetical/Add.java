@@ -1,7 +1,7 @@
 package assembler.mnemonics.arithmetical;
 
 import assembler.Assembler;
-import assembler.AssembleableOperation;
+import assembler.AssemblerError;
 import assembler.mnemonics.Operation;
 import assembler.utils.AssemblerUtils;
 
@@ -21,7 +21,7 @@ public class Add extends Operation {
     // ADD [] , []
 
     @Override
-    public void assemble(String line) {
+    public void assemble(String line) throws AssemblerError {
         String[] tokens = AssemblerUtils.decomposeInTokens(line);
 
         LinkedList<Short> assembledCode = Assembler.getInstance().getAssembledCode();

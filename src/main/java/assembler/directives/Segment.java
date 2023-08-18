@@ -1,10 +1,10 @@
 package assembler.directives;
 
-import assembler.AssembleableOperation;
+import assembler.AssembleOperation;
 import assembler.utils.AssemblerUtils;
 import assembler.Assembler;
 
-public class Segment implements AssembleableOperation {
+public class Segment implements AssembleOperation {
     public static final String MNEMONIC = "SEGMENT";
 
     @Override

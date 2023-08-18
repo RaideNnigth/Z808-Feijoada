@@ -1,6 +1,7 @@
 package assembler.mnemonics.move;
 
 import assembler.Assembler;
+import assembler.AssemblerError;
 import assembler.mnemonics.Operation;
 import assembler.utils.AssemblerUtils;
 
@@ -16,7 +17,7 @@ public class Mov extends Operation {
     private final short MOV_AXDIR = (short) 0xA1FF;
 
     @Override
-    public void assemble(String line) {
+    public void assemble(String line) throws AssemblerError {
         String[] tokens = AssemblerUtils.decomposeInTokens(line);
 
         if (tokens.length != 3)

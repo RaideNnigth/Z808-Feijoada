@@ -1,6 +1,7 @@
 package assembler.mnemonics.flow;
 
 import assembler.Assembler;
+import assembler.AssemblerError;
 import assembler.mnemonics.Operation;
 import assembler.utils.AssemblerUtils;
 
@@ -16,7 +17,7 @@ public class Jmp extends Operation {
     // JMP LABEL
 
     @Override
-    public void assemble(String line) {
+    public void assemble(String line) throws AssemblerError {
         String[] tokens = AssemblerUtils.decomposeInTokens(line);
 
         LinkedList<Short> assembledCode = Assembler.getInstance().getAssembledCode();
