@@ -35,6 +35,7 @@ public class MacroProcessor {
     }
 
     /*
+
     public String parseMacros(String pathToProgram) throws Exception {
         FileReader fileReader = new FileReader(pathToProgram);
         Logger.getInstance().reset();
@@ -42,10 +43,9 @@ public class MacroProcessor {
         // Parse line by line
         try (BufferedReader fileIO = new BufferedReader(fileReader)) {
             for (String s : fileIO.lines().toList()) {
+                s = s.split(";")[0];
                 if (!s.isEmpty()) {
-                    if (s.trim().charAt(0) != ';') {
-                        this.lines.add(s);
-                    }
+                    this.lines.add(s);
                 }
             }
 
@@ -57,7 +57,7 @@ public class MacroProcessor {
             }
         } catch (IOException e) {
             Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, "Error while reading " + pathToProgram + "file: " + e.getMessage()));
-            Logger.getInstance().printLogs();
+            //Logger.getInstance().printLogs();
             resetMacroProcessor();
         }
 

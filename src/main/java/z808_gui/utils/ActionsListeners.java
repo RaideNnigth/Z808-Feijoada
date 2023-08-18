@@ -20,6 +20,7 @@ import static z808_gui.utils.UIUtils.PROGRAM_PATH;
 
 public class ActionsListeners {
     private static ActionListener saveAL = null;
+    private static ActionListener preprocessarAL = null;
     private static ActionListener montarAL = null;
     private static ActionListener runAL = null;
 
@@ -80,6 +81,18 @@ public class ActionsListeners {
         }
 
         return saveAL;
+    }
+
+    public ActionListener getPreproceesarAL() {
+        if (preprocessarAL == null) {
+            preprocessarAL = e -> {
+                getSaveAL().actionPerformed(e);
+
+
+            };
+        }
+
+        return preprocessarAL;
     }
 
     public ActionListener getMontarAL() {

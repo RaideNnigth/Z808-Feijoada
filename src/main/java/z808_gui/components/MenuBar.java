@@ -123,6 +123,10 @@ public class MenuBar extends JMenuBar {
         arquivoMenu.add(sairMenItem);
 
         // --------------------- Sub-itens menu Executar ---------------------
+        JMenuItem preprocessMenItem = new JMenuItem("Processar macros");
+        preprocessMenItem.setAccelerator(KeyStroke.getKeyStroke('R', CTRL_MASK));
+        preprocessMenItem.addActionListener(al.getMontarAL());
+
         JMenuItem montarMenItem = new JMenuItem("Montar código");
         montarMenItem.setAccelerator(KeyStroke.getKeyStroke('M', CTRL_MASK));
         montarMenItem.addActionListener(al.getMontarAL());
