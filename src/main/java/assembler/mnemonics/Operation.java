@@ -1,9 +1,6 @@
 package assembler.mnemonics;
 
-import assembler.AssembleableOperation;
-import assembler.Assembler;
-import assembler.Log;
-import assembler.LogType;
+import assembler.*;
 import assembler.tables.datatable.DataItem;
 import assembler.tables.datatable.DataTable;
 import assembler.tables.symboltable.Symbol;
@@ -41,9 +38,8 @@ public abstract class Operation implements AssembleableOperation {
         }
         // If it's not a valid name, then it's an error
         else {
-            Assembler.getInstance().getLogger().addLog(new Log(LogType.ERROR, Assembler.getInstance().getLineCounter(),
+            Logger.getInstance().addLog(new Log(LogType.ERROR, Assembler.getInstance().getLineCounter(),
                     "Invalid name for Data Item: " + token));
-            Assembler.getInstance().setLoggerInterruption(true);
         }
     }
 
@@ -61,9 +57,8 @@ public abstract class Operation implements AssembleableOperation {
         }
         // If it's not a valid name, then it's an error
         else {
-            Assembler.getInstance().getLogger().addLog(new Log(LogType.ERROR, Assembler.getInstance().getLineCounter(),
+            Logger.getInstance().addLog(new Log(LogType.ERROR, Assembler.getInstance().getLineCounter(),
                     "Invalid name for Label: " + token));
-            Assembler.getInstance().setLoggerInterruption(true);
         }
     }
 }

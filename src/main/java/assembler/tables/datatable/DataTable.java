@@ -3,6 +3,7 @@ package assembler.tables.datatable;
 import assembler.Assembler;
 import assembler.Log;
 import assembler.LogType;
+import assembler.Logger;
 import assembler.utils.AssemblerUtils;
 
 import java.util.HashMap;
@@ -70,8 +71,7 @@ public class DataTable {
         if (!AssemblerUtils.isValidName(d.getIdentification())) {
             Log l = new Log(LogType.ERROR, Assembler.getInstance().getLineCounter(),
                     String.format("%s is not a valid identifier.", d.getIdentification()));
-            Assembler.getInstance().getLogger().addLog(l);
-            Assembler.getInstance().setLoggerInterruption(true);
+            Logger.getInstance().addLog(l);
         }
         dataItemHashMap.put(d.getIdentification(), d);
     }
