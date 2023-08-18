@@ -1,8 +1,10 @@
 package macroprocessor.macrotable;
+
 import java.util.HashMap;
 
 //Singleton class
 public class MacroTable {
+
     private final HashMap<String, Macro> macroTableDefinitions;
 
     private static MacroTable instance = null;
@@ -29,16 +31,22 @@ public class MacroTable {
         return macroTableDefinitions.get(macro);
     }
 
-    public void declareMacro(String macroName, String macroCode, String[] parameters, int alignmentLevel, Macro parentMacro) {
-       Macro newMacro;
+    public void declareMacro(String macroName, String macroCode, String[] parameters, Macro parentMacro) {
+        Macro newMacro;
         if(parentMacro == null) {
-            newMacro = new Macro(macroName, macroCode, parameters, alignmentLevel);
+            newMacro = new Macro(macroName, macroCode, parameters);
         }
         // Henrique me de um pão
         // Nao - Rick
         else {
-            newMacro = new Macro(macroCode, macroCode, parameters, alignmentLevel, parentMacro);
+            newMacro = new Macro(macroCode, macroCode, parameters, parentMacro);
         }
+
+        macroTableDefinitions.put(macroName, newMacro);
+    }
+
+    public void declareMacro(String macroName, String[] parameters) {
+        Macro newMacro = new Macro(macroName, parameters);
 
         macroTableDefinitions.put(macroName, newMacro);
     }

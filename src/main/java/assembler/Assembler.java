@@ -20,7 +20,6 @@ public class Assembler {
     private final LabelProcessor labelProcessor = new LabelProcessor();
     private final DirectiveProcessor directiveProcessor = new DirectiveProcessor();
     private final OperationProcessor operationProcessor = new OperationProcessor();
-    private final MacroProcessor macroProcessor = new MacroProcessor();
 
     // Assembled code
     private final LinkedList<Short> assembledCode = new LinkedList<>();

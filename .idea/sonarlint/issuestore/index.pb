@@ -44,8 +44,6 @@ f
 6src/main/java/virtual_machine/registers/Registers.java,0\5\052b19deb81bb44c7e2b18572af7512319cc6378
 {
 Ksrc/main/java/virtual_machine/commands/operations/arithmetical/SubAxAx.java,a\4\a4d66b5cedf0f5fb97c76b04b8be3e5187c9f6fc
-b
-2src/main/java/assembler/AssembleableOperation.java,5\6\56cd457e8e41dc5e4a5ecfa3edf17bf24d82620d
 y
 Isrc/main/java/virtual_machine/commands/operations/arithmetical/DivAx.java,7\0\70e1e341f5ec2c4e9a2e2a1adc9a5e52de66bdc7
 Z
@@ -148,12 +146,6 @@ g
 0src/main/java/virtual_machine/loader/Loader.java,6\4\64e0f6f7b25f1ace6905d71781ef62b36d430104
 a
 1src/main/java/virtual_machine/VirtualMachine.java,0\a\0a9800519cf30d9fe053adb916b646ac811e8d74
-b
-2src/main/java/z808_gui/utils/ActionsListeners.java,5\2\52d6b83002893fb4f7da6bdba538e2a97b6a2a83
-^
-.src/main/java/z808_gui/components/MenuBar.java,3\f\3f23c26a1fd94210b9b6ffb3e2862581dd93eefc
-P
- src/main/java/assembler/Log.java,2\f\2f80697f7e193efd213798734a7c0ee2f721f335
 j
 :src/main/java/virtual_machine/interpreter/Interpreter.java,0\b\0b98f8107923188fbedaf00b6cdb5848a7869141
 j
