@@ -125,7 +125,7 @@ public class MenuBar extends JMenuBar {
         // --------------------- Sub-itens menu Executar ---------------------
         JMenuItem preprocessMenItem = new JMenuItem("Processar macros");
         preprocessMenItem.setAccelerator(KeyStroke.getKeyStroke('R', CTRL_MASK));
-        preprocessMenItem.addActionListener(al.getMontarAL());
+        preprocessMenItem.addActionListener(al.getPreprocessarAL());
 
         JMenuItem montarMenItem = new JMenuItem("Montar código");
         montarMenItem.setAccelerator(KeyStroke.getKeyStroke('M', CTRL_MASK));
@@ -135,6 +135,7 @@ public class MenuBar extends JMenuBar {
         executarTudoMenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
         executarTudoMenItem.addActionListener(al.getRunAL());
 
+        executarMenu.add(preprocessMenItem);
         executarMenu.add(montarMenItem);
         executarMenu.add(executarTudoMenItem);
 

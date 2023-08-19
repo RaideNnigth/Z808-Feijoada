@@ -35,10 +35,13 @@ public class MainWindow extends JFrame {
         // Painel inferior com os botões
         LowerCommandsPanel lowerCommands = new LowerCommandsPanel();
 
+        PreprocessorButton preprocessorButton = new PreprocessorButton(PLAY_DEFAULT_IMG, vm);
         PlayButton playButton = new PlayButton(PLAY_DEFAULT_IMG, vm);
         AssembleButton assembleButton = new AssembleButton(ASSEM_DEFAULT_IMG, vm);
 
         // Populando lowerCommands
+        lowerCommands.add(Box.createRigidArea(H_SPACER));
+        lowerCommands.add(preprocessorButton);
         lowerCommands.add(Box.createRigidArea(H_SPACER));
         lowerCommands.add(assembleButton);
         lowerCommands.add(Box.createRigidArea(H_SPACER));

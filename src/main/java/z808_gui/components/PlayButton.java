@@ -1,6 +1,5 @@
 package z808_gui.components;
 
-import assembler.Assembler;
 import virtual_machine.VirtualMachine;
 import z808_gui.observerpattern.Listener;
 import z808_gui.observerpattern.MessageType;
@@ -11,9 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.CharArrayReader;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import static z808_gui.utils.UIUtils.*;
 
