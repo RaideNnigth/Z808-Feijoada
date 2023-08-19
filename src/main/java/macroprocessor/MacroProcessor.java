@@ -133,7 +133,7 @@ public class MacroProcessor {
         }
 
         // get rest of code after macro call
-        LinkedList<String> restOfCode = (LinkedList<String>) this.lines.subList(startLineIndex + 1, lines.size() - 1);
+        LinkedList<String> restOfCode = (LinkedList<String>) this.lines.subList(startLineIndex + 1, lines.size());
 
         // get macro code
         String macroCode = macro.getMacroCode();
@@ -319,8 +319,8 @@ public class MacroProcessor {
     }
 
     private void removeLine(int startLineIndex, int endLineIndex) {
-        // Remove all lines in the interval
-        this.lines.subList(startLineIndex, endLineIndex).clear();
+        // Remove all lines in the interval (Sum +1 in the endLineIndex cause subList is exclusive and we want to remove the endLineIndex line)
+        this.lines.subList(startLineIndex, endLineIndex + 1).clear();
     }
 
     private void resetMacroProcessor() {
