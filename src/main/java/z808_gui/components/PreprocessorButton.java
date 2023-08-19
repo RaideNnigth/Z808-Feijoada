@@ -1,7 +1,7 @@
 package z808_gui.components;
 
 import virtual_machine.VirtualMachine;
-import z808_gui.observerpattern.Listener;
+import z808_gui.observerpattern.ProgramPathListener;
 import z808_gui.observerpattern.MessageType;
 import z808_gui.observerpattern.ProgramPathEventManager;
 import z808_gui.utils.ActionsListeners;
@@ -13,7 +13,7 @@ import java.awt.event.MouseEvent;
 
 import static z808_gui.utils.UIUtils.*;
 
-public class PreprocessorButton extends JLabel implements Listener {
+public class PreprocessorButton extends JLabel implements ProgramPathListener {
         public PreprocessorButton(ImageIcon IMG, VirtualMachine vm) {
             super(IMG);
             this.setPreferredSize(new Dimension(CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE));

@@ -9,21 +9,30 @@ import javax.swing.*;
 import java.awt.*;
 
 import z808_gui.components.*;
+import z808_gui.observerpattern.ProgramPathListener;
+import z808_gui.observerpattern.MessageType;
+import z808_gui.observerpattern.ProgramPathEventManager;
 import z808_gui.utils.ActionsListeners;
+import z808_gui.utils.UIUtils;
 
 import static z808_gui.utils.UIUtils.*;
 
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame implements ProgramPathListener {
     private final VirtualMachine vm;
+    private static final String TITLE = "Z808 - Feijoada Edition";
+
 
     public MainWindow(VirtualMachine virtualMachine) {
         this.vm = virtualMachine;
 
-        setTitle("Z808 - Feijoada Edition");
+        setTitle(TITLE);
         setIconImage((new ImageIcon(PLAY_DEFAULT_IMG_PATH)).getImage());
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         setBackground(Color.white);
+
+        ProgramPathEventManager ppm = ProgramPathEventManager.getInstance();
+        ppm.subscribe(this);
 
         // Creates menu
         JMenuBar menuBar = new MenuBar(ActionsListeners.getInstance(virtualMachine));
@@ -40,8 +49,9 @@ public class MainWindow extends JFrame {
         AssembleButton assembleButton = new AssembleButton(ASSEM_DEFAULT_IMG, vm);
 
         // Populando lowerCommands
-        lowerCommands.add(Box.createRigidArea(H_SPACER));
-        lowerCommands.add(preprocessorButton);
+        // Is this really necessary? - Henrique
+        //lowerCommands.add(Box.createRigidArea(H_SPACER));
+        //lowerCommands.add(preprocessorButton);
         lowerCommands.add(Box.createRigidArea(H_SPACER));
         lowerCommands.add(assembleButton);
         lowerCommands.add(Box.createRigidArea(H_SPACER));
@@ -103,5 +113,17 @@ public class MainWindow extends JFrame {
 
         // Appear
         this.setVisible(true);
+    }
+
+    @Override
+    public void update(MessageType type) {
+        switch (type) {
+            case PATH_IS_SET -> {
+                setTitle(TITLE + " - " + UIUtils.getFileNameNoExtension(PROGRAM_PATH));
+            }
+            case PATH_NOT_SET -> {
+                setTitle(TITLE);
+            }
+        }
     }
 }

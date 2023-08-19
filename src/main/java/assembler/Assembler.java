@@ -69,7 +69,6 @@ public class Assembler {
     public void startAssembleFile() {
         // Handling macros and returns intermediate file path to new file soo we do not change user one
         //pathToProgram = macroProcessor.parseMacros(pathToProgram);
-        Logger.getInstance().reset();
         FileReader fileReader;
 
         try {
@@ -217,7 +216,7 @@ public class Assembler {
     }
 
     private void writeToOutputFile() throws FileNotFoundException, IOException {
-
+        System.out.println("Writing to output file (from Assembler class): " + this.outputFile);
         OutputStream outputStream = new FileOutputStream(this.outputFile);
 
         DataOutputStream dataOutStream = new DataOutputStream(outputStream);
@@ -241,6 +240,10 @@ public class Assembler {
         for (int i = 1; i < assembledData.size(); i += (i % 2 == 0) ? 3 : -1) {
             dataOutStream.writeByte(assembledData.get(i));
         }
+
+        // Amados, fechem as streams. Jesus perdoa vocês, eu não - Henrique
+        outputStream.close();
+        dataOutStream.close();
     }
 
     private void resetAssembler() {

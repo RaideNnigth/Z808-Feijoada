@@ -1,9 +1,11 @@
 package z808_gui.utils;
 
 import assembler.Assembler;
+import logger.Logger;
 import macroprocessor.MacroProcessor;
 import virtual_machine.VirtualMachine;
 import z808_gui.components.AssemblyTextArea;
+import z808_gui.components.LogTextArea;
 import z808_gui.components.Tabs;
 import z808_gui.observerpattern.MessageType;
 import z808_gui.observerpattern.ProgramPathEventManager;
@@ -42,10 +44,20 @@ public class ActionsListeners {
                 // Save file
                 getSaveAL().actionPerformed(e);
 
+                // Reset logs
+                Logger.getInstance().reset();
+
+                // Handle macros
+                var macroProc = MacroProcessor.getInstance();
+                macroProc.start(PROGRAM_PATH);
+                System.out.println("ppath: " + PROGRAM_PATH);
+                String intermediateFile = macroProc.getOutputFile();
+                System.out.println("pre path: " + intermediateFile);
+
                 // Then assemble
                 Assembler assembler = Assembler.getInstance();
                 try {
-                    assembler.assembleFile(PROGRAM_PATH);
+                    assembler.assembleFile(intermediateFile);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "ERRO: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE, null);
                 }
@@ -64,7 +76,7 @@ public class ActionsListeners {
                 getMontarAL().actionPerformed(e);
 
                 // .bin file path to load
-                String binPath = (PROGRAM_PATH.substring(0, PROGRAM_PATH.length() - 4) + ".bin");
+                String binPath = PROGRAM_PATH.replace(".asm", ".bin");
 
                 try {
                     // Load bin
@@ -74,7 +86,7 @@ public class ActionsListeners {
                     var tabbedPane = Tabs.getInstance();
                     tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
                 } catch (IOException ioException) {
-                    JOptionPane.showMessageDialog(null, "O arquivo \"" + PROGRAM_PATH + "\" não existe!", "Erro", JOptionPane.ERROR_MESSAGE, null);
+                    JOptionPane.showMessageDialog(null, "FALHA DE MONTAGEM. VERIFIQUE LOGS.", "Erro", JOptionPane.ERROR_MESSAGE, null);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex, "Erro", JOptionPane.ERROR_MESSAGE, null);
                     ex.printStackTrace();

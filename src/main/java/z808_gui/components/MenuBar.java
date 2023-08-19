@@ -1,8 +1,5 @@
 package z808_gui.components;
 
-import assembler.Assembler;
-import virtual_machine.VirtualMachine;
-import z808_gui.observerpattern.Listener;
 import z808_gui.observerpattern.MessageType;
 import z808_gui.observerpattern.ProgramPathEventManager;
 import z808_gui.utils.ActionsListeners;
@@ -10,15 +7,10 @@ import z808_gui.utils.ActionsListeners;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.LinkedList;
 
 import static z808_gui.utils.UIUtils.*;
 
