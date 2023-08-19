@@ -86,7 +86,7 @@ public class MacroProcessor {
         }
 
         // Log success
-        Logger.getInstance().addLog(new Log(LogType.INFO, 0, "Macros finished to be replaced!"));
+        Logger.getInstance().addLog(new Log(LogType.INFO, 0, "Macros Processor finished and intermediate file written!"));
 
         // Reset logger
         Logger.getInstance().reset();
