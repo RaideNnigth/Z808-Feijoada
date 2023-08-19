@@ -36,7 +36,6 @@ public class ActionsListeners {
         return instance;
     }
 
-
     public ActionListener getMontarAL() {
         if (montarAL == null) {
             montarAL = e -> {
