@@ -140,7 +140,7 @@ public class MacroProcessor {
 
         // replace parameters
         for (int i = 0; i < parameters.length; i++) {
-            macroCode = macroCode.replace(macro.getParameters()[i], parameters[i]);
+            macroCode = macroCode.replaceAll("(?<=[\\s,])"+macro.getParameters()[i]+"(?=[\\s,]|$)", parameters[i]);
         }
 
         // split macro code into lines
