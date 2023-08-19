@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 public class ProgramPathEventManager {
     private static ProgramPathEventManager instance = null;
-    private static final LinkedList<Listener> subscribers = new LinkedList<>();
+    private static final LinkedList<ProgramPathListener> subscribers = new LinkedList<>();
 
     private ProgramPathEventManager() {
     }
@@ -17,12 +17,12 @@ public class ProgramPathEventManager {
         return instance;
     }
 
-    public void subscribe(Listener l) {
+    public void subscribe(ProgramPathListener l) {
         subscribers.add(l);
     }
 
     public void notifySubscribers(MessageType t) {
-        for (Listener l : subscribers) {
+        for (ProgramPathListener l : subscribers) {
             l.update(t);
         }
     }

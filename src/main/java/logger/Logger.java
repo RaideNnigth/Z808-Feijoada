@@ -47,7 +47,6 @@ public class Logger extends Observable {
     public void reset() {
         logs.clear();
         lastLog = null;
-        //LogTextArea.getInstance().clearText();
     }
 
     @Override
