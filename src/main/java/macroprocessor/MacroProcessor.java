@@ -98,6 +98,10 @@ public class MacroProcessor {
         this.resetMacroProcessor();
     }
 
+    public String getOutputFile() {
+        return this.outputFile;
+    }
+
     private void replaceAllOcorrencesOfMacros() throws UndeclaredMacro, InvalidMacroParameters, Exception {
         this.lineCounter = 0;
 
@@ -179,7 +183,7 @@ public class MacroProcessor {
      *
      * @throws RuntimeException if an unexpected exception occurs during processing.
      */
-    public void parseMacros() throws RuntimeException {
+    private void parseMacros() throws RuntimeException {
         // Start fileReader
         FileReader fileReader;
         try {

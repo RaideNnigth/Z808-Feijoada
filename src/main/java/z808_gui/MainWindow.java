@@ -40,8 +40,9 @@ public class MainWindow extends JFrame {
         AssembleButton assembleButton = new AssembleButton(ASSEM_DEFAULT_IMG, vm);
 
         // Populando lowerCommands
-        lowerCommands.add(Box.createRigidArea(H_SPACER));
-        lowerCommands.add(preprocessorButton);
+        // Is this really necessary? - Henrique
+        //lowerCommands.add(Box.createRigidArea(H_SPACER));
+        //lowerCommands.add(preprocessorButton);
         lowerCommands.add(Box.createRigidArea(H_SPACER));
         lowerCommands.add(assembleButton);
         lowerCommands.add(Box.createRigidArea(H_SPACER));

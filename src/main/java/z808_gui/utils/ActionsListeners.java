@@ -42,10 +42,15 @@ public class ActionsListeners {
                 // Save file
                 getSaveAL().actionPerformed(e);
 
+                // Handle macros
+                var macroProc = MacroProcessor.getInstance();
+                macroProc.start(PROGRAM_PATH);
+                String intermediateFile = macroProc.getOutputFile();
+
                 // Then assemble
                 Assembler assembler = Assembler.getInstance();
                 try {
-                    assembler.assembleFile(PROGRAM_PATH);
+                    assembler.assembleFile(intermediateFile);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "ERRO: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE, null);
                 }
