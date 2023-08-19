@@ -61,7 +61,9 @@ public class MacroProcessor {
             return;
         }
 
-        // Substitute macros on file before outputting it
+        // Log success of parse Macro
+        Logger.getInstance().addLog(new Log(LogType.INFO, 0, "Macros finished to be parsed!"));
+
         try {
             replaceAllOcorrencesOfMacros();
         } catch (UndeclaredMacro e) {
@@ -71,6 +73,9 @@ public class MacroProcessor {
             Logger.getInstance().addLog(new Log(LogType.ERROR, 0, String.format("Invalid Macro Parameters: %s", e.getMessage())));
             return;
         }
+
+        // Log success of replace macros
+        Logger.getInstance().addLog(new Log(LogType.INFO, 0, "Macros finished to be replaced!"));
 
         // Write output file
         try {
@@ -107,11 +112,13 @@ public class MacroProcessor {
 
             // Check if it is a macro call (not a macro definition and that it is not just a label or instruction)
             // After that we check if the macro exists, in case is valid name, and it is not declared, we throw an exception
-            if (AssemblerUtils.isValidMacro(macroName) && !this.macroTable.macroExists(macroName)) {
-                throw new UndeclaredMacro(String.format("Macro undeclared: %s", macroName));
-            } else {
-                // Replace occurrences with the macroCode defined for it
-                replaceOcorrenceOfMacro(this.lineCounter, this.macroTable.getMacro(macroName), macroParams);
+            if (AssemblerUtils.isValidMacro(macroName)) {
+                if (!this.macroTable.macroExists(macroName)) {
+                    throw new UndeclaredMacro(String.format("Macro undeclared: %s", macroName));
+                } else {
+                    // Replace occurrences with the macroCode defined for it
+                    replaceOcorrenceOfMacro(this.lineCounter, this.macroTable.getMacro(macroName), macroParams);
+                }
             }
 
             // Increment line counter
