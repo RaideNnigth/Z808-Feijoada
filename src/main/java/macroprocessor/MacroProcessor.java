@@ -133,7 +133,7 @@ public class MacroProcessor {
         }
 
         // get rest of code after macro call
-        LinkedList<String> restOfCode = (LinkedList<String>) this.lines.subList(startLineIndex + 1, lines.size());
+        LinkedList<String> restOfCode = new LinkedList<>(this.lines.subList(startLineIndex + 1, lines.size()));
 
         // get macro code
         String macroCode = macro.getMacroCode();
@@ -146,6 +146,8 @@ public class MacroProcessor {
         // split macro code into lines
         LinkedList<String> macroCodeLinkedList = new LinkedList<>(Arrays.asList(macroCode.split("\n")));
 
+
+        this.lines.removeLast();
         // add macro code to lines
         this.lines.addAll(macroCodeLinkedList);
         // add rest of code to lines
