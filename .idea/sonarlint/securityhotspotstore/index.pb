@@ -49,8 +49,6 @@ g
 7src/main/java/assembler/tables/datatable/DataTable.java,0\5\05b0b7bfefc63d648d5985cd63cdc7db26ea5053
 l
 <src/main/java/virtual_machine/registers/BankOfRegisters.java,6\c\6c87bf50beb8a95f5d8196dbf87a411265264903
-s
-Csrc/main/java/virtual_machine/commands/operations/move/MovAxDx.java,5\5\5524519acd58d5a7264421710998a44e15a3f82b
 g
 7src/main/java/z808_gui/observerpattern/MessageType.java,c\d\cd22f08c96c33a3dfc97ffab5e2ab7ff623f2e28
 e

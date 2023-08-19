@@ -49,6 +49,8 @@ public class MacroProcessor {
      * @param pathToProgram The path to the program file.
      */
     public void start(String pathToProgram) {
+        // Reset everyt-ing just to make sure shit beach bitch suc*
+        this.resetMacroProcessor();
         // Handling files utils
         this.inputFile = pathToProgram;
         this.outputFile = String.valueOf(inputFile).replace(".asm", ".pre");
@@ -67,10 +69,13 @@ public class MacroProcessor {
         try {
             replaceAllOcorrencesOfMacros();
         } catch (UndeclaredMacro e) {
-            Logger.getInstance().addLog(new Log(LogType.ERROR, 0, String.format("Undeclared Macro on code: %s", e.getMessage())));
+            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Undeclared Macro on code: %s", e.getMessage())));
             return;
         } catch (InvalidMacroParameters e) {
-            Logger.getInstance().addLog(new Log(LogType.ERROR, 0, String.format("Invalid Macro Parameters: %s", e.getMessage())));
+            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Invalid Macro Parameters: %s", e.getMessage())));
+            return;
+        } catch (Exception e) {
+            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Unknown error: %s", e.getMessage())));
             return;
         }
 
@@ -93,11 +98,15 @@ public class MacroProcessor {
         this.resetMacroProcessor();
     }
 
-    private void replaceAllOcorrencesOfMacros() throws UndeclaredMacro, InvalidMacroParameters {
+    private void replaceAllOcorrencesOfMacros() throws UndeclaredMacro, InvalidMacroParameters, Exception {
         this.lineCounter = 0;
-        for (String line : this.lines) {
+
+        for (int i = 0; i < this.lines.size(); i++) {
+            // Get current line being processed
+            this.currentLine = this.lines.get(this.lineCounter);
+
             // Get all tokens in line
-            String[] tokens = AssemblerUtils.decomposeInTokens(line);
+            String[] tokens = AssemblerUtils.decomposeInTokens(this.currentLine);
 
             // Get macro name
             String macroName = tokens[0];
@@ -126,14 +135,17 @@ public class MacroProcessor {
         }
     }
 
-    private void replaceOcorrenceOfMacro(int startLineIndex, Macro macro, String[] parameters) throws InvalidMacroParameters {
-
+    private void replaceOcorrenceOfMacro(int startLineIndex, Macro macro, String[] parameters) throws InvalidMacroParameters, Exception {
+        // Check if number of parameters is valid (Need to be equal)
         if (macro.getParameters().length != parameters.length) {
             throw new InvalidMacroParameters(String.format("Invalid number of parameters for macro %s", macro.getIdentification()));
         }
 
         // get rest of code after macro call
         LinkedList<String> restOfCode = new LinkedList<>(this.lines.subList(startLineIndex + 1, lines.size()));
+
+        // remove rest of code from lines and call for macro
+        this.lines.subList(startLineIndex, lines.size()).clear();
 
         // get macro code
         String macroCode = macro.getMacroCode();
@@ -146,12 +158,15 @@ public class MacroProcessor {
         // split macro code into lines
         LinkedList<String> macroCodeLinkedList = new LinkedList<>(Arrays.asList(macroCode.split("\n")));
 
-
-        this.lines.removeLast();
         // add macro code to lines
         this.lines.addAll(macroCodeLinkedList);
+
+        // update line counter to the end of macro code added
+        this.lineCounter = this.lines.size() - macroCodeLinkedList.size();
+
         // add rest of code to lines
         this.lines.addAll(restOfCode);
+
     }
 
 
@@ -224,6 +239,8 @@ public class MacroProcessor {
         // All tokens in line
         String[] tokens = AssemblerUtils.decomposeInTokens(this.currentLine);
 
+        if (tokens.length < 2)
+            return;
         // is macro declaration?
         if (!tokens[1].equalsIgnoreCase(MACRODEF))
             return;
@@ -310,9 +327,10 @@ public class MacroProcessor {
     private void writeOutputFile() throws IOException {
         // Writing intermediate file
         OutputStream outputStream = new FileOutputStream(this.outputFile);
-        DataOutputStream dataOutStream = new DataOutputStream(outputStream);
-        for (String line : this.lines)
-            dataOutStream.writeBytes(String.format("%s%n", line));
+        try ( DataOutputStream dataOutStream = new DataOutputStream(outputStream) ) {
+            for (String line : this.lines)
+                dataOutStream.writeBytes(String.format("%s%n", line));
+        }
     }
 
     private void appendLine(String line) {

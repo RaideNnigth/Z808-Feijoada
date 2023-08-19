@@ -15,8 +15,6 @@ v
 Fsrc/main/java/virtual_machine/commands/operations/logical/OrAxCte.java,4\3\437aae1cca3935534a9b672e61c52c5034526e30
 u
 Esrc/main/java/virtual_machine/commands/operations/logical/OrAxDx.java,9\f\9f59fc53836c81361416c1ab19c207a7668abad3
-{
-Ksrc/main/java/virtual_machine/commands/operations/arithmetical/AddAxDx.java,d\a\da3862d2117180e16b55db42bf583a3479429e97
 s
 Csrc/main/java/virtual_machine/commands/operations/move/MovDxAx.java,b\3\b31962d4a44838a11d6256e04ff775d8fdf03715
 :
@@ -92,8 +90,6 @@ g
 7src/main/java/assembler/mnemonics/arithmetical/Sub.java,f\0\f06434c6b061137f0a15e9ce525b0c18aeb88b04
 l
 <src/main/java/virtual_machine/registers/BankOfRegisters.java,6\c\6c87bf50beb8a95f5d8196dbf87a411265264903
-s
-Csrc/main/java/virtual_machine/commands/operations/move/MovAxDx.java,5\5\5524519acd58d5a7264421710998a44e15a3f82b
 g
 7src/main/java/z808_gui/observerpattern/MessageType.java,c\d\cd22f08c96c33a3dfc97ffab5e2ab7ff623f2e28
 e

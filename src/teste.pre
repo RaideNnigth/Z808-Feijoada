@@ -1,10 +1,4 @@
 .CODE SEGMENT
-
 MOV AX, 30
 ADD AX, 30
-
-sum
-
-sum MACRODEF
-	ADD AX, 10
-ENDM
+ADD AX, 10
