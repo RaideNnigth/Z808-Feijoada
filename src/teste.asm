@@ -3,8 +3,13 @@
 MOV AX, 30
 ADD AX, 30
 
-sum
+sum 69, 39
 
-sum MACRODEF
-	ADD AX, 10
+sum MACRODEF x
+	ADD AX, x
+ENDM
+
+sum MACRODEF x, w
+	ADD AX, x
+	ADD AX, w
 ENDM
