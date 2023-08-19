@@ -227,7 +227,7 @@ public class MacroProcessor {
             return;
 
         // Macro name is valid?
-        if (!AssemblerUtils.isValidMacro(this.currentLine)) {
+        if (!AssemblerUtils.isValidMacro(tokens[0])) {
             throw new InvalidMacroNameError(String.format("Invalid name: %s", this.currentLine.split(" ")[0]));
         }
 

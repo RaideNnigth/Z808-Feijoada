@@ -151,16 +151,14 @@ public class AssemblerUtils {
         return true;
     }
 
-    public static boolean isValidMacro(String line) {
-        if (!line.matches(macroRegex)) {
+    public static boolean isValidMacro(String macroName) {
+        if (!macroName.matches(macroRegex)) {
             return false;
         }
 
-        line = line.substring(0, line.length() - 2);
-
         // Check if name is invalid word
         for (String s : CodeTable.getInstance().getKeys()) {
-            if (line.equals(s))
+            if (macroName.equals(s))
                 return false;
         }
 
