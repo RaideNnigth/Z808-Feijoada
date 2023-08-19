@@ -67,7 +67,7 @@ public class MacroProcessor {
         Logger.getInstance().addLog(new Log(LogType.INFO, 0, "Macros finished to be parsed!"));
 
         try {
-            replaceAllOcorrencesOfMacros();
+            replaceAllOccurrencesOfMacros();
         } catch (UndeclaredMacro e) {
             Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Undeclared Macro on code: %s", e.getMessage())));
             return;
@@ -102,8 +102,11 @@ public class MacroProcessor {
         return this.outputFile;
     }
 
-    private void replaceAllOcorrencesOfMacros() throws UndeclaredMacro, InvalidMacroParameters, Exception {
+    private void replaceAllOccurrencesOfMacros() throws UndeclaredMacro, InvalidMacroParameters, Exception {
         this.lineCounter = 0;
+
+        // All Macros that have been called on code until now
+        LinkedList<String> calledMacros = new LinkedList<>();
 
         for (int i = 0; i < this.lines.size(); i++) {
             // Get current line being processed
@@ -128,9 +131,15 @@ public class MacroProcessor {
             if (AssemblerUtils.isValidMacro(macroName)) {
                 if (!this.macroTable.macroExists(macroName)) {
                     throw new UndeclaredMacro(String.format("Macro undeclared: %s", macroName));
+                }
+                Macro currentMacroParent = this.macroTable.getMacro(macroName).getParentMacro();
+                Macro currentMacro = this.macroTable.getMacro(macroName);
+                if (currentMacroParent != null && !currentMacroParent.getWasCalled()) {
+                    throw new UndeclaredMacro(String.format("Macro undeclared (Suspected that you had declared this macro inside another that you did not called): %s", macroName));
                 } else {
                     // Replace occurrences with the macroCode defined for it
-                    replaceOcorrenceOfMacro(this.lineCounter, this.macroTable.getMacro(macroName), macroParams);
+                    replaceOccurrenceOfMacro(this.lineCounter, currentMacro, macroParams);
+                    currentMacro.setWasCalled();
                 }
             }
 
@@ -139,7 +148,7 @@ public class MacroProcessor {
         }
     }
 
-    private void replaceOcorrenceOfMacro(int startLineIndex, Macro macro, String[] parameters) throws InvalidMacroParameters, Exception {
+    private void replaceOccurrenceOfMacro(int startLineIndex, Macro macro, String[] parameters) throws InvalidMacroParameters, Exception {
         // Check if number of parameters is valid (Need to be equal)
         if (macro.getParameters().length != parameters.length) {
             throw new InvalidMacroParameters(String.format("Invalid number of parameters for macro %s", macro.getIdentification()));
@@ -156,7 +165,7 @@ public class MacroProcessor {
 
         // replace parameters
         for (int i = 0; i < parameters.length; i++) {
-            macroCode = macroCode.replaceAll("(?<=[\\s,])"+macro.getParameters()[i]+"(?=[\\s,]|$)", parameters[i]);
+            macroCode = macroCode.replaceAll("(?<=[\\s,])" + macro.getParameters()[i] + "(?=[\\s,]|$)", parameters[i]);
         }
 
         // split macro code into lines
@@ -217,19 +226,12 @@ public class MacroProcessor {
             Logger.getInstance().addLog(new Log(LogType.ERROR, this.lineCounter, "Unknown error: Error while reading " + this.inputFile + "file: " + e.getMessage()));
             throw new RuntimeException(e);
         }
-
-        try {
-            this.writeOutputFile();
-        } catch (IOException e) {
-            Logger.getInstance().addLog(new Log(LogType.ERROR, this.lineCounter, "Error while reading " + this.inputFile + "file: " + e.getMessage()));
-        }
     }
 
     // Ai gustavo no cu nao - Ferrao
     // no cu sim! - Gustavo
     // Cala a boca e senta - Bessa
     // Semata - Nicolas
-    // Get macro code
 
     /**
      * Parses a line looking for macros, processes their definitions, and updates the macro table.
@@ -284,14 +286,17 @@ public class MacroProcessor {
             this.currentLine = this.lines.get(lineCounter);
 
             // Check if it's a nested macro definition
-            if (this.currentLine.equalsIgnoreCase(MACRODEF)) {
+            if (this.currentLine.contains(MACRODEF)) {
+                // Parse nested macro
                 parseLine(currentMacro);
+            } else {
+                macroCode.append(currentLine).append("\n");
+
             }
-            macroCode.append(currentLine).append("\n");
-            lineCounter += 1;
+            this.lineCounter += 1;
         }
         // End of macro definition
-        int endMacroDef = lineCounter;
+        int endMacroDef = this.lineCounter;
 
         // Insert new code on macro
         currentMacro.setMacroCode(macroCode.toString());
@@ -299,6 +304,9 @@ public class MacroProcessor {
 
         // Remove macro definition from lines
         removeLine(startMacroDef, endMacroDef);
+
+        // Reset line counter
+        this.lineCounter = startMacroDef - 1;
     }
 
     /**
@@ -331,7 +339,7 @@ public class MacroProcessor {
     private void writeOutputFile() throws IOException {
         // Writing intermediate file
         OutputStream outputStream = new FileOutputStream(this.outputFile);
-        try ( DataOutputStream dataOutStream = new DataOutputStream(outputStream) ) {
+        try (DataOutputStream dataOutStream = new DataOutputStream(outputStream)) {
             for (String line : this.lines)
                 dataOutStream.writeBytes(String.format("%s%n", line));
         }
@@ -343,8 +351,21 @@ public class MacroProcessor {
     }
 
     private void removeLine(int startLineIndex, int endLineIndex) {
-        // Remove all lines in the interval (Sum +1 in the endLineIndex cause subList is exclusive and we want to remove the endLineIndex line)
-        this.lines.subList(startLineIndex, endLineIndex + 1).clear();
+
+        // Get all code until macro definition
+        LinkedList<String> firstHalf = new LinkedList<>(this.lines.subList(0, startLineIndex));
+
+        // Get all code after macro definition
+        LinkedList<String> secondHalf = new LinkedList<>(this.lines.subList(endLineIndex + 1, this.lines.size()));
+
+        // Clear lines list
+        this.lines.clear();
+
+        // Add first half
+        this.lines.addAll(firstHalf);
+
+        // Add second half
+        this.lines.addAll(secondHalf);
     }
 
     private void resetMacroProcessor() {

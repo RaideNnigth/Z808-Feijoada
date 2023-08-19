@@ -1,15 +1,15 @@
 .CODE SEGMENT
 
-MOV AX, 30
-ADD AX, 30
+ADD ax, 10
 
-sum 69, 39
-
-sum MACRODEF x
-	ADD AX, x
+sum MACRODEF x, y
+	subtri MACRODEF x, y
+		SUB ax, x
+		SUB ax, y
+	ENDM
+	ADD ax, x
+	ADD ax, y
 ENDM
 
-sum MACRODEF x, w
-	ADD AX, x
-	ADD AX, w
-ENDM
+sum 20, 30
+subtri 15, 25
