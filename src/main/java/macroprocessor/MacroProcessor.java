@@ -266,16 +266,18 @@ public class MacroProcessor {
         } else {
             macroParams = new String[0];
         }
-
+        Macro currentMacro;
         if (parentMacro != null) {
             // Create Macro instance if it is a nested macro (macroParent.macroName)
             this.macroTable.declareMacro(parentMacro.getIdentification() + "." + macroName, macroParams);
+            currentMacro = this.macroTable.getMacro(parentMacro.getIdentification() + "." + macroName);
+
         } else {
             // Create Macro instance if it is a normal macro
             this.macroTable.declareMacro(macroName, macroParams);
-        }
+            currentMacro = this.macroTable.getMacro(macroName);
 
-        Macro currentMacro = this.macroTable.getMacro(macroName);
+        }
 
         // Macro code
         StringBuilder macroCode = new StringBuilder();
