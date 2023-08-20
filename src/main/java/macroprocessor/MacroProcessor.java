@@ -105,9 +105,6 @@ public class MacroProcessor {
     private void replaceAllOccurrencesOfMacros() throws UndeclaredMacro, InvalidMacroParameters, Exception {
         this.lineCounter = 0;
 
-        // All Macros that have been called on code until now
-        LinkedList<String> calledMacros = new LinkedList<>();
-
         for (int i = 0; i < this.lines.size(); i++) {
             // Get current line being processed
             this.currentLine = this.lines.get(this.lineCounter);
@@ -132,15 +129,18 @@ public class MacroProcessor {
                 if (!this.macroTable.macroExists(macroName)) {
                     throw new UndeclaredMacro(String.format("Macro undeclared: %s", macroName));
                 }
-                Macro currentMacroParent = this.macroTable.getMacro(macroName).getParentMacro();
-                Macro currentMacro = this.macroTable.getMacro(macroName);
-                if (currentMacroParent != null && !currentMacroParent.getWasCalled()) {
-                    throw new UndeclaredMacro(String.format("Macro undeclared (Suspected that you had declared this macro inside another that you did not called): %s", macroName));
-                } else {
-                    // Replace occurrences with the macroCode defined for it
-                    replaceOccurrenceOfMacro(this.lineCounter, currentMacro, macroParams);
-                    currentMacro.setWasCalled();
+
+                // Get macro only if it was declared
+                Macro currentMacro = this.macroTable.getMacroIfWasDeclared(macroName);
+
+                // Check if macro was declared else throw exception
+                if (currentMacro == null) {
+                    throw new UndeclaredMacro(String.format("Macro undeclared: %s", macroName));
                 }
+
+                // Replace occurrence of macro
+                replaceOccurrenceOfMacro(this.lineCounter, currentMacro, macroParams);
+                currentMacro.setWasCalled();
             }
 
             // Increment line counter
@@ -267,8 +267,14 @@ public class MacroProcessor {
             macroParams = new String[0];
         }
 
-        // Create Macro instance
-        this.macroTable.declareMacro(macroName, macroParams);
+        if (parentMacro != null) {
+            // Create Macro instance if it is a nested macro (macroParent.macroName)
+            this.macroTable.declareMacro(parentMacro.getIdentification() + "." + macroName, macroParams);
+        } else {
+            // Create Macro instance if it is a normal macro
+            this.macroTable.declareMacro(macroName, macroParams);
+        }
+
         Macro currentMacro = this.macroTable.getMacro(macroName);
 
         // Macro code
