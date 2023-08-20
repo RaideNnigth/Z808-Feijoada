@@ -26,8 +26,9 @@ public class MacroTable {
             return getMacro(macroName);
         }
 
+        // If get 'till here, is a nested macro. Check if parent was called
         for (Macro m : macros) {
-            if (m.getWasCalled()) {
+            if (m.getParentMacro().getWasCalled()) {
                 return m;
             }
         }
