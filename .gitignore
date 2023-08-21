@@ -45,3 +45,7 @@ bin/
 **/.fuse_hidden*
 .idea/sonarlint/securityhotspotstore/index.pb
 .idea/sonarlint/issuestore/index.pb
+src/programs/testemacro1_dataMem.txt
+.idea/sonarlint/securityhotspotstore/index.pb
+.idea/sonarlint/issuestore/index.pb
+src/programs/testemacro1_dataMem.txt
