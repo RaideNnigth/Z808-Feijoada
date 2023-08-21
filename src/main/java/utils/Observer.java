@@ -1,4 +1,4 @@
-package logger;
+package utils;
 
 import z808_gui.observerpattern.MessageType;
 

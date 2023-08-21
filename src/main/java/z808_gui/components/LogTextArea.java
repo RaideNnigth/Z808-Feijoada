@@ -1,6 +1,6 @@
 package z808_gui.components;
 
-import logger.Observer;
+import utils.Observer;
 
 import javax.swing.*;
 import java.awt.*;

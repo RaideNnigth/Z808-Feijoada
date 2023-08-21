@@ -49,6 +49,8 @@ public class Assembler {
     private boolean codeSegmentSet;
     private boolean dataSegmentSet;
 
+    private final Logger logger = Logger.getInstance();
+
     private Assembler() {
         lineCounter = 0;
     }
@@ -74,7 +76,8 @@ public class Assembler {
         try {
             fileReader = new FileReader(this.inputFile);
         } catch (FileNotFoundException e) {
-            Logger.getInstance().addLog(new Log(LogType.ERROR, 0, String.format("IO Error: Input file (%s) not found!", this.inputFile)));
+            logger.error(0, String.format("IO Error: Input file (%s) not found!", this.inputFile));
+            //Logger.getInstance().addLog(new Log(LogType.ERROR, 0, String.format("IO Error: Input file (%s) not found!", this.inputFile)));
             return;
         }
 
@@ -93,23 +96,23 @@ public class Assembler {
                 this.currentLine = fileIO.readLine();
             }
         } catch (IOException e) {
-            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("IO Error: Error while reading %s (%s)", this.inputFile, e.getMessage())));
-            //Logger.getInstance().printLogs();
-            //resetAssembler();
+            logger.error(lineCounter, String.format("IO Error: Error while reading %s (%s)", this.inputFile, e.getMessage()));
+            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("IO Error: Error while reading %s (%s)", this.inputFile, e.getMessage())));
             return;
         } catch (AssemblerError e) {
-            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Assembly error: %s", e.getMessage())));
-            //Logger.getInstance().printLogs();
-            //resetAssembler();
+            logger.error(lineCounter, String.format("Assembly error: %s", e.getMessage()));
+            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Assembly error: %s", e.getMessage())));
             return;
         } catch (Exception e) {
-            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Unknown error: %s", e.getMessage())));
+            logger.error(lineCounter, String.format("Unknown error: %s", e.getMessage()));
+            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Unknown error: %s", e.getMessage())));
             return;
         } finally {
             try {
                 fileReader.close();
             } catch (IOException e) {
-                Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Fatal error: couldn't close input file! (%s)", e.getMessage())));
+                logger.error(lineCounter, String.format("Fatal error: couldn't close input file! (%s)", e.getMessage()));
+                //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Fatal error: couldn't close input file! (%s)", e.getMessage())));
             }
             //return;
         }
@@ -118,7 +121,8 @@ public class Assembler {
         try {
             SymbolTable.getInstance().replaceAllOcorrencesOfDeclaredSymbols();
         } catch (UndeclaredSymbol e) {
-            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Symbol table error: %s", e.getMessage())));
+            logger.error(lineCounter, String.format("Symbol table error: %s", e.getMessage()));
+            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Symbol table error: %s", e.getMessage())));
             //Logger.getInstance().printLogs();
             //resetAssembler();
             return;
@@ -128,21 +132,20 @@ public class Assembler {
         try {
             DataTable.getInstance().replaceAllOcorrencesOfDeclaredDataItems();
         } catch (UndeclaredDataItem e) {
-            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Data table error: %s", e.getMessage())));
+            logger.error(lineCounter, String.format("Data table error: %s", e.getMessage()));
+            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Data table error: %s", e.getMessage())));
             return;
         } catch (Exception e) {
-            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Unknown error: %s", e.getMessage())));
-            //Logger.getInstance().printLogs();
-            //resetAssembler();
+            logger.error(lineCounter, String.format("Unknown error: %s", e.getMessage()));
+            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Unknown error: %s", e.getMessage())));
             return;
         }
 
         // No code segment was declared
         if (!codeSegmentSet) {
-            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, "Code segment error: code segment isn't set"));
+            logger.error(lineCounter, "Code segment error: code segment isn't set");
+            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, "Code segment error: code segment isn't set"));
             return;
-            //resetAssembler();
-            //throw new Exception("Code segment not set!");
         }
 
         this.calculateHeader();
@@ -150,15 +153,18 @@ public class Assembler {
         try {
             this.writeToOutputFile();
         } catch (FileNotFoundException e) {
-            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("File error: couldn't create output file (%s)", e.getMessage())));
+            logger.error(lineCounter, String.format("File error: couldn't create output file (%s)", e.getMessage()));
+            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("File error: couldn't create output file (%s)", e.getMessage())));
             return;
         } catch (IOException e) {
-            Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("IO Error: Error while writing to %s (%s)", this.outputFile, e.getMessage())));
+            logger.error(lineCounter, String.format("IO Error: Error while writing to %s (%s)", this.outputFile, e.getMessage()));
+            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("IO Error: Error while writing to %s (%s)", this.outputFile, e.getMessage())));
             return;
         }
 
         // Log success message
-        Logger.getInstance().addLog(new Log(LogType.INFO, 0, "Code assembled!"));
+        logger.info(lineCounter, "Code assembled!");
+        //Logger.getInstance().addLog(new Log(LogType.INFO, 0, "Code assembled!"));
         //Logger.getInstance().printLogs();
 
         // Reset after assembly

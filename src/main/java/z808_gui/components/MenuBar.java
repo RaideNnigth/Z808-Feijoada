@@ -34,7 +34,7 @@ public class MenuBar extends JMenuBar {
         novoMenItem.addActionListener(e -> {
             PROGRAM_PATH = "";
             CURRENT_DIRECTORY = "";
-            AssemblyTextArea.getInstance().setText("");
+            AssemblyTextPane.getInstance().setText("");
             ppm.notifySubscribers(MessageType.PATH_NOT_SET);
         });
 
@@ -81,7 +81,7 @@ public class MenuBar extends JMenuBar {
 
                     // Carrega texto no textarea
                     try {
-                        AssemblyTextArea.getInstance().setText(Files.readString(Paths.get(PROGRAM_PATH)));
+                        AssemblyTextPane.getInstance().setText(Files.readString(Paths.get(PROGRAM_PATH)));
                     } catch (IOException ex) {
                         System.out.println(ex);
                         System.exit(0);

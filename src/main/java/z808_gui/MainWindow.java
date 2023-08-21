@@ -67,7 +67,7 @@ public class MainWindow extends JFrame implements ProgramPathListener {
         centralPanelLayout.setAutoCreateContainerGaps(true);
 
         // ------------------------------ Criando a area de texto para o Assembly ------------------------------
-        AssemblyTextArea assemblyArea = AssemblyTextArea.getInstance();
+        AssemblyTextPane assemblyArea = AssemblyTextPane.getInstance();
         //LogTextArea logArea = LogTextArea.getInstance();
         LogTextArea logArea = new LogTextArea();
         Logger.getInstance().subscribe(logArea);

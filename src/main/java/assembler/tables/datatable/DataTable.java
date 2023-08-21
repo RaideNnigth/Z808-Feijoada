@@ -69,9 +69,11 @@ public class DataTable {
 
     private void addDataItem(DataItem d) {
         if (!AssemblerUtils.isValidName(d.getIdentification())) {
-            Log l = new Log(LogType.ERROR, Assembler.getInstance().getLineCounter(),
+            Logger.getInstance().error(Assembler.getInstance().getLineCounter(),
                     String.format("%s is not a valid identifier.", d.getIdentification()));
-            Logger.getInstance().addLog(l);
+            //Log l = new Log(LogType.ERROR, Assembler.getInstance().getLineCounter(),
+            //        String.format("%s is not a valid identifier.", d.getIdentification()));
+            //Logger.getInstance().addLog(l);
         }
         dataItemHashMap.put(d.getIdentification(), d);
     }

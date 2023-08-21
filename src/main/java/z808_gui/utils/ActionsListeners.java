@@ -4,7 +4,7 @@ import assembler.Assembler;
 import logger.Logger;
 import macroprocessor.MacroProcessor;
 import virtual_machine.VirtualMachine;
-import z808_gui.components.AssemblyTextArea;
+import z808_gui.components.AssemblyTextPane;
 import z808_gui.components.LogTextArea;
 import z808_gui.components.Tabs;
 import z808_gui.observerpattern.MessageType;
@@ -118,7 +118,7 @@ public class ActionsListeners {
                         }
 
                         try (FileWriter fw = new FileWriter(PROGRAM_PATH)) {
-                            fw.write(AssemblyTextArea.getInstance().getText());
+                            fw.write(AssemblyTextPane.getInstance().getText());
                         } catch (IOException ex) {
                             System.err.println(ex);
                             System.exit(0);
@@ -128,7 +128,7 @@ public class ActionsListeners {
                 // Caso contrário, o arquivo existe e será atualizado com o código novo
                 else {
                     try (FileWriter fw = new FileWriter(PROGRAM_PATH)) {
-                        fw.write(AssemblyTextArea.getInstance().getText());
+                        fw.write(AssemblyTextPane.getInstance().getText());
                     } catch (IOException ex) {
                         System.err.println(ex);
                         System.exit(0);
