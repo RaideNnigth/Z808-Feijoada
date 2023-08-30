@@ -2,16 +2,15 @@ package virtual_machine.commands.operations.arithmetical;
 
 import virtual_machine.commands.operations.Command;
 import virtual_machine.commands.operations.OperationsUtils;
+import virtual_machine.interpreter.OpParameters;
+import virtual_machine.memory.MemoryController;
+import virtual_machine.registers.BankOfRegisters;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
 
 import java.util.HashMap;
 
 public class SubAxCte implements Command {
-    private void add( RegWork ax, RegWork dx ) {
-        ax.setReg( (short)(ax.getReg() + dx.getReg()) );
-    }
-
     // Campos do registrador SR afetados pela soma: CF, PF, ZF, SF, OF
     // CF: carry ou borrow
     // PF: flag de paridade
@@ -19,18 +18,24 @@ public class SubAxCte implements Command {
     // SF: flag de sinal
     // OF: flag de overflow
     @Override
-    public void doOperation( HashMap<String, Object> args ) {
-        RegWork ax = (RegWork) args.get("ax");
-        byte cte = (byte) args.get("cte");
-        RegFlags sr = (RegFlags) args.get("sr");
+    public void doOperation(HashMap<OpParameters, Object> args ) {
+        RegWork ax = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getAx();
+        RegWork ip = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getIp();
+        RegFlags sr = (RegFlags) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getSr();
+        MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
 
-        int result = ax.getReg() - cte;
+        // We must get from the memory the 16 bit constant
+        short cte = mc.getWordBE(ip.getValue());
+
+        ip.setValue((short) (ip.getValue() + 1)); // Increment IP
+
+        int result = ax.getValue() - cte;
         sr.setOf(OperationsUtils.hasOverflow16(result));
-        sr.setCf(OperationsUtils.hasCarry(ax.getReg(), (int) cte));
+        sr.setCf(OperationsUtils.hasCarry(ax.getValue(), (int) cte));
         sr.setPf(OperationsUtils.parityBit(result));
         sr.setZf(OperationsUtils.isZero(result));
         sr.setSf(OperationsUtils.hasSignal(result));
 
-        ax.setReg((short) result);
+        ax.setValue((short) result);
     }
 }

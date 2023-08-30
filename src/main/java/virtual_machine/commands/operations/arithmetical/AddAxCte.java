@@ -2,6 +2,9 @@ package virtual_machine.commands.operations.arithmetical;
 
 import virtual_machine.commands.operations.Command;
 import virtual_machine.commands.operations.OperationsUtils;
+import virtual_machine.interpreter.OpParameters;
+import virtual_machine.memory.MemoryController;
+import virtual_machine.registers.BankOfRegisters;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
 
@@ -10,18 +13,31 @@ import java.util.HashMap;
 public class AddAxCte implements Command {
 
     @Override
-    public void doOperation( HashMap<String, Object> args ) {
-        RegWork ax = (RegWork) args.get("ax");
-        byte cte = (byte) args.get("cte");
-        RegFlags sr = (RegFlags) args.get("sr");
+    public void doOperation(HashMap<OpParameters, Object> args) {
 
-        int result = ax.getReg() + cte;
+        // Get regs
+        RegWork ax = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getAx();
+        RegWork ip = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getIp();
+        RegFlags sr = (RegFlags) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getSr();
+
+        // Get memory controller
+        MemoryController mc = (MemoryController) args.get(OpParameters.MEM_CONTROLLER);
+
+        short cte = mc.getWordBE(ip.getValue()); // Get constant
+
+        // We must get from the memory the 16 bit constant
+        ip.setValue((short) (ip.getValue() + 1)); // Increment IP
+
+        int result = ax.getValue() + cte; // Doing op
+
+        // Flags
         sr.setOf(OperationsUtils.hasOverflow16(result));
-        sr.setCf(OperationsUtils.hasCarry(ax.getReg(), (int) cte));
+        sr.setCf(OperationsUtils.hasCarry(ax.getValue(), cte));
         sr.setPf(OperationsUtils.parityBit(result));
         sr.setZf(OperationsUtils.isZero(result));
         sr.setSf(OperationsUtils.hasSignal(result));
 
-        ax.setReg((short) result);
+        // Set result in AX
+        ax.setValue((short) result);
     }
 }

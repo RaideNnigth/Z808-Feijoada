@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>210</x>
+      <y>161</y>
+      <w>266</w>
+      <h>399</h>
+    </coordinates>
+    <panel_attributes>Assembler
+-
+- labelProcessor: LabelProcessor
+- directiveProcessor: DirectiveProcessor
+- operationProcessor: OperationProcessor
+
+- assembledCode: LinkedList&lt;Short&gt;
+
+- logger: Logger
+- loggerInterruption: boolean
+
+- currentLine: String
+- linecounter: int
+
+- PC: int
+- HEADER_SIZE: final int
+- CS_END: int
+- DS_START: int
+- DS_END: int
+- SS_START: int
+- SS_END: int
+
+_- instance: Assembler_
+-
+_+ getInstance(): Assembler_
++ assembleFile(pathToProgram: String): void
+- assembleLine(): void
++ getPC(): int
++ getLineCounter(): int
++ isLoggerInterruption(): boolean
++ setLoggerInterruption(loggerInterruption: boolean): void
++ getAssembledCode(): LinkedList&lt;Short&gt;
++ getLogger(): Logger
++ getCurrentLine(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>525</x>
+      <y>637</y>
+      <w>273</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>CodeTable
+-
+- codeMap: HashMap&lt;String, AssembleableOperation&gt;
+-
+_+ getInstance(): CodeTable_
++ isValidOperation(): boolean
++ getOperation(): AssembleableOperation
++ getKeys(): String[]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>343</x>
+      <y>553</y>
+      <w>21</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>455</y>
+      <w>224</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>OperationProcessor
+-
+- codeTable: CodeTable
+-
++ isOperation(line: String): boolean
++ assembleOperation(line:String): unsigned int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>469</x>
+      <y>322</y>
+      <w>105</w>
+      <h>203</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>130.0;270.0;70.0;270.0;70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>658</x>
+      <y>539</y>
+      <w>21</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>280</y>
+      <w>224</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>DirectiveProcessor
+-
+- directivesTable: HashMap&lt;String, Operation&gt;
+-
++ assembleDirective(line:String): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>469</x>
+      <y>322</y>
+      <w>105</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>130.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>105</y>
+      <w>224</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>LabelProcessor
+-
+-
++ assembleLabel(line: String): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>469</x>
+      <y>147</y>
+      <w>105</w>
+      <h>196</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>130.0;10.0;70.0;10.0;70.0;260.0;10.0;260.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>259</x>
+      <y>637</y>
+      <w>182</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Symbol
+-
+- identificator: String
+- isDeclared: boolean
+- value: short
+- usedAt: ArrayList&lt;Short&gt;
+-
++ getIdentificator(): String
++ isDeclared(): boolean
++ setDeclared(d: boolean): void
++ getUsedAt(): LinkedList&lt;Integer&gt;
++ getValue(): short
++ setValue(v: short): void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1127</x>
+      <y>490</y>
+      <w>210</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+AssembleableOperation
+-
+-
+assemble(line: String): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>791</x>
+      <y>567</y>
+      <w>196</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>260.0;10.0;260.0;60.0;50.0;60.0;50.0;160.0;10.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>882</x>
+      <y>784</y>
+      <w>210</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>ConcreteOperation1
+-
+_+ MNEMONIC: String_
+- MACHINE_CODE_VARIATION1: final short
+- MACHINE_CODE_VARIATION2: final short
+...
+-
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1092</x>
+      <y>784</y>
+      <w>98</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>Todas as operações
+seguirão essa ideia.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>840</x>
+      <y>427</y>
+      <w>252</w>
+      <h>147</h>
+    </coordinates>
+    <panel_attributes>SymbolTable
+-
+- symbolTable: HashMap&lt;String, Symbol&gt;
+
+_- instance: SymbolTable_
+-
+_+ getInstance(): SymbolTable_
++ symbolExists(s: String): boolean
++ getSymbol(s: String): Symbol
++ addOccurrenceOfSymbol(s: String, index: int): void
++ addSymbol(sy: Symbol): void
++ replaceAllOcorrencesOfDeclaredSymbols(): void
++ reset(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>791</x>
+      <y>672</y>
+      <w>91</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1092</x>
+      <y>567</y>
+      <w>161</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>210.0;10.0;210.0;180.0;10.0;180.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>868</x>
+      <y>644</y>
+      <w>231</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>/Operation/
+-
+_+ AX_STR: String_
+_+ DX_STR: String_
+_+ SI_STR: String_
+-
++ processDirectAddressing(token: String): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>980</x>
+      <y>728</y>
+      <w>21</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+</diagram>

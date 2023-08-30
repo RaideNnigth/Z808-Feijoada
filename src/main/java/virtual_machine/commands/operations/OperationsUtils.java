@@ -2,7 +2,7 @@ package virtual_machine.commands.operations;
 
 public abstract class OperationsUtils {
     public static boolean hasCarry(int op1, int op2) {
-        return (op1 & op2) == 0;
+        return (op1 & op2) != 0;
     }
 
     public static boolean hasOverflow16(int result) {

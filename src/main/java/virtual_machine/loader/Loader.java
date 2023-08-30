@@ -8,46 +8,62 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class Loader {
-    private String filePath;
+    private String pathToProgram;
     private long programSize;
     private byte[] programBinary;
-    private int PC = 0;
-    private MemoryController memoryController;
+    private int PC;
 
-    public Loader(String path) throws IOException {
-        memoryController = new MemoryController();
-        setPathToProgram(path);
+    public Loader() {
+
     }
 
-    public void setPathToProgram(String path) throws IOException {
-        filePath = path;
+    public void setProgramToLoad(String path) throws IOException {
+        pathToProgram = path;
 
-        try (var programFileReader = new FileInputStream(filePath)) {
-            programSize = (new File(filePath)).length();
+        try (var programFileReader = new FileInputStream(pathToProgram)) {
+            programSize = (new File(pathToProgram)).length();
             programBinary = new byte[(int) programSize];
             programFileReader.read(programBinary);
         } catch (IOException e) {
-            throw new IOException("Error opening: \"" + filePath + "\" file.");
+            throw new IOException("Error opening: \"" + pathToProgram + "\" file.");
         }
     }
 
     /**
      * Esse método retorna um valor de 16 bits lido a partir
-     * do byte atual apontado por PC em Little Endian, retornando
+     * do byte em Little Endian apontado por PC, retornando
+     * em Little Endian também.
+     * A função já deixa PC apontando para a próxima palavra
+     * de 16 bits no arquivo.
+     *
+     * @return Um valor de 16 bits em Little Endian na posição de PC
+     */
+    private short read16bitLE() {
+        short ret = BinaryUtils.concatBytes(programBinary[PC], programBinary[PC + 1]);
+        PC += 2;
+
+        return ret;
+    }
+
+    /**
+     * Esse método retorna um valor de 16 bits lido a partir
+     * do byte em Little Endian apontado por PC, retornando
      * em Big Endian.
      * A função já deixa PC apontando para a próxima palavra
      * de 16 bits no arquivo.
      *
      * @return Um valor de 16 bits em Big Endian na posição de PC
      */
-    private short read16bit() {
+    private short read16bitBE() {
         short ret = BinaryUtils.concatBytes(programBinary[PC + 1], programBinary[PC]);
         PC += 2;
 
         return ret;
     }
 
-    public void loadToMemory() {
+    public void loadToMemory(MemoryController memoryController, int codeSegment, int dataSegment, int stackSegment) {
+        PC = 0;
+
         int csStart = 0;
         int csEnd = 0;
         int dsStart = 0;
@@ -56,45 +72,36 @@ public class Loader {
         int ssEnd = 0;
 
         // Reading header
-        csStart = read16bit();
-        csEnd = read16bit();
-        dsStart = read16bit();
-        dsEnd = read16bit();
-        ssStart = read16bit();
-        ssEnd = read16bit();
-
-        // Print segments addresses (test purposes only)
-        System.out.printf("""
-                        csStart: %x
-                        csEnd: %x
-                        dsStart: %x
-                        dsEnd: %x
-                        ssStart: %x
-                        ssEnd: %x
-                        """,
-                csStart, csEnd,
-                dsStart, dsEnd,
-                ssStart, ssEnd);
+        csStart = read16bitBE();
+        csEnd = read16bitBE();
+        dsStart = read16bitBE();
+        dsEnd = read16bitBE();
+        ssStart = read16bitBE();
+        ssEnd = read16bitBE();
 
         // Start writing instructions in Code Segment
         PC = csStart;
         int memCounter = 0;
-        while (PC < csEnd) {
-            short temp = read16bit();
-            //System.out.printf("%04x%n", temp);
-            memoryController.writeInstruction(temp, memCounter++);
+        while (PC <= csEnd) {
+            short temp = read16bitBE();
+            memoryController.writeWord((short) ((memCounter++) + codeSegment), temp);
         }
+
+        //System.out.println("Data loaded to memory: ");
 
         // Start writing data in Data Segment
         PC = dsStart;
         memCounter = 0;
-        while (PC < dsEnd) {
-            short temp = read16bit();
-            //System.out.printf("%04x%n", temp);
-            memoryController.writeData(temp, memCounter++);
+        while (PC <= dsEnd) {
+            short temp = read16bitBE();
+            memoryController.writeWord((short) ((memCounter++) + dataSegment), temp);
         }
 
-        // Será q presiza meter o loop da pilha?
-        // - Henrique
+        PC = ssStart;
+        memCounter = 0;
+        while (PC <= ssEnd) {
+            short temp = read16bitBE();
+            memoryController.writeWord((short) ((memCounter++) + stackSegment), temp);
+        }
     }
 }

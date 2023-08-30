@@ -2,35 +2,26 @@ package virtual_machine.commands.operations.logical;
 
 import virtual_machine.commands.operations.Command;
 import virtual_machine.commands.operations.OperationsUtils;
+import virtual_machine.interpreter.OpParameters;
+import virtual_machine.registers.BankOfRegisters;
 import virtual_machine.registers.RegFlags;
 import virtual_machine.registers.RegWork;
 
 import java.util.HashMap;
 
 public class OrAxAx implements Command {
-    public void doOperation(HashMap<String, Object> args) {
-        RegWork ax = (RegWork) args.get("ax");
-        RegFlags sr = (RegFlags) args.get("sr");
+    public void doOperation(HashMap<OpParameters, Object> args) {
+        RegWork ax = (RegWork) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getAx();
+        RegFlags sr = (RegFlags) ((BankOfRegisters) args.get(OpParameters.REGISTERS)).getSr();
 
-        short result = 0;
-        boolean carryFlag = false;
-        byte bitCarry = 0;
-        byte bitResult;
-        byte bitOp1;
-        byte bitOp2;
-        for (int i = 0; i < 16; i++) {
-            bitOp1 = (byte) (((ax.getReg() << (15 - i)) >>> (14)));
-            bitOp2 = (byte) (((ax.getReg() << (15 - i)) >>> (14)));
-            bitResult = (byte) (bitOp1 | bitOp2 | bitCarry);
-            bitCarry = (byte) (bitOp1 & bitOp2 | bitCarry);
-            if (bitCarry == 1)
-                carryFlag = true;
-            result = (short) (bitResult | (bitResult << (15 - i)));
-        }
-        sr.setCf(carryFlag);
+        short result = (short) (ax.getValue() | ax.getValue());
+
+        sr.setCf(false);
         sr.setPf(OperationsUtils.parityBit(result));
         sr.setZf(OperationsUtils.isZero(result));
         sr.setSf(OperationsUtils.hasSignal(result));
-        sr.setOf(bitCarry == 1);
+        sr.setOf(false);
+
+        ax.setValue(result);
     }
 }
