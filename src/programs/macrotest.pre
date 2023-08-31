@@ -1,0 +1,4 @@
+.code segment
+add ax, 1
+add ax, 1
+sub ax, 3

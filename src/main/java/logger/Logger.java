@@ -35,12 +35,12 @@ public class Logger extends Observable {
     }
 
     public void info(int lineNumber, String message) {
-        Log log = new Log(LogType.ERROR, lineNumber, message);
+        Log log = new Log(LogType.INFO, lineNumber, message);
         this.addLog(log);
     }
 
     public void debug(int lineNumber, String message) {
-        Log log = new Log(LogType.ERROR, lineNumber, message);
+        Log log = new Log(LogType.INFO, lineNumber, message);
         this.addLog(log);
     }
 
