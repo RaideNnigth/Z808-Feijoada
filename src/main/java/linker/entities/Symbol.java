@@ -71,4 +71,14 @@ public class Symbol {
     public String getRelocability() {
         return relocability;
     }
+
+    public String getDefinition() {
+        return definition;
+    }
+    public short getAbsoluteValue() {
+        return absoluteValue;
+    }
+    public String getModuleNameAddress() {
+        return moduleNameAddress;
+    }
 }
