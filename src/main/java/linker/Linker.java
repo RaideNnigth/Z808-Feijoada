@@ -1,14 +1,25 @@
 package linker;
 
 import linker.tables.DefinitionsTable;
+import linker.tables.GlobalSymbolTable;
+import linker.tables.UsageTable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Linker {
     private static Linker instance = null;
+
+    private final HashMap<String, DefinitionsTable> definitionsTables;
+
+    private final HashMap<String, UsageTable> usageTables;
+
+    private final GlobalSymbolTable globalSymbolTable;
+
+    // Singleton pattern
     private Linker() {
         definitionsTables = new HashMap<>();
+        usageTables = new HashMap<>();
+        globalSymbolTable = GlobalSymbolTable.getInstance();
     }
     public static Linker getInstance() {
         if (instance == null) {
@@ -16,8 +27,6 @@ public class Linker {
         }
         return instance;
     }
-
-    private final HashMap<String, DefinitionsTable> definitionsTables;
 
     public void addDefinitionsTable(String fileName, DefinitionsTable definitionsTable) {
         definitionsTables.put(fileName, definitionsTable);
@@ -29,5 +38,17 @@ public class Linker {
 
     public DefinitionsTable getDefinitionsTable(String fileName) {
         return definitionsTables.get(fileName);
+    }
+
+    public void addUsageTable(String fileName, UsageTable usageTable) {
+        usageTables.put(fileName, usageTable);
+    }
+
+    public HashMap<String, UsageTable> getHashMapUsageTable() {
+        return usageTables;
+    }
+
+    public UsageTable getUsageTable(String fileName) {
+        return usageTables.get(fileName);
     }
 }

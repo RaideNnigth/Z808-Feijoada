@@ -17,7 +17,7 @@ import linker.entities.Symbol;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class usageTable {
+public class UsageTable {
 
     private final HashMap<String, ArrayList<Symbol>> usageTable = new HashMap<>();
 
