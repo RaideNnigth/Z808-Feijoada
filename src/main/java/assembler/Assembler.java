@@ -191,6 +191,8 @@ public class Assembler {
             //return;
         //}
 
+
+
         // Handling operations and data declarations
         if (isCodeSegment) {
             // Handle operations
