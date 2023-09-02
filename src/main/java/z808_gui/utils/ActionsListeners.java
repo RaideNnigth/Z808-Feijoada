@@ -33,6 +33,19 @@ public class ActionsListeners {
         this.vm = vm;
     }
 
+    private static void processDirectory(File directory) throws Exception {
+        for (final File fileEntry : directory.listFiles()) {
+            if (fileEntry.isDirectory()) {
+                processDirectory(fileEntry);
+            } else {
+                if (fileEntry.getName().endsWith(".asm")) {
+                    String processedCodePath = MacroProcessor.getInstance().parseMacros(fileEntry.getAbsolutePath());
+                    Assembler.getInstance().assembleFile(processedCodePath);
+                }
+            }
+        }
+    }
+
     public static ActionsListeners getInstance(VirtualMachine vm) {
         if (instance == null) {
             instance = new ActionsListeners(vm);
@@ -49,16 +62,10 @@ public class ActionsListeners {
                 // Reset logs
                 Logger.getInstance().reset();
 
-                // Get macro processor
-                var macroProc = MacroProcessor.getInstance();
-
-                // Get assembler
-                Assembler assembler = Assembler.getInstance();
-
-                // Now, process macros and assemble
+                // Now, process macros, assemble and link
                 try {
-                    String processedCodePath = macroProc.parseMacros(PROGRAM_PATH);
-                    assembler.assembleFile(processedCodePath);
+                    processDirectory(new File(CURRENT_DIRECTORY));
+                    // CALL LINKER <- TODO
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "ERRO: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE, null);
                 }
