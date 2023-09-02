@@ -1,6 +1,8 @@
 package z808_gui.utils;
 
 import assembler.Assembler;
+import logger.Log;
+import logger.LogType;
 import logger.Logger;
 import macroprocessor.MacroProcessor;
 import virtual_machine.VirtualMachine;
@@ -47,17 +49,16 @@ public class ActionsListeners {
                 // Reset logs
                 Logger.getInstance().reset();
 
-                // Handle macros
+                // Get macro processor
                 var macroProc = MacroProcessor.getInstance();
-                macroProc.start(PROGRAM_PATH);
-                System.out.println("ppath: " + PROGRAM_PATH);
-                String intermediateFile = macroProc.getOutputFile();
-                System.out.println("pre path: " + intermediateFile);
 
-                // Then assemble
+                // Get assembler
                 Assembler assembler = Assembler.getInstance();
+
+                // Now, process macros and assemble
                 try {
-                    assembler.assembleFile(intermediateFile);
+                    String processedCodePath = macroProc.parseMacros(PROGRAM_PATH);
+                    assembler.assembleFile(processedCodePath);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "ERRO: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE, null);
                 }
@@ -82,6 +83,9 @@ public class ActionsListeners {
                     // Load bin
                     vm.loadProgram(binPath);
                     vm.executeProgram();
+
+                    // Add execution success log
+                    Logger.getInstance().addLog(new Log(LogType.INFO, 0, "Programa executado com sucesso!"));
 
                     var tabbedPane = Tabs.getInstance();
                     tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
@@ -142,23 +146,4 @@ public class ActionsListeners {
         return saveAL;
     }
 
-
-
-    public ActionListener getPreprocessarAL() {
-        if (preprocessarAL == null) {
-            preprocessarAL = e -> {
-                getSaveAL().actionPerformed(e);
-
-                // Preprocess file
-                MacroProcessor macroProcessor = MacroProcessor.getInstance();
-                try {
-                    macroProcessor.start(PROGRAM_PATH);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "ERRO: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE, null);
-                }
-            };
-        }
-
-        return preprocessarAL;
-    }
 }

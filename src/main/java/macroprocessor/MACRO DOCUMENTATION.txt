@@ -1,0 +1,209 @@
+PROCESSADOR DE MACROS COM ESCOPO
+
+Algoritmo idealizado por Henrique Rodrigues - mais conhecido como Rei Delas ou Salomão dos Computers.
+
+-------------------------------------------------- INTRODUÇÃO --------------------------------------------------
+
+A ideia é realizar um processador de 1 passada. Onde esta é dividida em três modos:
+
+MODO 1: modo cópia
+MODO 2: declaração de macro
+MODO 3: expansão de macro
+
+SIGLAS USADAS:
+PM - Processador de Macros
+PREN - Política de Renomeação
+
+-------------------------------------------------- FUNCIONAMENTO --------------------------------------------------
+
+---------> MODO 1:
+
+Este é o modo inicial que o PM inicia. Nesse modo, ele apenas copia o texto do arquivo original para uma lista encadeada
+que conterá o texto final já processado.
+
+Caso no meio desse modo, ele encontre uma definição de macro, ele entra no MODO 2. Caso ele encontre uma chamada de macro,
+ele entrará no MODO 3.
+
+---------> MODO 2:
+
+Este modo recebe a linha contendo a declaração da macro que ele vai criar. Este modo possui um contador interno de nível de
+aninhamento, que inicia em 1. Este contador servirá para identificar a qual macro o token ENDM (end macro) se refere, e também
+para saber a quais chamadas de macro ele deve aplicar a política de renomeação (PREN), que explicarei mais a frente.
+
+No MODO 2, o PM vai verificar se já existe uma macro com o nome da declaração na tabela de macros. Se existir, ele verifica se
+a macro foi nomeada pelo PM ou pelo usuário (há uma flag na classe Macro que nos dá essa info). Se foi nomeada pelo usuário, ele
+realiza uma validação do nome. Se foi nomeada pelo PM, ele pula essa verificação.
+
+O motivo do PM fazer essa distinção de quem nomeou a macro, é porque o PM usa o símbolo '#' para definir a hierarquia de macros
+aninhadas, mas o usuário não pode usar esse símbolo para nomear as macros, só o PM.
+
+Podemos concluir o seguinte nessa etapa:
+
+Macro existe na tabela? SIM
+	- Foi nomeada pelo usuário? SIM -> Então essa é uma macro externa que está sendo redefinida.
+	- Foi nomeada pelo usuário? NÃO -> Então é uma redeclaração de uma macro aninhada
+
+Macro existe na tabela? NÃO
+	- Então ela está sendo declarada pela primeira vez pelo usuário.
+
+Independente de quem criou a macro, e se ela existe ou não na tabala de macros, o procedimento é o mesmo: será criado um novo objeto
+de macro, passando o nome da macro e seus parâmetros, e cada linha da declaração dessa macro será adicionada no campo de código desse
+novo objeto de macro.
+
+Se o PM encontrar uma definição de macro dentro da macro que está sendo processada (situação de aninhamento), será criado um novo objeto
+de macro, mas não como anteriormente (pois essa macro só existe quando a sua macro-pai é expandida). O objeto conterá somente o nome da 
+macro (renomeado seguindo a PREN) e uma flag dizendo que a macro foi nomeada pelo PM. Assim, ao encontrar essa macro de novo, o PM vai
+ignorar a verificação de nome. O contador de nível de de aninhamento também será incrementado para 2, isso indicará que o PM estará processando
+agora o código de uma macro aninhada nível 2.
+
+Ao processar o código de uma macro aninhada de nível 2, o PM simplesmente irá renomear a macro aninhada seguindo a PREN e irá adicionar todo o seu
+código, junto com as linhas de declaração (MACRODEF) e fechamento (ENDM) no código da macro-pai.
+
+Se existir mais uma macro aninhada dentro dessa macro aninhada, o procedimento é semelhante, porém ainda mais restrito: não é criado um novo
+objeto de macro e agora nem mesmo a PREN é aplicada, simplesmente se incrementa o contador de aninhamento e adiciona-se o código dessa macro
+aninhada nível 3 (ou mais) dentro do código da macro que está sendo processada.
+
+A política de renomeação é aplicada ao nome de macros aninhadas junto com todas as suas chamadas DENTRO DO ESCOPO DA MACRO EXTERNA. Essa
+política renomeia as macros da seguinte forma:
+
+NOME_MACRO_EXTERNA#NOME_MACRO_INTERNA
+
+Dessa forma conseguimos saber quem é a MACRO-Pai das macros aninhadas, para resolver os escopos. Isso também
+permite validar chamadas de macros aninhadas inválidas (sem chamar a pai primeiro).
+
+* OBSERVAÇÃO 1: podemos ter muitas macros aninhadas no mesmo nível dentro de uma macro. Por exemplo:
+
+MYMACRO MACRO
+	ADD AX, 3
+
+	OTHERMACRO MACRO
+		SUB AX, 4
+	ENDM
+
+	ADD AX, 5
+
+	ANOTHERMACRO MACRO
+		AND AX, 1
+	ENDM
+
+	CALLM OTHERMACRO
+	CALLM ANOTERMACRO
+END
+
+Isso é perfeitamente possível, e a forma com que o PM vai lidar com isso é simples: o nome das macros aninhadas
+dentro da MYMACRO vão ser adicionadas a um HashMap de nomes de macros aninhadas, antes de passarem pela política
+de renomeação. Dessa forma, cada chamada de macro dentro de MYMACRO vai verificar se o nome da macro chamada existe
+no hashmap de macros aninhadas. Se existir, ele substitui com o novo nome associado. Se não existir, ele não faz nada.
+
+Como você pode perceber, se o nome da macro chamada existir no hashmap de aninhadas, é essa macro que será chamada. Isso
+implica na consequência descrita na observação 2:
+
+* OBSERVAÇÃO 2: vamos analizar a seguinte situação:
+
+OTHERMACRO MACRO
+	SUB AX, 4
+ENDM
+
+MYMACRO MACRO
+	ADD AX, 3
+
+	OTHERMACRO MACRO
+		AND AX, 1
+	ENDM
+
+	CALLM OTHERMACRO
+END
+
+Veja que existe uma macro externa chamada OTHERMACRO e uma macro aninhada em MYMACRO com o mesmo nome. O que vai acontecer
+é que a chamada de OTHERMACRO vai expandir para a definição aninhada. Isso implica que o namespace aninhado sempre irá
+sobrescrever o namespace externo. Se o usuário quer chamar uma macro externa que tem mesmo nome de uma interna, ele deverá
+renomear uma das duas para não haver esse conflito.
+
+---------> MODO 3:
+
+Para realizar a expansão de uma macro nesse sistema, é necessário vários truques de programação, já que estamos dando um bom
+nível de liberdade para o programador. Mas é claro que algumas regras serão impostas pra isso não virar uma zona:
+
+1 - Como nosso PM é projetado para executar tudo em uma única passada, o programador NÃO PODERÁ fazer uma chamada
+para uma macro que ainda não foi declarada. Isto é, o programador não pode chamar uma macro na linha 10 e fazer sua definição
+na linha 15, por exemplo.
+
+2 - Macros poderão ser redefinidas. A chamada de uma macro usará a definição mais recente que há no HashMap de macros. 
+Por exemplo, considere o seguinte código:
+
+EX1 MACRO
+	SUB AX, 4
+ENDM
+
+CALLM EX1
+
+EX1 MACRO
+	ADD AX, 16
+ENDM
+
+CALLM EX1
+
+Após o PM terminar sua execução, o código acima será expandido para o seguinte código:
+
+SUB AX, 4
+ADD AX, 16
+
+3 - Se uma macro aninhada tiver um argumento com o mesmo nome de um argumento da macro externa, então dentro do escopo da macro 
+aninhada toda referência a esse parâmetro será vinculado com o parâmetro da macro aninhada. Ou seja, o parâmetro da macro aninhada
+sobrescreverá o parâmetro da externa dentro desse escopo. Vejamos num exemplo para ficar claro:
+
+EX1 MACRO X, Y
+	SUB AX, X
+	EX2 MACRO X
+		ADD AX, X
+		SUB AX, Y
+	ENDM
+	CALL EX2 3
+ENDM
+
+CALLM EX1 10, 6
+
+No código acima, temos a macro aninhada EX2 com parâmetro X, de mesmo nome que um parâmetro da macro externa EX1. O PM vai entender
+este segundo X como um X diferente, e portanto não vai usar o X externo dentro da definição de EX2.
+
+O código expandido ficará assim:
+
+SUB AX, 10
+
+ADD AX, 3
+SUB AX, 6
+
+Dito as regras, vamos para o funcionamento do MODO 3:
+
+Quando o PM detecta uma linha com chamada de macro, ele entra no MODO 3 para resolver. Primeiro, essa linha será decomposta.
+Se houver passagem de parâmetros, esses parâmetros serão colocados num ArrayList.
+
+Agora, o PM irá verifica se existe uma macro para o nome desta chamada. Ele checa no HashMap de dados se há implementação para o
+nome de macro chamada. Se houver, ele chama um método da classe Macro que irá realizar a substituição dos parâmetro formais
+pelos parâmetros reais. Com o retorno da função (uma lista de Strings) ele o insere no topo da lista de código para processar e
+volta para o MODO 1.
+
+Se o usuário desejar chamar uma macro que está aninhada, mas no escopo externo da macro-pai, ele deverá usar a seguinte sintaxe:
+
+NOME_MACRO_EXTERNA.NOME_MACRO_INTERNA
+
+Isso foi inspirado no mecanismo de classe interna do Java.
+
+Esse algoritmo permite redefinição de MACROS. Ele sempre manterá a última declaração salva para uma MACRO com o mesmo identificador
+no mesmo escopo. Se forem o mesmo identificador mas em escopos diferentes não ocorrerá erro devido à politica de renomeação para
+macros aninhadas.
+
+Se não for possível expandir porque a macro não existe na tabela e ela não contém "#", então essa Macro não foi declarada.
+Se não for possível expandir porque a macro não existe na tabela e ela contém "#", então alguma macro pai não foi declarada.
+
+
+M1 MACRO P1
+	ADD AX, P1
+	
+	M2 MACRO P2
+		ADD AX, P1
+		SUB AX, P2
+	ENDM
+
+	CALL M2
+ENDM
