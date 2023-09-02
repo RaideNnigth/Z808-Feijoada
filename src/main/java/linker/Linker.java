@@ -6,11 +6,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Linker {
-    private final HashMap<String, DefinitionsTable> definitionsTables;
-
-    public Linker() {
+    private static Linker instance = null;
+    private Linker() {
         definitionsTables = new HashMap<>();
     }
+    public static Linker getInstance() {
+        if (instance == null) {
+            instance = new Linker();
+        }
+        return instance;
+    }
+
+    private final HashMap<String, DefinitionsTable> definitionsTables;
 
     public void addDefinitionsTable(String fileName, DefinitionsTable definitionsTable) {
         definitionsTables.put(fileName, definitionsTable);

@@ -2,6 +2,7 @@ package assembler.linkerdirectives;
 
 import assembler.AssembleOperation;
 import assembler.utils.AssemblerUtils;
+import linker.Linker;
 
 public class Public implements AssembleOperation {
     public static final String MNEMONIC = "PUBLIC";
@@ -10,7 +11,7 @@ public class Public implements AssembleOperation {
         String[] tokens = AssemblerUtils.decomposeInTokens(line);
 
         for (int i = 1; i < tokens.length; i++) {
-            var
+            var definitionsTable = Linker.getInstance().getDefinitionsTable();
         }
     }
 }
