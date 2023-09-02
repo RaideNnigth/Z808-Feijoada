@@ -2,11 +2,15 @@ package assembler;
 
 import assembler.codeprocessors.DirectiveProcessor;
 import assembler.codeprocessors.LabelProcessor;
+import assembler.codeprocessors.LinkerDirectivesProcessor;
 import assembler.codeprocessors.OperationProcessor;
+import assembler.linkerdirectives.Name;
 import assembler.tables.datatable.DataTable;
 import assembler.tables.datatable.UndeclaredDataItem;
 import assembler.tables.symboltable.SymbolTable;
 import assembler.tables.symboltable.UndeclaredSymbol;
+import assembler.utils.AssemblerUtils;
+import linker.tables.exceptions.UndaclaredModuleNameException;
 import logger.*;
 import macroprocessor.MacroProcessor;
 
@@ -20,6 +24,7 @@ public class Assembler {
     private final LabelProcessor labelProcessor = new LabelProcessor();
     private final DirectiveProcessor directiveProcessor = new DirectiveProcessor();
     private final OperationProcessor operationProcessor = new OperationProcessor();
+    private final LinkerDirectivesProcessor linkerDirectivesProcessor = new LinkerDirectivesProcessor();
 
     // Assembled code
     private final LinkedList<Short> assembledCode = new LinkedList<>();
@@ -27,6 +32,7 @@ public class Assembler {
     private final ArrayList<Byte> assembledData = new ArrayList<>();
 
     // Handling files utils
+    private String currentModuleName;
     private String inputFile;
     private String outputFile;
     private String currentLine;
@@ -84,8 +90,12 @@ public class Assembler {
         // Assemble line by line
         try (BufferedReader fileIO = new BufferedReader(fileReader)) {
             this.currentLine = fileIO.readLine();
-            this.lineCounter += 1;
 
+            // Process first line
+            currentLine = currentLine.toUpperCase();
+            assembleFirstLine();
+
+            this.currentLine = fileIO.readLine();
             while (this.currentLine != null) { //&& !Logger.getInstance().isInterrupted()) {
                 // Our assembler IS NOT case-sensitive!!
                 // The input file will be uppercased because of macroprocessor
@@ -205,6 +215,18 @@ public class Assembler {
 
     }
 
+    // First line MUST be the name of the module
+    private void assembleFirstLine() throws UndaclaredModuleNameException {
+        String[] tokens = AssemblerUtils.decomposeInTokens(currentLine);
+
+        if(tokens[0].equals(Name.MNEMONIC)) {
+            linkerDirectivesProcessor.processLinkerDirective(currentLine);
+        }
+        else {
+            throw new UndaclaredModuleNameException();
+        }
+    }
+
     private void calculateHeader() {
         // -------------------------- Calculating segments of header --------------------------
         // Since each short takes 2 bytes, we need to multiply by 2. We need to subtract 1 because the first byte is already counted
@@ -307,5 +329,13 @@ public class Assembler {
 
     public boolean isDataSegmentFound() {
         return dataSegmentSet;
+    }
+
+    public void setModuleName(String moduleName) {
+        this.currentModuleName = moduleName;
+    }
+
+    public String getModuleName() {
+        return this.currentModuleName;
     }
 }
