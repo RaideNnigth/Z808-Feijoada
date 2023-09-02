@@ -1,20 +1,33 @@
 package z808_gui.components;
 
+import logger.Logger;
+import z808_gui.components.panels.AssemblyTextPane;
+
 import javax.swing.*;
 import java.awt.*;
 
 import static z808_gui.utils.UIUtils.startDimension;
 
 public class Tabs extends JTabbedPane {
-    private static Tabs instance = null;
+    AssemblyTextPane assemblyArea;
+    LogTextArea logArea;
 
-    private Tabs() {
-        this.setPreferredSize(new Dimension((int) (startDimension.getWidth() * 2 / 3), Short.MAX_VALUE));
+    public Tabs() {
+        this.setPreferredSize(new Dimension((int) ((startDimension.getWidth() / 3) * 2), Short.MAX_VALUE));
+
+        this.assemblyArea = new AssemblyTextPane();
+        this.logArea = new LogTextArea();
+        Logger.getInstance().subscribe(this.logArea);
+
+        this.addTab("Programa", null, this.assemblyArea, "Escreva seu programa em FeijoadaZ808 Assembly");
+        this.addTab("Log", null, this.logArea, "Logs de montagem");
     }
 
-    public static Tabs getInstance() {
-        if (instance == null)
-            instance = new Tabs();
-        return instance;
+    public AssemblyTextPane getAssemblyArea() {
+        return assemblyArea;
+    }
+
+    public LogTextArea getLogArea() {
+        return logArea;
     }
 }

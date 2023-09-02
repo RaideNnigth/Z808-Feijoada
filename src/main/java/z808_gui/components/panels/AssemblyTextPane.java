@@ -1,4 +1,4 @@
-package z808_gui.components;
+package z808_gui.components.panels;
 
 import z808_gui.utils.TextLineNumber;
 
@@ -11,7 +11,6 @@ import java.util.HashMap;
 
 public class AssemblyTextPane extends JScrollPane {
     private JTextPane assemblyTextEditor;
-    private static AssemblyTextPane instance = null;
     private final HashMap<String, Color> colorMap = new HashMap<>();
     private final HashMap<String, Color> colorGroups = new HashMap<>();
     private final String instructionsRegex = "(\\W)*(mov|add|sub|mult|hlt)";
@@ -132,13 +131,6 @@ public class AssemblyTextPane extends JScrollPane {
             index++;
         }
         return index;
-    }
-
-    public static AssemblyTextPane getInstance() {
-        if (instance == null)
-            instance = new AssemblyTextPane();
-
-        return instance;
     }
 
     public String getText() {

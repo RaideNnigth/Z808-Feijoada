@@ -18,6 +18,7 @@ public class UIUtils {
     public static final String Z808_FEIJOADA_LOGO_IMG_PATH = "src/main/java/z808_gui/imgs/Z808FEIJOADALOGO.png";
     public static final String ASSEM_DEFAULT_IMG_PATH = "src/main/java/z808_gui/imgs/assemFeijao.png";
     public static final String ASSEM_ACTIVE_IMG_PATH = "src/main/java/z808_gui/imgs/assemFeijaoActive.png";
+    public static final String CLEAR_LOGS_IMG_PATH = "src/main/java/z808_gui/imgs/clearLogsImg.jpeg";
 
     // Play and Step icon
     public static final int CONTROLS_BUTTON_SIZE = 60;
@@ -25,6 +26,7 @@ public class UIUtils {
     public static final ImageIcon PLAY_HOVER_IMG = new ImageIcon(UIUtils.resizeImage(PLAY_ACTIVE_IMG_PATH, CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE, Image.SCALE_SMOOTH));
     public static final ImageIcon ASSEM_DEFAULT_IMG = new ImageIcon(UIUtils.resizeImage(ASSEM_DEFAULT_IMG_PATH, CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE, Image.SCALE_SMOOTH));
     public static final ImageIcon ASSEM_ACTIVE_IMG = new ImageIcon(UIUtils.resizeImage(ASSEM_ACTIVE_IMG_PATH, CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE, Image.SCALE_SMOOTH));
+    public static final ImageIcon CLEAR_LOGS_IMG = new ImageIcon(UIUtils.resizeImage(CLEAR_LOGS_IMG_PATH, CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE, Image.SCALE_SMOOTH));
 
     // Logo Z808
     public static final int FEIJOADA_LOGO_SIZE_X = 455;
@@ -41,7 +43,7 @@ public class UIUtils {
 
     // Spacers
     public static final Dimension H_SPACER = new Dimension(10, 0);
-    public static final JSeparator verticalSep = new JSeparator(SwingConstants.VERTICAL);
+    public static final JSeparator VERTICAL_SEPARATOR = new JSeparator(SwingConstants.VERTICAL);
 
 
     public static Image resizeImage(String imgPath, int width, int height, int algorithm) {

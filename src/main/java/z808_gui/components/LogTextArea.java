@@ -17,14 +17,6 @@ public class LogTextArea extends JScrollPane implements Observer {
         setViewportView(logText);
     }
 
-    /*
-    public static LogTextArea getInstance() {
-        if (instance == null)
-            instance = new LogTextArea();
-
-        return instance;
-    }*/
-
     public String getText() {
         return logText.getText();
     }

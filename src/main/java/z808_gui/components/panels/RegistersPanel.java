@@ -1,4 +1,4 @@
-package z808_gui.components;
+package z808_gui.components.panels;
 
 import virtual_machine.observerpattern.RegObsListener;
 import virtual_machine.registers.Registers;

@@ -1,4 +1,4 @@
-package z808_gui.components;
+package z808_gui.components.buttons;
 
 import virtual_machine.VirtualMachine;
 import z808_gui.observerpattern.ProgramPathListener;
@@ -8,6 +8,7 @@ import z808_gui.utils.ActionsListeners;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -20,14 +21,16 @@ public class AssembleButton extends JLabel implements ProgramPathListener {
         setEnabled(false);
 
         ProgramPathEventManager.getInstance().subscribe(this);
+    }
 
-        addMouseListener(new MouseAdapter() {
+    public void setActionListener(ActionListener al) {
+        this.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 mouseExited(e);
 
                 if (isEnabled()) {
-                    ActionsListeners.getInstance(vm).getMontarAL().actionPerformed(null);
+                    al.actionPerformed(null);
                 }
             }
 
