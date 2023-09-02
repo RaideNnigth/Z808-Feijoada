@@ -4,6 +4,7 @@ import linker.tables.DefinitionsTable;
 import linker.tables.GlobalSymbolTable;
 import linker.tables.UsageTable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Linker {
@@ -27,6 +28,22 @@ public class Linker {
         }
         return instance;
     }
+
+
+    public String link(ArrayList<String> pathsToBins) {
+
+        /*
+        try {
+            this.globalSymbolTable.replaceAllOcorrencesOfDeclaredSymbols();
+        } catch (UndeclaredSymbol undeclaredSymbol) {
+            undeclaredSymbol.printStackTrace();
+        }
+        */
+
+        return "";
+    }
+
+
 
     public void addDefinitionsTable(String fileName, DefinitionsTable definitionsTable) {
         definitionsTables.put(fileName, definitionsTable);
