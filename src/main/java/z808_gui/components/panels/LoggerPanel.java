@@ -6,17 +6,22 @@ import utils.Observer;
 import javax.swing.*;
 import java.awt.*;
 
-public class LogTextArea extends JScrollPane implements Observer {
-    private JTextArea logText;
-    //private static LogTextArea instance = null;
+import static z808_gui.utils.UIUtils.startDimension;
 
-    public LogTextArea() {
+public class LoggerPanel extends JScrollPane implements Observer {
+    private JTextArea logText;
+
+    public LoggerPanel() {
         Logger.getInstance().subscribe(this);
+
         logText = new JTextArea();
         logText.setFont(new Font("Consolas", Font.PLAIN, 22));
         logText.setLineWrap(true);
         logText.setEditable(false);
-        setViewportView(logText);
+
+        this.setPreferredSize(new Dimension(Short.MAX_VALUE, (int) (startDimension.getHeight() / 4)));
+        this.setViewportView(logText);
+        this.setVisible(false);
     }
 
     public String getText() {

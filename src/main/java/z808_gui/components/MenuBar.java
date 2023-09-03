@@ -1,19 +1,12 @@
 package z808_gui.components;
 
-import z808_gui.components.panels.AssemblyTextPane;
 import z808_gui.observerpattern.MessageType;
 import z808_gui.observerpattern.ProgramPathEventManager;
 import z808_gui.utils.ActionsListeners;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import static z808_gui.utils.UIUtils.*;
 
 public class MenuBar extends JMenuBar {
     // Control key mask
@@ -25,12 +18,10 @@ public class MenuBar extends JMenuBar {
     JMenu ajudaMenu;
 
     ActionsListeners actionsListeners;
-    AssemblyTextPane assemblyTextPane;
     final ProgramPathEventManager ppm = ProgramPathEventManager.getInstance();
 
-    public MenuBar(ActionsListeners al, AssemblyTextPane assemblyTextPane) {
+    public MenuBar(ActionsListeners al) {
         this.actionsListeners = al;
-        this.assemblyTextPane = assemblyTextPane;
 
         // Itens da barra de menus
         this.arquivoMenu = new JMenu("Arquivo");
@@ -59,9 +50,6 @@ public class MenuBar extends JMenuBar {
         novoMenItem.setAccelerator(KeyStroke.getKeyStroke('N', this.CTRL_MASK));
 
         novoMenItem.addActionListener(e -> {
-            PROGRAM_PATH = "";
-            CURRENT_DIRECTORY = "";
-            this.assemblyTextPane.setText("");
             ppm.notifySubscribers(MessageType.PATH_NOT_SET);
         });
 
@@ -77,6 +65,10 @@ public class MenuBar extends JMenuBar {
 
         salvarMenItem.addActionListener(this.actionsListeners.getSaveAL());
 
+        JMenuItem exportarMemMenuItem = new JMenuItem("Exportar memória");
+        exportarMemMenuItem.addActionListener(this.actionsListeners.getExportMemAL());
+
+
         // Sair
         JMenuItem sairMenItem = new JMenuItem("Sair");
         sairMenItem.setAccelerator(KeyStroke.getKeyStroke('Q', this.CTRL_MASK));
@@ -87,6 +79,7 @@ public class MenuBar extends JMenuBar {
         this.arquivoMenu.add(novoMenItem);
         this.arquivoMenu.add(abrirMenItem);
         this.arquivoMenu.add(salvarMenItem);
+        this.arquivoMenu.add(exportarMemMenuItem);
         this.arquivoMenu.add(sairMenItem);
     }
 
@@ -106,7 +99,7 @@ public class MenuBar extends JMenuBar {
 
     private void populateLoggerMenu() {
         JMenuItem clearLoggerTextMenuItem = new JMenuItem("Limpar saída do logger");
-        clearLoggerTextMenuItem.addActionListener(this.actionsListeners.getClearLogTextAL());
+        clearLoggerTextMenuItem.addActionListener(this.actionsListeners.getOpenLoggerAL());
         this.loggerMenu.add(clearLoggerTextMenuItem);
     }
 

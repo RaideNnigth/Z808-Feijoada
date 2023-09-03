@@ -6,16 +6,15 @@ import logger.LogType;
 import logger.Logger;
 import macroprocessor.MacroProcessor;
 import virtual_machine.VirtualMachine;
-import z808_gui.MainWindow;
 import z808_gui.components.panels.AssemblyTextPane;
-import z808_gui.components.panels.LogTextArea;
-import z808_gui.components.Tabs;
+import z808_gui.components.panels.LoggerPanel;
+import z808_gui.components.panels.Tabs;
 import z808_gui.observerpattern.MessageType;
 import z808_gui.observerpattern.ProgramPathEventManager;
-import static z808_gui.utils.UIUtils.PROGRAM_PATH;
-import static z808_gui.utils.UIUtils.CURRENT_DIRECTORY;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
@@ -23,45 +22,34 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import static z808_gui.utils.UIUtils.startDimension;
+
 public class ActionsListeners {
     private ActionListener openAL;
     private ActionListener saveAL;
+    private ActionListener exportMemAL;
     private ActionListener montarAL;
     private ActionListener runAL;
-    private ActionListener clearLogTextAL;
+    private ActionListener openLoggerAL;
 
     private VirtualMachine vm;
 
     private Tabs tabs;
-    private AssemblyTextPane assemblyTextPane;
-    private LogTextArea logTextArea;
+    private LoggerPanel loggerPanel;
 
 
-    public ActionsListeners(VirtualMachine vm, Tabs tabs, AssemblyTextPane assemblyTextPane, LogTextArea logTextArea) {
+    public ActionsListeners(VirtualMachine vm, Tabs tabs, LoggerPanel loggerPanel) {
         this.vm = vm;
 
         this.tabs = tabs;
-        this.assemblyTextPane = assemblyTextPane;
-        this.logTextArea = logTextArea;
+        this.loggerPanel = loggerPanel;
 
         this.setOpenAL();
         this.setSaveAL();
+        this.setExportMemAL();
         this.setMontalAL();
         this.setRunAL();
-        this.initClearLogTextAL();
-    }
-
-    private void processDirectory(File directory) throws Exception {
-        for (final File fileEntry : directory.listFiles()) {
-            if (fileEntry.isDirectory()) {
-                processDirectory(fileEntry);
-            } else {
-                if (fileEntry.getName().endsWith(".asm")) {
-                    String processedCodePath = MacroProcessor.getInstance().parseMacros(fileEntry.getAbsolutePath());
-                    Assembler.getInstance().assembleFile(processedCodePath);
-                }
-            }
-        }
+        this.setOpenLoggerAL();
     }
 
     private void setOpenAL() {
@@ -100,14 +88,12 @@ public class ActionsListeners {
                 if (selectedFile.getName().endsWith(".asm")) {
                     // Seta PROGRAM_PATH com o endereço do arquivo selecionado
                     assemblyEditor.setFilepath(selectedFile.getAbsolutePath());
-                    //System.out.println("Selected file: " + PROGRAM_PATH);
-                    //System.out.println("Dir path to selected file: " + CURRENT_DIRECTORY);
 
                     // Carrega texto no textarea
                     try {
                         assemblyEditor.setText(Files.readString(Paths.get(assemblyEditor.getFilepath())));
                     } catch (IOException ex) {
-                        System.out.println(ex);
+                        Logger.getInstance().error(ex.getMessage());
                         System.exit(0);
                     }
 
@@ -227,9 +213,20 @@ public class ActionsListeners {
         };
     }
 
-    private void initClearLogTextAL() {
-        this.clearLogTextAL = e -> {
-            this.logTextArea.clearText();
+    private void setExportMemAL() {
+        this.exportMemAL = e -> {
+            AssemblyTextPane assemblyEditor = (AssemblyTextPane) this.tabs.getSelectedComponent();
+            this.vm.exportMemoryData(assemblyEditor.getFilepath());
+        };
+    }
+
+    private void setOpenLoggerAL() {
+        this.openLoggerAL = e -> {
+            if (this.loggerPanel.isVisible()) {
+                this.loggerPanel.setVisible(false);
+            } else {
+                this.loggerPanel.setVisible(true);
+            }
         };
     }
 
@@ -237,6 +234,10 @@ public class ActionsListeners {
 
     public ActionListener getSaveAL() {
         return saveAL;
+    }
+
+    public ActionListener getExportMemAL() {
+        return exportMemAL;
     }
 
     public ActionListener getMontarAL() {
@@ -247,7 +248,7 @@ public class ActionsListeners {
         return runAL;
     }
 
-    public ActionListener getClearLogTextAL() {
-        return clearLogTextAL;
+    public ActionListener getOpenLoggerAL() {
+        return openLoggerAL;
     }
 }

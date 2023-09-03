@@ -4,6 +4,7 @@ import virtual_machine.observerpattern.RegObsListener;
 import virtual_machine.registers.Registers;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
@@ -18,10 +19,11 @@ public class RegistersPanel extends JPanel implements RegObsListener {
         GroupLayout rightPanelLayout = new GroupLayout(this);
         rightPanelLayout.setAutoCreateGaps(true);
 
-        setLayout(rightPanelLayout);
+        this.setLayout(rightPanelLayout);
+        this.setBorder(new EmptyBorder(10,10,10,10));
 
         // Its size will be fixed 1/3 of the start dimension
-        setPreferredSize(new Dimension((int) (startDimension.getWidth() / 3), Short.MAX_VALUE));
+        setPreferredSize(new Dimension(200, Short.MAX_VALUE));
         setBackground(Color.white);
 
         // Inicializando labels
@@ -115,7 +117,7 @@ public class RegistersPanel extends JPanel implements RegObsListener {
         } else {
             for (Registers r : Registers.values()) {
                 if (r != Registers.SR) {
-                    registersJLabelsMap.get(r).setText(r.getLabel() + " " + Integer.toHexString(currentWorkRegs.get(r)));
+                    registersJLabelsMap.get(r).setText(r.getLabel() + " " + Integer.toHexString(currentWorkRegs.get(r)).toUpperCase());
                 }
             }
         }

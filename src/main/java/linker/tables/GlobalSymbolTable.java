@@ -3,8 +3,6 @@ package linker.tables;
 import linker.entities.LinkerSymbol;
 import java.util.HashMap;
 
-import linker.entities.Symbol;
-
 public class GlobalSymbolTable {
     // Map symbol name to symbol definition
     private final HashMap<String, LinkerSymbol> globalSymbolTable = new HashMap<>();

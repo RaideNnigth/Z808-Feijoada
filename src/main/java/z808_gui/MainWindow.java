@@ -1,14 +1,12 @@
 package z808_gui;
 
 import virtual_machine.VirtualMachine;
-import z808_gui.components.panels.CentralPanel;
-import z808_gui.components.panels.LowerCommandsPanel;
+import z808_gui.components.panels.*;
 import z808_gui.components.MenuBar;
 
 import javax.swing.*;
 import java.awt.*;
 
-import z808_gui.components.panels.UpperTitlePanel;
 import z808_gui.observerpattern.ProgramPathListener;
 import z808_gui.observerpattern.MessageType;
 import z808_gui.observerpattern.ProgramPathEventManager;
@@ -21,14 +19,14 @@ public class MainWindow extends JFrame implements ProgramPathListener {
     private final VirtualMachine vm;
     private static final String TITLE = "Z808 - Feijoada Edition";
 
-    public static String activeFilepath = "";
-
     JMenuBar menuBar;
 
     // Paineis
     UpperTitlePanel upperTitlePanel;
     CentralPanel centralPanel;
-    LowerCommandsPanel lowerCommandsPanel;
+    SideBar sideBar;
+
+    RegistersPanel registersPanel;
 
     ActionsListeners actionsListeners;
 
@@ -51,24 +49,30 @@ public class MainWindow extends JFrame implements ProgramPathListener {
         this.upperTitlePanel = new UpperTitlePanel();
 
         // Painel inferior com os botões
-        this.lowerCommandsPanel = new LowerCommandsPanel(vm);
+        this.sideBar = new SideBar(vm);
+
+        this.registersPanel = new RegistersPanel();
+        vm.subscribe(this.registersPanel);
+        vm.notifySubscribers();
+
 
         // ------------------------------ Criando painel central ------------------------------
-        this.centralPanel = new CentralPanel(vm);
+        this.centralPanel = new CentralPanel();
 
         // Adicionando os painéis
         this.add(this.upperTitlePanel, BorderLayout.NORTH);
-        this.add(this.lowerCommandsPanel, BorderLayout.SOUTH);
+        this.add(this.sideBar, BorderLayout.WEST);
+        this.add(this.registersPanel, BorderLayout.EAST);
         this.add(this.centralPanel, BorderLayout.CENTER);
 
-        this.actionsListeners = new ActionsListeners(vm, this.centralPanel.getTabs(), this.centralPanel.getTabs().getAssemblyArea(), this.centralPanel.getTabs().getLogArea());
+        this.actionsListeners = new ActionsListeners(vm, this.centralPanel.getTabs(), this.centralPanel.getLoggerPanel());
 
         // Precisa ser iniciado depois dos actionListeners
         this.createMenuBar();
 
-        this.lowerCommandsPanel.getAssembleButton().setActionListener(this.actionsListeners.getMontarAL());
-        this.lowerCommandsPanel.getPlayButton().setActionListener(this.actionsListeners.getRunAL());
-        this.lowerCommandsPanel.getClearLogsButton().setActionListener(this.actionsListeners.getClearLogTextAL());
+        this.sideBar.getAssembleButton().setActionListener(this.actionsListeners.getMontarAL());
+        this.sideBar.getPlayButton().setActionListener(this.actionsListeners.getRunAL());
+        this.sideBar.getClearLogsButton().setActionListener(this.actionsListeners.getOpenLoggerAL());
 
         // Packing UI
         this.pack();
@@ -82,19 +86,15 @@ public class MainWindow extends JFrame implements ProgramPathListener {
     }
 
     private void createMenuBar() {
-        this.menuBar = new MenuBar(this.actionsListeners, this.centralPanel.getTabs().getAssemblyArea());
+        this.menuBar = new MenuBar(this.actionsListeners);
         this.setJMenuBar(this.menuBar);
-    }
-
-    public String getActiveFilepath() {
-        return activeFilepath;
     }
 
     @Override
     public void update(MessageType type) {
         switch (type) {
             case PATH_IS_SET -> {
-                setTitle(TITLE + " - " + UIUtils.getFileNameNoExtension(PROGRAM_PATH));
+                //setTitle(TITLE + " - " + UIUtils.getFileNameNoExtension(((AssemblyTextPane) this.centralPanel.getTabs().getSelectedComponent()).getFilepath()));
             }
             case PATH_NOT_SET -> {
                 setTitle(TITLE);

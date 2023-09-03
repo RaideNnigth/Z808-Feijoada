@@ -21,7 +21,7 @@ public class UIUtils {
     public static final String CLEAR_LOGS_IMG_PATH = "src/main/java/z808_gui/imgs/clearLogsImg.png";
 
     // Play and Step icon
-    public static final int CONTROLS_BUTTON_SIZE = 60;
+    public static final int CONTROLS_BUTTON_SIZE = 45;
     public static final ImageIcon PLAY_DEFAULT_IMG = new ImageIcon(UIUtils.resizeImage(PLAY_DEFAULT_IMG_PATH, CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE, Image.SCALE_SMOOTH));
     public static final ImageIcon PLAY_HOVER_IMG = new ImageIcon(UIUtils.resizeImage(PLAY_ACTIVE_IMG_PATH, CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE, Image.SCALE_SMOOTH));
     public static final ImageIcon ASSEM_DEFAULT_IMG = new ImageIcon(UIUtils.resizeImage(ASSEM_DEFAULT_IMG_PATH, CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE, Image.SCALE_SMOOTH));
@@ -33,16 +33,13 @@ public class UIUtils {
     public static final int FEIJOADA_LOGO_SIZE_Y = 75;
     public static final Color BROWN_COLOR = new Color(0x5a473d);
 
-    // Path to active program
-    public static String PROGRAM_PATH = "";
-    public static String CURRENT_DIRECTORY = "";
-
     // Registers labels and stuff
     public static final HashMap<Registers, JLabel> registersJLabelsMap = new HashMap<>();
     //public static final RegFlags flagRegister = VirtualMachine.getFlagsRegister();
 
     // Spacers
     public static final Dimension H_SPACER = new Dimension(10, 0);
+    public static final Dimension V_SPACER = new Dimension(0, 10);
     public static final JSeparator VERTICAL_SEPARATOR = new JSeparator(SwingConstants.VERTICAL);
 
 

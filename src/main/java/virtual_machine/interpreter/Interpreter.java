@@ -34,7 +34,7 @@ public class Interpreter {
             executeNextInstruction();
         }
 
-        memoryController.exportDataMem();
+        //memoryController.exportDataMem();
         memoryController.resetMemory();
     }
 
