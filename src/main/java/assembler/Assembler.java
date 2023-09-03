@@ -216,7 +216,7 @@ public class Assembler {
     }
 
     // First line MUST be the name of the module
-    private void assembleFirstLine() throws UndaclaredModuleNameException {
+    private void assembleFirstLine() throws Exception {
         String[] tokens = AssemblerUtils.decomposeInTokens(currentLine);
 
         if(tokens[0].equals(Name.MNEMONIC)) {
