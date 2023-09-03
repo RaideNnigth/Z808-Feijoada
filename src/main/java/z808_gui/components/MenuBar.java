@@ -49,9 +49,7 @@ public class MenuBar extends JMenuBar {
         JMenuItem novoMenItem = new JMenuItem("Novo");
         novoMenItem.setAccelerator(KeyStroke.getKeyStroke('N', this.CTRL_MASK));
 
-        novoMenItem.addActionListener(e -> {
-            ppm.notifySubscribers(MessageType.PATH_NOT_SET);
-        });
+        novoMenItem.addActionListener(this.actionsListeners.getNewAL());
 
         // Abrir
         JMenuItem abrirMenItem = new JMenuItem("Abrir");
@@ -99,7 +97,7 @@ public class MenuBar extends JMenuBar {
 
     private void populateLoggerMenu() {
         JMenuItem clearLoggerTextMenuItem = new JMenuItem("Limpar saída do logger");
-        clearLoggerTextMenuItem.addActionListener(this.actionsListeners.getOpenLoggerAL());
+        clearLoggerTextMenuItem.addActionListener(this.actionsListeners.getClearLoggerTextAL());
         this.loggerMenu.add(clearLoggerTextMenuItem);
     }
 

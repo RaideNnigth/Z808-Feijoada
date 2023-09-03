@@ -21,7 +21,7 @@ public class LoggerPanel extends JScrollPane implements Observer {
 
         this.setPreferredSize(new Dimension(Short.MAX_VALUE, (int) (startDimension.getHeight() / 4)));
         this.setViewportView(logText);
-        this.setVisible(false);
+        this.setVisible(true);
     }
 
     public String getText() {

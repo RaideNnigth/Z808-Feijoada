@@ -10,6 +10,9 @@ public class Extrn implements AssembleOperation {
 
     @Override
     public void assemble(String line) throws Exception {
+        if (Assembler.getInstance().isCodeSegmentFound() || Assembler.getInstance().isDataSegmentFound())
+            throw new Exception("EXTRN labels have to be declared before segments");
+
         var tokens = AssemblerUtils.decomposeInTokens(line);
 
         var usageTable = Linker.getInstance().getUsageTable(Assembler.getInstance().getModuleName());

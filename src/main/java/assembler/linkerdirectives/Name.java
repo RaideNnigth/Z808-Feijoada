@@ -1,6 +1,7 @@
 package assembler.linkerdirectives;
 
 import assembler.AssembleOperation;
+import assembler.Assembler;
 import assembler.utils.AssemblerUtils;
 import linker.Linker;
 import linker.tables.DefinitionsTable;
@@ -18,5 +19,6 @@ public class Name implements AssembleOperation {
         // Create tables in Linker for this module
         Linker.getInstance().addDefinitionsTable(tokens[1], new DefinitionsTable());
         Linker.getInstance().addUsageTable(tokens[1], new UsageTable());
+        Assembler.getInstance().setModuleName(tokens[1]);
     }
 }

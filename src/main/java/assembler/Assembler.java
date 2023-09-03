@@ -74,6 +74,14 @@ public class Assembler {
     public void assembleFile(String inputFile) {
         this.inputFile = inputFile;
         this.outputFile = String.valueOf(inputFile).replace(".pre", ".bin").replace(".asm", ".bin");
+
+        try {
+            File f = new File(outputFile);
+            f.delete();
+        } catch (Exception ex) {
+            Logger.getInstance().error(ex.getMessage());
+        }
+
         this.startAssembleFile();
         this.resetAssembler();
     }

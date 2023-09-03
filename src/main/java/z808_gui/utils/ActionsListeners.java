@@ -25,12 +25,14 @@ import java.nio.file.Paths;
 import static z808_gui.utils.UIUtils.startDimension;
 
 public class ActionsListeners {
+    private ActionListener newAL;
     private ActionListener openAL;
     private ActionListener saveAL;
     private ActionListener exportMemAL;
     private ActionListener montarAL;
     private ActionListener runAL;
     private ActionListener openLoggerAL;
+    private ActionListener clearLoggerTextAL;
 
     private VirtualMachine vm;
 
@@ -44,12 +46,22 @@ public class ActionsListeners {
         this.tabs = tabs;
         this.loggerPanel = loggerPanel;
 
+        this.setNewAL();
         this.setOpenAL();
         this.setSaveAL();
         this.setExportMemAL();
         this.setMontalAL();
         this.setRunAL();
         this.setOpenLoggerAL();
+        this.setClearLoggerTextAL();
+    }
+
+    private void setNewAL() {
+        this.newAL = e -> {
+            AssemblyTextPane assemblyEditor = new AssemblyTextPane();
+            this.tabs.add("*new file", assemblyEditor);
+            this.tabs.setSelectedIndex(this.tabs.getTabCount() - 1);
+        };
     }
 
     private void setOpenAL() {
@@ -106,7 +118,8 @@ public class ActionsListeners {
             }
 
             String[] filepathTokens = assemblyEditor.getFilepath().split("/");
-            this.tabs.add(filepathTokens[filepathTokens.length-1], assemblyEditor);
+            this.tabs.add(filepathTokens[filepathTokens.length - 1], assemblyEditor);
+            this.tabs.setSelectedIndex(this.tabs.getTabCount() - 1);
         };
     }
 
@@ -197,6 +210,9 @@ public class ActionsListeners {
                         System.err.println(ex);
                         System.exit(0);
                     }
+
+                    String[] filepathTokens = assemblyEditor.getFilepath().split("/");
+                    this.tabs.add(filepathTokens[filepathTokens.length-1], assemblyEditor);
                 }
             }
             // Caso contrário, o arquivo existe e será atualizado com o código novo
@@ -230,6 +246,16 @@ public class ActionsListeners {
         };
     }
 
+    private void setClearLoggerTextAL() {
+        this.clearLoggerTextAL = e -> {
+            this.loggerPanel.clearText();
+        };
+    }
+
+    public ActionListener getNewAL() {
+        return newAL;
+    }
+
     public ActionListener getOpenAL() { return openAL; }
 
     public ActionListener getSaveAL() {
@@ -250,5 +276,9 @@ public class ActionsListeners {
 
     public ActionListener getOpenLoggerAL() {
         return openLoggerAL;
+    }
+
+    public ActionListener getClearLoggerTextAL() {
+        return clearLoggerTextAL;
     }
 }

@@ -12,7 +12,7 @@ public class Linker {
     private static Linker instance = null;
 
     // Tables from files (modules)
-    private final HashMap<String, DefinitionsTable> definitionsTables;
+    private final HashMap<String, DefinitionsTable> definitionsTables = new HashMap<>();
     private final HashMap<String, UsageTable> usageTables;
 
     // Global symbol table
@@ -23,7 +23,6 @@ public class Linker {
 
     // Singleton pattern
     private Linker() {
-        definitionsTables = new HashMap<>();
         usageTables = new HashMap<>();
         globalSymbolTable = GlobalSymbolTable.getInstance();
         binFilesPaths = new HashMap<>();
