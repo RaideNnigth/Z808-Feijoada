@@ -21,6 +21,8 @@ public class MainWindow extends JFrame implements ProgramPathListener {
     private final VirtualMachine vm;
     private static final String TITLE = "Z808 - Feijoada Edition";
 
+    public static String activeFilepath = "";
+
     JMenuBar menuBar;
 
     // Paineis
@@ -60,7 +62,10 @@ public class MainWindow extends JFrame implements ProgramPathListener {
         this.add(this.centralPanel, BorderLayout.CENTER);
 
         this.actionsListeners = new ActionsListeners(vm, this.centralPanel.getTabs(), this.centralPanel.getTabs().getAssemblyArea(), this.centralPanel.getTabs().getLogArea());
+
+        // Precisa ser iniciado depois dos actionListeners
         this.createMenuBar();
+
         this.lowerCommandsPanel.getAssembleButton().setActionListener(this.actionsListeners.getMontarAL());
         this.lowerCommandsPanel.getPlayButton().setActionListener(this.actionsListeners.getRunAL());
         this.lowerCommandsPanel.getClearLogsButton().setActionListener(this.actionsListeners.getClearLogTextAL());
@@ -79,6 +84,10 @@ public class MainWindow extends JFrame implements ProgramPathListener {
     private void createMenuBar() {
         this.menuBar = new MenuBar(this.actionsListeners, this.centralPanel.getTabs().getAssemblyArea());
         this.setJMenuBar(this.menuBar);
+    }
+
+    public String getActiveFilepath() {
+        return activeFilepath;
     }
 
     @Override

@@ -2,6 +2,8 @@ package linker.tables;
 
 import java.util.HashMap;
 
+import linker.entities.Symbol;
+
 public class GlobalSymbolTable {
     private final HashMap<String, Symbol> symbolTable = new HashMap<>();
 

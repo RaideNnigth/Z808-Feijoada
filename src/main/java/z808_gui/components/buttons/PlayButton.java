@@ -17,6 +17,7 @@ import static z808_gui.utils.UIUtils.*;
 public class PlayButton extends JLabel implements ProgramPathListener {
     public PlayButton(ImageIcon IMG, VirtualMachine vm) {
         super(IMG);
+        setToolTipText("Run");
         setPreferredSize(new Dimension(CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE));
         setEnabled(false);
 

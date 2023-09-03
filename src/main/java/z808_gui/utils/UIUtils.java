@@ -18,7 +18,7 @@ public class UIUtils {
     public static final String Z808_FEIJOADA_LOGO_IMG_PATH = "src/main/java/z808_gui/imgs/Z808FEIJOADALOGO.png";
     public static final String ASSEM_DEFAULT_IMG_PATH = "src/main/java/z808_gui/imgs/assemFeijao.png";
     public static final String ASSEM_ACTIVE_IMG_PATH = "src/main/java/z808_gui/imgs/assemFeijaoActive.png";
-    public static final String CLEAR_LOGS_IMG_PATH = "src/main/java/z808_gui/imgs/clearLogsImg.jpeg";
+    public static final String CLEAR_LOGS_IMG_PATH = "src/main/java/z808_gui/imgs/clearLogsImg.png";
 
     // Play and Step icon
     public static final int CONTROLS_BUTTON_SIZE = 60;

@@ -1,5 +1,6 @@
-package z808_gui.components;
+package z808_gui.components.panels;
 
+import logger.Logger;
 import utils.Observer;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ public class LogTextArea extends JScrollPane implements Observer {
     //private static LogTextArea instance = null;
 
     public LogTextArea() {
+        Logger.getInstance().subscribe(this);
         logText = new JTextArea();
         logText.setFont(new Font("Consolas", Font.PLAIN, 22));
         logText.setLineWrap(true);

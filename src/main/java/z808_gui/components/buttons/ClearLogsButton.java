@@ -17,6 +17,7 @@ import static z808_gui.utils.UIUtils.ASSEM_DEFAULT_IMG;
 public class ClearLogsButton extends JLabel implements ProgramPathListener {
     public ClearLogsButton() {
         super(CLEAR_LOGS_IMG);
+        this.setToolTipText("Clear logs");
         this.setPreferredSize(new Dimension(CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE));
         setEnabled(false);
 
