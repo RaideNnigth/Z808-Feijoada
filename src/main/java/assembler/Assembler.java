@@ -87,7 +87,7 @@ public class Assembler {
             return;
         }
 
-        // Assemble line by line
+        // ------------------------------------------ Assemble line by line ------------------------------------------
         try (BufferedReader fileIO = new BufferedReader(fileReader)) {
             this.currentLine = fileIO.readLine();
 
@@ -96,7 +96,7 @@ public class Assembler {
             assembleFirstLine();
 
             this.currentLine = fileIO.readLine();
-            while (this.currentLine != null) { //&& !Logger.getInstance().isInterrupted()) {
+            while (this.currentLine != null) {
                 // Our assembler IS NOT case-sensitive!!
                 // The input file will be uppercased because of macroprocessor
                 currentLine = currentLine.toUpperCase();
@@ -107,24 +107,19 @@ public class Assembler {
             }
         } catch (IOException e) {
             logger.error(lineCounter, String.format("IO Error: Error while reading %s (%s)", this.inputFile, e.getMessage()));
-            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("IO Error: Error while reading %s (%s)", this.inputFile, e.getMessage())));
             return;
         } catch (AssemblerError e) {
             logger.error(lineCounter, String.format("Assembly error: %s", e.getMessage()));
-            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Assembly error: %s", e.getMessage())));
             return;
         } catch (Exception e) {
             logger.error(lineCounter, String.format("Unknown error: %s", e.getMessage()));
-            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Unknown error: %s", e.getMessage())));
             return;
         } finally {
             try {
                 fileReader.close();
             } catch (IOException e) {
                 logger.error(lineCounter, String.format("Fatal error: couldn't close input file! (%s)", e.getMessage()));
-                //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Fatal error: couldn't close input file! (%s)", e.getMessage())));
             }
-            //return;
         }
 
         // Resolve symbols in symboltable
@@ -132,9 +127,6 @@ public class Assembler {
             SymbolTable.getInstance().replaceAllOcorrencesOfDeclaredSymbols();
         } catch (UndeclaredSymbol e) {
             logger.error(lineCounter, String.format("Symbol table error: %s", e.getMessage()));
-            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Symbol table error: %s", e.getMessage())));
-            //Logger.getInstance().printLogs();
-            //resetAssembler();
             return;
         }
 
@@ -192,16 +184,13 @@ public class Assembler {
         if (labelProcessor.assembleLabel(currentLine))
             return;
 
-        // Handling directives
-        //try {
+        // Handling assembler directives
         if (directiveProcessor.assembleDirective(currentLine))
             return;
-        //} catch (Exception e) {
-            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, "ERROR ON DIRECTIVE PROCESSOR\n " + e.getMessage()));
-            //return;
-        //}
 
-
+        // Handling linker directives
+        if (linkerDirectivesProcessor.processLinkerDirective(currentLine))
+            return;
 
         // Handling operations and data declarations
         if (isCodeSegment) {

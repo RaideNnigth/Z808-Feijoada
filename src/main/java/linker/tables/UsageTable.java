@@ -12,28 +12,32 @@ package linker.tables;
     * Ocorrence is the address of the symbol in bin file
  */
 
-import linker.entities.Symbol;
-
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class UsageTable {
+    public static class SymbolOcurrence {
+        String moduleName;
+        short address;
 
-    private final HashMap<String, ArrayList<Symbol>> usageTable = new HashMap<>();
-
-    public void addSymbol(String symbolName, Symbol s) {
-        // compute if present just add one more symbol to Arraylist in hashmap for symbolName
-        // if not present create new Arraylist and add symbol to it
-        if (usageTable.containsKey(symbolName)) {
-            usageTable.get(symbolName).add(s);
-        } else {
-            ArrayList<Symbol> symbolList = new ArrayList<>();
-            symbolList.add(s);
-            usageTable.put(symbolName, symbolList);
+        public SymbolOcurrence(String moduleName, short address) {
+            this.moduleName = moduleName;
+            this.address = address;
         }
     }
 
-    public HashMap<String, ArrayList<Symbol>> getUsageTable() {
+    private final HashMap<String, LinkedList<SymbolOcurrence>> usageTable = new HashMap<>();
+
+    public void addSymbol(String symbolName, String moduleName, short address) {
+        if(!usageTable.containsKey(symbolName)) {
+            usageTable.put(symbolName, new LinkedList<>());
+        }
+
+        var list = usageTable.get(symbolName);
+        list.add(new SymbolOcurrence(moduleName, address));
+    }
+
+    public HashMap<String, LinkedList<SymbolOcurrence>> getUsageTable() {
         return usageTable;
     }
 
@@ -41,7 +45,7 @@ public class UsageTable {
         return usageTable.containsKey(symbolName);
     }
 
-    public ArrayList<Symbol> getSymbolOccurrence(String symbolName) {
+    public LinkedList<SymbolOcurrence> getSymbolOccurrence(String symbolName) {
         return usageTable.get(symbolName);
     }
 }

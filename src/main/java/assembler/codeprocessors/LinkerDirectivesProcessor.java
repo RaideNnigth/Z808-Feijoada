@@ -9,7 +9,7 @@ import assembler.utils.AssemblerUtils;
 import java.util.HashMap;
 
 public class LinkerDirectivesProcessor {
-    private static HashMap<String, AssembleOperation> linkerDirectives = new HashMap<>();
+    private final HashMap<String, AssembleOperation> linkerDirectives = new HashMap<>();
 
     public LinkerDirectivesProcessor() {
         linkerDirectives.put(Public.MNEMONIC, new Public());

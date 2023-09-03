@@ -15,8 +15,9 @@ public class Public implements AssembleOperation {
         // Get definitions table from linker
         var definitionsTable = Linker.getInstance().getDefinitionsTable(Assembler.getInstance().getModuleName());
 
+        // Adding all public symbos to definitions table
         for (int i = 1; i < tokens.length; i++) {
-            definitionsTable.addDefinition(tokens[i], new Symbol(tokens[i], (short)0));
+            definitionsTable.addDefinition(tokens[i], new Symbol());
 
             // We need to add the correct value later!!!
             // 0 is just a placeholder
