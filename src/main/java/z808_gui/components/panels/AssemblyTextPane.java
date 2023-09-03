@@ -11,6 +11,8 @@ import java.util.HashMap;
 
 public class AssemblyTextPane extends JScrollPane {
     private JTextPane assemblyTextEditor;
+    private String filepath = "";
+
     private final HashMap<String, Color> colorMap = new HashMap<>();
     private final HashMap<String, Color> colorGroups = new HashMap<>();
     private final String instructionsRegex = "(\\W)*(mov|add|sub|mult|hlt)";
@@ -139,5 +141,13 @@ public class AssemblyTextPane extends JScrollPane {
 
     public void setText(String s) {
         assemblyTextEditor.setText(s);
+    }
+
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
     }
 }

@@ -21,6 +21,7 @@ public class MenuBar extends JMenuBar {
     JMenu arquivoMenu;
     JMenu executarMenu;
     JMenu loggerMenu;
+    JMenu configsMenu;
     JMenu ajudaMenu;
 
     ActionsListeners actionsListeners;
@@ -35,6 +36,7 @@ public class MenuBar extends JMenuBar {
         this.arquivoMenu = new JMenu("Arquivo");
         this.executarMenu = new JMenu("Executar");
         this.loggerMenu = new JMenu("Logger");
+        this.configsMenu = new JMenu("Configurações");
         this.ajudaMenu = new JMenu("Ajuda");
 
         this.populateArquivoMenu();
@@ -46,6 +48,7 @@ public class MenuBar extends JMenuBar {
         this.add(arquivoMenu);
         this.add(executarMenu);
         this.add(loggerMenu);
+        this.add(configsMenu);
         this.add(ajudaMenu);
     }
 
@@ -66,59 +69,7 @@ public class MenuBar extends JMenuBar {
         JMenuItem abrirMenItem = new JMenuItem("Abrir");
         abrirMenItem.setAccelerator(KeyStroke.getKeyStroke('O', this.CTRL_MASK));
 
-        abrirMenItem.addActionListener(e -> {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-
-            // Filtro de itens
-            var assemblyFilter = new FileFilter() {
-                @Override
-                public boolean accept(File f) {
-                    if (f.isDirectory()) {
-                        return true;
-                    } else {
-                        return f.getName().toLowerCase().endsWith(".asm");
-                    }
-                }
-
-                @Override
-                public String getDescription() {
-                    return "Assembly source file (*.asm)";
-                }
-            };
-
-            fileChooser.addChoosableFileFilter(assemblyFilter);
-            fileChooser.setFileFilter(assemblyFilter);
-
-            int result = fileChooser.showOpenDialog(null);
-
-            if (result == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fileChooser.getSelectedFile();
-
-                // Validando arquivo uwu
-                if (selectedFile.getName().endsWith(".asm")) {
-                    // Seta PROGRAM_PATH com o endereço do arquivo selecionado
-                    PROGRAM_PATH = selectedFile.getAbsolutePath();
-                    CURRENT_DIRECTORY = PROGRAM_PATH.substring(0, PROGRAM_PATH.length() - selectedFile.getName().length() - 1);
-                    System.out.println("Selected file: " + PROGRAM_PATH);
-                    System.out.println("Dir path to selected file: " + CURRENT_DIRECTORY);
-
-                    // Carrega texto no textarea
-                    try {
-                        this.assemblyTextPane.setText(Files.readString(Paths.get(PROGRAM_PATH)));
-                    } catch (IOException ex) {
-                        System.out.println(ex);
-                        System.exit(0);
-                    }
-
-                    // Notifica inscritos
-                    ppm.notifySubscribers(MessageType.PATH_IS_SET);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Você só pode abrir arquivos Assembly (.asm)!", "Erro", JOptionPane.ERROR_MESSAGE, null);
-                }
-
-            }
-        });
+        abrirMenItem.addActionListener(this.actionsListeners.getOpenAL());
 
         // Salvar
         JMenuItem salvarMenItem = new JMenuItem("Salvar");

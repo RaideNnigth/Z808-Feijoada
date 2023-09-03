@@ -17,6 +17,7 @@ import static z808_gui.utils.UIUtils.*;
 public class AssembleButton extends JLabel implements ProgramPathListener {
     public AssembleButton(ImageIcon IMG, VirtualMachine vm) {
         super(IMG);
+        this.setToolTipText("Assemble code");
         this.setPreferredSize(new Dimension(CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE));
         setEnabled(false);
 
