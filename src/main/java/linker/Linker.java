@@ -57,15 +57,15 @@ public class Linker {
         return definitionsTables.get(fileName);
     }
 
-    public void addUsageTable(String fileName, UsageTable usageTable) {
-        usageTables.put(fileName, usageTable);
+    public void addUsageTable(String moduleName, UsageTable usageTable) {
+        usageTables.put(moduleName, usageTable);
     }
 
     public HashMap<String, UsageTable> getHashMapUsageTable() {
         return usageTables;
     }
 
-    public UsageTable getUsageTable(String fileName) {
-        return usageTables.get(fileName);
+    public UsageTable getUsageTable(String moduleName) {
+        return usageTables.get(moduleName);
     }
 }

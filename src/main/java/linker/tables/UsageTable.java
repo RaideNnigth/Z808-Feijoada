@@ -28,11 +28,13 @@ public class UsageTable {
 
     private final HashMap<String, LinkedList<SymbolOcurrence>> usageTable = new HashMap<>();
 
-    public void addSymbol(String symbolName, String moduleName, short address) {
+    public void addSymbol(String symbolName) {
         if(!usageTable.containsKey(symbolName)) {
             usageTable.put(symbolName, new LinkedList<>());
         }
+    }
 
+    public void addSymbolOccurrence(String symbolName, String moduleName, short address) {
         var list = usageTable.get(symbolName);
         list.add(new SymbolOcurrence(moduleName, address));
     }
