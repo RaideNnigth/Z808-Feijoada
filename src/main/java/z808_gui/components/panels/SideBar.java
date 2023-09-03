@@ -2,7 +2,7 @@ package z808_gui.components.panels;
 
 import virtual_machine.VirtualMachine;
 import z808_gui.components.buttons.AssembleButton;
-import z808_gui.components.buttons.ClearLogsButton;
+import z808_gui.components.buttons.OpenCloseLoggerButton;
 import z808_gui.components.buttons.PlayButton;
 
 import javax.swing.*;
@@ -14,12 +14,12 @@ import static z808_gui.utils.UIUtils.*;
 public class SideBar extends JPanel {
     PlayButton playButton;
     AssembleButton assembleButton;
-    ClearLogsButton clearLogsButton;
+    OpenCloseLoggerButton openCloseLoggerButton;
 
     public SideBar(VirtualMachine vm) {
         this.playButton = new PlayButton(PLAY_DEFAULT_IMG, vm);
         this.assembleButton = new AssembleButton(ASSEM_DEFAULT_IMG, vm);
-        this.clearLogsButton = new ClearLogsButton();
+        this.openCloseLoggerButton = new OpenCloseLoggerButton();
 
         this.setBorder(new EmptyBorder(0, 10, 0, 10));
 
@@ -28,7 +28,7 @@ public class SideBar extends JPanel {
         this.add(Box.createRigidArea(V_SPACER));
         this.add(this.playButton);
         this.add(Box.createRigidArea(V_SPACER));
-        this.add(this.clearLogsButton);
+        this.add(this.openCloseLoggerButton);
 
         this.setPreferredSize(new Dimension(this.assembleButton.getPreferredSize().width + 20, 80));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -43,7 +43,7 @@ public class SideBar extends JPanel {
         return assembleButton;
     }
 
-    public ClearLogsButton getClearLogsButton() {
-        return clearLogsButton;
+    public OpenCloseLoggerButton getClearLogsButton() {
+        return openCloseLoggerButton;
     }
 }

@@ -16,10 +16,11 @@ public class CentralPanel extends JPanel {
         this.tabs = new Tabs();
 
         this.loggerPanel = new LoggerPanel();
-        this.loggerPanel.setPreferredSize(new Dimension(800, 200));
+        //this.loggerPanel.setPreferredSize(new Dimension(800, 200));
 
         this.add(this.tabs, BorderLayout.NORTH);
         this.add(this.loggerPanel, BorderLayout.SOUTH);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     public Tabs getTabs() {

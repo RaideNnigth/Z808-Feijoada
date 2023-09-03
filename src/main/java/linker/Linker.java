@@ -44,7 +44,7 @@ public class Linker {
         }
 
         // Now it's time to rock, Bessa Turing
-
+        // Verifying each
         return "";
     }
 

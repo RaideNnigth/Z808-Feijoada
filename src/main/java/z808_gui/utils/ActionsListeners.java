@@ -115,11 +115,10 @@ public class ActionsListeners {
                     JOptionPane.showMessageDialog(null, "Você só pode abrir arquivos Assembly (.asm)!", "Erro", JOptionPane.ERROR_MESSAGE, null);
                 }
 
+                String[] filepathTokens = assemblyEditor.getFilepath().split("/");
+                this.tabs.add(filepathTokens[filepathTokens.length - 1], assemblyEditor);
+                this.tabs.setSelectedIndex(this.tabs.getTabCount() - 1);
             }
-
-            String[] filepathTokens = assemblyEditor.getFilepath().split("/");
-            this.tabs.add(filepathTokens[filepathTokens.length - 1], assemblyEditor);
-            this.tabs.setSelectedIndex(this.tabs.getTabCount() - 1);
         };
     }
 
@@ -192,13 +191,9 @@ public class ActionsListeners {
 
                 int result = fileChooser.showSaveDialog(null);
                 if (result == JFileChooser.APPROVE_OPTION) {
-                    var selectedFile = fileChooser.getSelectedFile();
+                    File selectedFile = fileChooser.getSelectedFile();
 
-                    // Coloca extensão se não tiver
-
-                    //CURRENT_DIRECTORY = PROGRAM_PATH.substring(0, PROGRAM_PATH.length() - selectedFile.getName().length() - 1);
-
-                    if (assemblyEditor.getFilepath().endsWith(".asm")) {
+                    if (selectedFile.getAbsolutePath().endsWith(".asm")) {
                         assemblyEditor.setFilepath(selectedFile.getAbsolutePath());
                     } else {
                         assemblyEditor.setFilepath(fileChooser.getSelectedFile().getAbsolutePath() + ".asm");

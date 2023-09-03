@@ -12,6 +12,6 @@ import static z808_gui.utils.UIUtils.startDimension;
 
 public class Tabs extends JTabbedPane {
     public Tabs() {
-        this.setPreferredSize(new Dimension(800, 300));
+        //this.setPreferredSize(new Dimension(800, 300));
     }
 }
