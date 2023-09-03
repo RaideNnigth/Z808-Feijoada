@@ -61,7 +61,11 @@ public class Logger extends Observable {
     @Override
     public void notifyObservers() {
         for (Observer observer : this.observers) {
-            observer.update(String.format("%s (at line %d) : %s", this.logs.getLast().getLogType(), this.logs.getLast().getLine(), this.logs.getLast().getMessage()));
+            if (this.logs.getLast().getLine() == 0) {
+                observer.update(String.format("%s : %s", this.logs.getLast().getLogType(), this.logs.getLast().getMessage()));
+            } else {
+                observer.update(String.format("%s (at line %d) : %s", this.logs.getLast().getLogType(), this.logs.getLast().getLine(), this.logs.getLast().getMessage()));
+            }
         }
     }
 

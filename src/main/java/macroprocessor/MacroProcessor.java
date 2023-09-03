@@ -148,6 +148,8 @@ public class MacroProcessor {
         // Get all tokens in line
         String[] tokens = AssemblerUtils.decomposeInTokens(this.currentLine);
 
+        System.out.println(Arrays.toString(tokens));
+
         // Increment nest level to 1
         currentMacroNestLevel += 1;
 

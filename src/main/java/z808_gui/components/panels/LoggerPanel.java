@@ -4,6 +4,7 @@ import logger.Logger;
 import utils.Observer;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 import static z808_gui.utils.UIUtils.startDimension;
@@ -18,6 +19,8 @@ public class LoggerPanel extends JScrollPane implements Observer {
         logText.setFont(new Font("Consolas", Font.PLAIN, 22));
         logText.setLineWrap(true);
         logText.setEditable(false);
+
+        this.setBorder(new EmptyBorder(0, 0, 10, 0));
 
         this.setViewportView(logText);
         this.setVisible(true);

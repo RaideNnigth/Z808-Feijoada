@@ -14,15 +14,12 @@ import z808_gui.observerpattern.ProgramPathEventManager;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
-import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import static z808_gui.utils.UIUtils.startDimension;
 
 public class ActionsListeners {
     private ActionListener newAL;
@@ -202,12 +199,13 @@ public class ActionsListeners {
                     try (FileWriter fw = new FileWriter(assemblyEditor.getFilepath())) {
                         fw.write(assemblyEditor.getText());
                     } catch (IOException ex) {
-                        System.err.println(ex);
-                        System.exit(0);
+                        Logger.getInstance().error(String.format("Couldn't write to asm file: %s", ex.getMessage()));
                     }
 
                     String[] filepathTokens = assemblyEditor.getFilepath().split("/");
                     this.tabs.add(filepathTokens[filepathTokens.length-1], assemblyEditor);
+
+                    ProgramPathEventManager.getInstance().notifySubscribers(MessageType.PATH_IS_SET);
                 }
             }
             // Caso contrário, o arquivo existe e será atualizado com o código novo
@@ -215,12 +213,11 @@ public class ActionsListeners {
                 try (FileWriter fw = new FileWriter(assemblyEditor.getFilepath())) {
                     fw.write(assemblyEditor.getText());
                 } catch (IOException ex) {
-                    System.err.println(ex);
-                    System.exit(0);
+                    Logger.getInstance().error(String.format("Couldn't write to asm file: %s", ex.getMessage()));
                 }
-            }
 
-            ProgramPathEventManager.getInstance().notifySubscribers(MessageType.PATH_IS_SET);
+                ProgramPathEventManager.getInstance().notifySubscribers(MessageType.PATH_IS_SET);
+            }
         };
     }
 

@@ -18,7 +18,7 @@ public class AssemblyTextPane extends JScrollPane {
     private final String instructionsRegex = "(\\W)*(mov|add|sub|mult|hlt)";
     private final String registersRegex = "(\\W)*(ax|dx)";
     private final String segmentsRegex = "(\\s)*(\\.(code|data|stack)\\s+segment)(\\s)*";
-    private final String directivesRegex = "(\\W)*(macrodef|endm)";
+    private final String directivesRegex = "(\\W)*(macrodef|endm|callm|name|extrn|public)";
     private final String numbersRegex = "(\\W)*([0-9])*(b|d|)";
     private final String commentsRegex = ";(.*)";
     private final String stringRegex = "";
