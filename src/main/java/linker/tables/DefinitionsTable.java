@@ -14,32 +14,36 @@ package linker.tables;
  * Value is the address for the symbol in the file (moduleName:0001), 0001 is the address in short
  * */
 
-import linker.entities.Symbol;
+import linker.entities.LinkerSymbol;
 import linker.tables.exceptions.AlreadyDeclaredPublicSymbolException;
-import linker.tables.exceptions.NotDeclaredPublicSymbolException;
 
 import java.util.HashMap;
 
 public class DefinitionsTable {
+    private final HashMap<String, LinkerSymbol> definitionsTable = new HashMap<>();
 
-    private final HashMap<String, Symbol> definitionsTable = new HashMap<>();
-
-    public void addDefinition(String symbolName, Symbol s) throws AlreadyDeclaredPublicSymbolException {
+    public void addDefinition(String symbolName, LinkerSymbol s) throws AlreadyDeclaredPublicSymbolException {
         if (this.definitionsTable.containsKey(symbolName)) {
             throw new AlreadyDeclaredPublicSymbolException("Such symbol is already declared, please check your code, symbolName:" + symbolName);
         }
         this.definitionsTable.put(symbolName, s);
     }
 
-    public HashMap<String, Symbol> getDefinitionsTable() {
+    public HashMap<String, LinkerSymbol> getDefinitionsTable() {
         return definitionsTable;
     }
 
-    public Symbol getSymbol(String symbolName) throws NotDeclaredPublicSymbolException {
+    public LinkerSymbol getSymbol(String symbolName) {
+        /*
         if (!this.definitionsTable.containsKey(symbolName)) {
             throw new NotDeclaredPublicSymbolException("Such symbol is not declared, please check your code, symbolName:" + symbolName);
         }
+        */
         return this.definitionsTable.get(symbolName);
+    }
+
+    public boolean containsSymbol(String symbolName) {
+        return definitionsTable.containsKey(symbolName);
     }
 
 }

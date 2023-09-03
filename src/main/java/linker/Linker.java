@@ -6,22 +6,29 @@ import linker.tables.UsageTable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Linker {
     private static Linker instance = null;
 
+    // Tables from files (modules)
     private final HashMap<String, DefinitionsTable> definitionsTables;
-
     private final HashMap<String, UsageTable> usageTables;
 
+    // Global symbol table
     private final GlobalSymbolTable globalSymbolTable;
+
+    // Map: moduleName -> path to bin file
+    private final HashMap<String, String> binFilesPaths;
 
     // Singleton pattern
     private Linker() {
         definitionsTables = new HashMap<>();
         usageTables = new HashMap<>();
         globalSymbolTable = GlobalSymbolTable.getInstance();
+        binFilesPaths = new HashMap<>();
     }
+
     public static Linker getInstance() {
         if (instance == null) {
             instance = new Linker();
@@ -30,42 +37,39 @@ public class Linker {
     }
 
 
-    public String link(ArrayList<String> pathsToBins) {
-
-        /*
-        try {
-            this.globalSymbolTable.replaceAllOcorrencesOfDeclaredSymbols();
-        } catch (UndeclaredSymbol undeclaredSymbol) {
-            undeclaredSymbol.printStackTrace();
+    public String link() {
+        // First let's populate the global symbol table
+        for (String module : binFilesPaths.keySet()) {
+            var definitionsTable = definitionsTables.get(module);
+            globalSymbolTable.addDefinitionTableToGlobalMap(definitionsTable);
         }
-        */
+
+        // Now it's time to rock, Bessa Turing
 
         return "";
     }
 
-
-
-    public void addDefinitionsTable(String fileName, DefinitionsTable definitionsTable) {
-        definitionsTables.put(fileName, definitionsTable);
+    public void addBinPath(String moduleName, String binPath) {
+        binFilesPaths.put(moduleName, binPath);
     }
 
-    public HashMap<String, DefinitionsTable> getHashMapDefinitionsTable() {
-        return definitionsTables;
+    public void addDefinitionsTable(String moduleName, DefinitionsTable definitionsTable) {
+        definitionsTables.put(moduleName, definitionsTable);
     }
 
-    public DefinitionsTable getDefinitionsTable(String fileName) {
-        return definitionsTables.get(fileName);
+    public DefinitionsTable getDefinitionsTable(String moduleName) {
+        return definitionsTables.get(moduleName);
     }
 
     public void addUsageTable(String moduleName, UsageTable usageTable) {
         usageTables.put(moduleName, usageTable);
     }
 
-    public HashMap<String, UsageTable> getHashMapUsageTable() {
-        return usageTables;
-    }
-
     public UsageTable getUsageTable(String moduleName) {
         return usageTables.get(moduleName);
+    }
+
+    public boolean isExternalSymbol(String moduleName, String symbolName) {
+        return usageTables.get(moduleName).containsSymbol(symbolName) || definitionsTables.get(moduleName).containsSymbol(symbolName);
     }
 }

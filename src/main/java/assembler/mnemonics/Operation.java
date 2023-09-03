@@ -6,6 +6,7 @@ import assembler.tables.datatable.DataTable;
 import assembler.tables.symboltable.Symbol;
 import assembler.tables.symboltable.SymbolTable;
 import assembler.utils.AssemblerUtils;
+import linker.Linker;
 import logger.Log;
 import logger.LogType;
 import logger.Logger;
@@ -19,8 +20,18 @@ public abstract class Operation implements AssembleOperation {
     protected void processDirectAddressing(String token) throws AssemblerError {
         var dataTable = DataTable.getInstance();
         var assembledCode = Assembler.getInstance().getAssembledCode();
+        var moduleName = Assembler.getInstance().getModuleName();
+        var linker = Linker.getInstance();
 
-        // Check if variable exists in DataTable
+
+        // Check if it is external symbol in usage table
+        if (linker.getUsageTable(moduleName).containsSymbol(token)) {
+            linker.getUsageTable(moduleName).addSymbolOccurrence(token, moduleName, (short) assembledCode.size());
+            assembledCode.add((short) 0); // Add placeholder for the address of the symbol
+            return;
+        }
+
+        // If it's not external, check if variable exists in DataTable
         if (dataTable.dataItemExist(token)) {
             var dataItem = dataTable.getDataItem(token);
 
@@ -50,6 +61,16 @@ public abstract class Operation implements AssembleOperation {
     // For LABELS!
     protected void processJumpAddressing(String token) throws AssemblerError {
         var st = SymbolTable.getInstance();
+        var moduleName = Assembler.getInstance().getModuleName();
+        var linker = Linker.getInstance();
+        var assembledCode = Assembler.getInstance().getAssembledCode();
+
+        // Check if it is external symbol in usage table
+        if (linker.getUsageTable(moduleName).containsSymbol(token)) {
+            linker.getUsageTable(moduleName).addSymbolOccurrence(token, moduleName, (short) assembledCode.size());
+            assembledCode.add((short) 0); // Add placeholder for the address of the symbol
+            return;
+        }
 
         if (st.symbolExists(token)) {
             st.addOccurrenceOfSymbol(token);

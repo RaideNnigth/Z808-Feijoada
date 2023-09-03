@@ -4,7 +4,7 @@ import assembler.AssembleOperation;
 import assembler.Assembler;
 import assembler.utils.AssemblerUtils;
 import linker.Linker;
-import linker.entities.Symbol;
+import linker.entities.LinkerSymbol;
 
 public class Public implements AssembleOperation {
     public static final String MNEMONIC = "PUBLIC";
@@ -17,7 +17,7 @@ public class Public implements AssembleOperation {
 
         // Adding all public symbos to definitions table
         for (int i = 1; i < tokens.length; i++) {
-            definitionsTable.addDefinition(tokens[i], new Symbol());
+            definitionsTable.addDefinition(tokens[i], new LinkerSymbol());
 
             // We need to add the correct value later!!!
             // 0 is just a placeholder

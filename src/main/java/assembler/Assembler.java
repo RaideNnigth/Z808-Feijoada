@@ -10,6 +10,7 @@ import assembler.tables.datatable.UndeclaredDataItem;
 import assembler.tables.symboltable.SymbolTable;
 import assembler.tables.symboltable.UndeclaredSymbol;
 import assembler.utils.AssemblerUtils;
+import linker.Linker;
 import linker.tables.exceptions.UndaclaredModuleNameException;
 import logger.*;
 import macroprocessor.MacroProcessor;
@@ -25,6 +26,9 @@ public class Assembler {
     private final DirectiveProcessor directiveProcessor = new DirectiveProcessor();
     private final OperationProcessor operationProcessor = new OperationProcessor();
     private final LinkerDirectivesProcessor linkerDirectivesProcessor = new LinkerDirectivesProcessor();
+
+    // Linker
+    private final Linker linker = Linker.getInstance();
 
     // Assembled code
     private final LinkedList<Short> assembledCode = new LinkedList<>();
@@ -74,7 +78,7 @@ public class Assembler {
         this.resetAssembler();
     }
 
-    public void startAssembleFile() {
+    private void startAssembleFile() {
         // Handling macros and returns intermediate file path to new file soo we do not change user one
         //pathToProgram = macroProcessor.parseMacros(pathToProgram);
         FileReader fileReader;
@@ -95,6 +99,7 @@ public class Assembler {
             currentLine = currentLine.toUpperCase();
             assembleFirstLine();
 
+            // Process remaining lines
             this.currentLine = fileIO.readLine();
             while (this.currentLine != null) {
                 // Our assembler IS NOT case-sensitive!!
@@ -163,6 +168,9 @@ public class Assembler {
             //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("IO Error: Error while writing to %s (%s)", this.outputFile, e.getMessage())));
             return;
         }
+
+        // Add bin path to linker
+        linker.addBinPath(this.currentModuleName, this.outputFile);
 
         // Log success message
         logger.info(lineCounter, "Code assembled!");
