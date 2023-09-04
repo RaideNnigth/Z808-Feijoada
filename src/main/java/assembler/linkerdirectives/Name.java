@@ -17,8 +17,7 @@ public class Name implements AssembleOperation {
             throw new Exception("Invalid number of arguments for NAME directive");
 
         // Create tables in Linker for this module
-        Linker.getInstance().addDefinitionsTable(tokens[1], new DefinitionsTable());
-        Linker.getInstance().addUsageTable(tokens[1], new UsageTable());
+        Linker.getInstance().createModule(tokens[1]);
         Assembler.getInstance().setModuleName(tokens[1]);
     }
 }

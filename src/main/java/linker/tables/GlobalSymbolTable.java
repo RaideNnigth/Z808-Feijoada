@@ -1,6 +1,8 @@
 package linker.tables;
 
 import linker.entities.LinkerSymbol;
+import linker.tables.exceptions.AlreadyDeclaredPublicSymbolException;
+
 import java.util.HashMap;
 
 public class GlobalSymbolTable {
@@ -18,8 +20,25 @@ public class GlobalSymbolTable {
         return instance;
     }
 
-    public void addDefinitionTableToGlobalMap(DefinitionsTable definitionsTable) {
-        var definitions = definitionsTable.getDefinitionsTable();
-        globalSymbolTable.forEach(definitions::putIfAbsent);
+    public void addDefinitionTableToGlobalMap(DefinitionsTable definitionsTable) throws AlreadyDeclaredPublicSymbolException {
+        var symbolNames = definitionsTable.getDefinitionsTable().keySet();
+        for (var symbolName : symbolNames) {
+            if(!globalSymbolTable.containsKey(symbolName)) {
+                globalSymbolTable.put(symbolName, definitionsTable.getSymbol(symbolName));
+            }
+            // Symbol redefinition in another module!
+            else {
+                throw new AlreadyDeclaredPublicSymbolException(symbolName);
+            }
+        }
+
+    }
+
+    public boolean containsSymbol(String symbolName) {
+        return globalSymbolTable.containsKey(symbolName);
+    }
+
+    public LinkerSymbol getSymbol(String symbolName) {
+        return globalSymbolTable.get(symbolName);
     }
 }

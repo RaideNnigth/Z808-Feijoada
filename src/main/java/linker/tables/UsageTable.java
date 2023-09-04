@@ -14,13 +14,14 @@ package linker.tables;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Set;
 
 public class UsageTable {
     private final HashMap<String, LinkedList<SymbolOccurrence>> usageTable = new HashMap<>();
 
     public static class SymbolOccurrence {
-        String moduleName;
-        short address;
+        public String moduleName;
+        public short address;
 
         public SymbolOccurrence(String moduleName, short address) {
             this.moduleName = moduleName;
@@ -47,7 +48,11 @@ public class UsageTable {
         return usageTable.containsKey(symbolName);
     }
 
-    public LinkedList<SymbolOccurrence> getSymbolOccurrence(String symbolName) {
+    public LinkedList<SymbolOccurrence> getSymbolOccurrences(String symbolName) {
         return usageTable.get(symbolName);
+    }
+
+    public Set<String> getSymbolNames() {
+        return usageTable.keySet();
     }
 }

@@ -36,4 +36,9 @@ public class BinaryUtils {
 
         return concatBytes(LO, HO);
     }
+
+    public static void writeShortInByteArrayLE(byte[] array, int index, short value) {
+        array[index] = getLowByte(value);
+        array[index + 1] = getHighByte(value);
+    }
 }
