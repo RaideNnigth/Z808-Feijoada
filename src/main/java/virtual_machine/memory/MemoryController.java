@@ -1,8 +1,7 @@
 package virtual_machine.memory;
 
 import logger.Logger;
-import virtual_machine.utils.BinaryUtils;
-import z808_gui.utils.UIUtils;
+import utils.BinaryUtils;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

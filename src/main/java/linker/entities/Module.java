@@ -2,7 +2,7 @@ package linker.entities;
 
 import linker.tables.DefinitionsTable;
 import linker.tables.UsageTable;
-import virtual_machine.utils.BinaryUtils;
+import utils.BinaryUtils;
 
 public class Module {
     private byte[] moduleCode;

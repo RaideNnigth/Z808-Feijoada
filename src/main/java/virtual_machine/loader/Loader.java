@@ -1,7 +1,7 @@
 package virtual_machine.loader;
 
 import virtual_machine.memory.MemoryController;
-import virtual_machine.utils.BinaryUtils;
+import utils.BinaryUtils;
 
 import java.io.File;
 import java.io.FileInputStream;

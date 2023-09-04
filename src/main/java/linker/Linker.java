@@ -6,7 +6,7 @@ import linker.tables.UsageTable;
 import linker.tables.exceptions.AlreadyDeclaredPublicSymbolException;
 import linker.tables.exceptions.NotDeclaredPublicSymbolException;
 import linker.entities.Module;
-import virtual_machine.utils.BinaryUtils;
+import utils.BinaryUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
