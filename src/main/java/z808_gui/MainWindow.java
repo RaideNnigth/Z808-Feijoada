@@ -11,6 +11,7 @@ import z808_gui.observerpattern.ProgramPathListener;
 import z808_gui.observerpattern.MessageType;
 import z808_gui.observerpattern.ProgramPathEventManager;
 import z808_gui.utils.ActionsListeners;
+import z808_gui.utils.SyntaxHighlightingProfile;
 import z808_gui.utils.UIUtils;
 
 import static z808_gui.utils.UIUtils.*;
@@ -18,6 +19,8 @@ import static z808_gui.utils.UIUtils.*;
 public class MainWindow extends JFrame implements ProgramPathListener {
     private final VirtualMachine vm;
     private static final String TITLE = "Z808 - Feijoada Edition";
+
+    private SyntaxHighlightingProfile defaultProfile;
 
     JMenuBar menuBar;
 
@@ -33,6 +36,8 @@ public class MainWindow extends JFrame implements ProgramPathListener {
 
     public MainWindow(VirtualMachine virtualMachine) {
         this.vm = virtualMachine;
+
+        this.defaultProfile = new SyntaxHighlightingProfile();
 
         this.setTitle(TITLE);
         this.setIconImage((new ImageIcon(PLAY_DEFAULT_IMG_PATH)).getImage());
@@ -65,7 +70,7 @@ public class MainWindow extends JFrame implements ProgramPathListener {
         this.add(this.registersPanel, BorderLayout.EAST);
         this.add(this.centralPanel, BorderLayout.CENTER);
 
-        this.actionsListeners = new ActionsListeners(vm, this.centralPanel.getTabs(), this.centralPanel.getLoggerPanel());
+        this.actionsListeners = new ActionsListeners(vm, this.centralPanel.getTabs(), this.centralPanel.getLoggerPanel(), this.defaultProfile);
 
         // Precisa ser iniciado depois dos actionListeners
         this.createMenuBar();

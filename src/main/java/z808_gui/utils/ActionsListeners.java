@@ -33,12 +33,15 @@ public class ActionsListeners {
 
     private VirtualMachine vm;
 
+    private SyntaxHighlightingProfile defaultProfile;
+
     private Tabs tabs;
     private LoggerPanel loggerPanel;
 
 
-    public ActionsListeners(VirtualMachine vm, Tabs tabs, LoggerPanel loggerPanel) {
+    public ActionsListeners(VirtualMachine vm, Tabs tabs, LoggerPanel loggerPanel, SyntaxHighlightingProfile pr) {
         this.vm = vm;
+        this.defaultProfile = pr;
 
         this.tabs = tabs;
         this.loggerPanel = loggerPanel;
@@ -55,7 +58,7 @@ public class ActionsListeners {
 
     private void setNewAL() {
         this.newAL = e -> {
-            AssemblyTextPane assemblyEditor = new AssemblyTextPane();
+            AssemblyTextPane assemblyEditor = new AssemblyTextPane(this.defaultProfile);
             this.tabs.add("*new file", assemblyEditor);
             this.tabs.setSelectedIndex(this.tabs.getTabCount() - 1);
         };
@@ -63,7 +66,7 @@ public class ActionsListeners {
 
     private void setOpenAL() {
         this.openAL = e -> {
-            AssemblyTextPane assemblyEditor = new AssemblyTextPane();
+            AssemblyTextPane assemblyEditor = new AssemblyTextPane(this.defaultProfile);
 
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));

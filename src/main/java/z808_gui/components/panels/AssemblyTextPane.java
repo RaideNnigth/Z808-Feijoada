@@ -1,5 +1,7 @@
 package z808_gui.components.panels;
 
+import z808_gui.utils.SyntaxHighlightingGroup;
+import z808_gui.utils.SyntaxHighlightingProfile;
 import z808_gui.utils.TextLineNumber;
 
 import javax.swing.*;
@@ -33,7 +35,8 @@ public class AssemblyTextPane extends JScrollPane {
     private final AttributeSet stringStyle = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Foreground, Color.yellow);
     private final AttributeSet defaultStyle = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Foreground, Color.BLACK);
 
-    public AssemblyTextPane() {
+
+    public AssemblyTextPane(SyntaxHighlightingProfile highlightProfile) {
         assemblyTextEditor = new JTextPane();
 
         TextLineNumber tln = new TextLineNumber(assemblyTextEditor);
@@ -44,8 +47,6 @@ public class AssemblyTextPane extends JScrollPane {
         setRowHeaderView(tln);
         setViewportView(assemblyTextEditor);
 
-
-        // Obrigado a https://github.com/stark9000/java-Syntax-Highlight
         DefaultStyledDocument doc = new DefaultStyledDocument() {
             @Override
             public void insertString(int offset, String str, AttributeSet a) throws BadLocationException {
@@ -113,7 +114,68 @@ public class AssemblyTextPane extends JScrollPane {
             }
         };
 
-        assemblyTextEditor.setDocument(doc);
+        /*
+        doc = new DefaultStyledDocument() {
+            @Override
+            public void insertString(int offset, String str, AttributeSet a) throws BadLocationException {
+                super.insertString(offset, str, a);
+
+                String text = getText(0, getLength());
+                int before = findLastNonWordChar(text, offset);
+                if (before < 0) {
+                    before = 0;
+                }
+                int after = findFirstNonWordChar(text, offset + str.length());
+                int wordL = before;
+                int wordR = before;
+
+                while (wordR <= after) {
+                    if (wordR == after || String.valueOf(text.charAt(wordR)).matches("\\W")) {
+                        String lowerCase = text.substring(wordL, wordR).toLowerCase();
+
+                        for (SyntaxHighlightingGroup gp : SyntaxHighlightingGroup.values()) {
+                            if (lowerCase.matches(highlightProfile.getRegex(gp))) {
+                                switch (gp) {
+                                    case COMMENTS ->
+                                            setCharacterAttributes(wordL, after - wordL, styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Foreground, highlightProfile.getColor(gp)), false);
+                                    case SEGMENTS ->
+                                            setCharacterAttributes(0, after, highlightProfile.getAttribute(SyntaxHighlightingGroup.SEGMENTS, styleContext), false);
+                                    default -> setCharacterAttributes(wordL, wordR - wordL, styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Foreground, highlightProfile.getColor(gp)), false);
+                                }
+                            } else {
+                                setCharacterAttributes(wordL, wordR - wordL, highlightProfile.getAttribute(SyntaxHighlightingGroup.DEFAULT, styleContext), false);
+                            }
+                        }
+
+                        wordL = wordR;
+                    }
+                    wordR++;
+                }
+            }
+
+            @Override
+            public void remove(int offs, int len) throws BadLocationException {
+                super.remove(offs, len);
+
+                String text = getText(0, getLength());
+
+                int before = findLastNonWordChar(text, offs);
+
+                if (before < 0) {
+                    before = 0;
+                }
+
+                int after = findFirstNonWordChar(text, offs);
+
+                try {
+                    setCharacterAttributes(before, after - before, highlightProfile.getAttribute(SyntaxHighlightingGroup.DEFAULT, styleContext), false);
+                } catch (Exception e) {
+
+                }
+            }
+        };*/
+
+        this.assemblyTextEditor.setDocument(doc);
     }
 
     private int findLastNonWordChar(String text, int index) {
