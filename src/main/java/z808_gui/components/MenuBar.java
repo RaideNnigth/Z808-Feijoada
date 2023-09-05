@@ -1,8 +1,9 @@
 package z808_gui.components;
 
-import z808_gui.observerpattern.MessageType;
+import virtual_machine.VirtualMachine;
+import z808_gui.components.panels.CentralPanel;
 import z808_gui.observerpattern.ProgramPathEventManager;
-import z808_gui.utils.ActionsListeners;
+import z808_gui.utils.UIUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,12 +17,12 @@ public class MenuBar extends JMenuBar {
     JMenu loggerMenu;
     JMenu configsMenu;
     JMenu ajudaMenu;
-
-    ActionsListeners actionsListeners;
+    CentralPanel centralPanel;
+    VirtualMachine vm;
     final ProgramPathEventManager ppm = ProgramPathEventManager.getInstance();
 
-    public MenuBar(ActionsListeners al) {
-        this.actionsListeners = al;
+    public MenuBar(CentralPanel centralPanel, VirtualMachine vm) {
+        this.centralPanel = centralPanel;
 
         // Itens da barra de menus
         this.arquivoMenu = new JMenu("Arquivo");
@@ -49,23 +50,25 @@ public class MenuBar extends JMenuBar {
         JMenuItem novoMenItem = new JMenuItem("Novo");
         novoMenItem.setAccelerator(KeyStroke.getKeyStroke('N', this.CTRL_MASK));
 
-        novoMenItem.addActionListener(this.actionsListeners.getNewAL());
+        novoMenItem.addActionListener(e -> UIUtils.newFile(this.centralPanel.getTabs()));
 
         // Abrir
         JMenuItem abrirMenItem = new JMenuItem("Abrir");
         abrirMenItem.setAccelerator(KeyStroke.getKeyStroke('O', this.CTRL_MASK));
 
-        abrirMenItem.addActionListener(this.actionsListeners.getOpenAL());
+        abrirMenItem.addActionListener(e -> UIUtils.openFile(this.centralPanel.getTabs()));
 
         // Salvar
         JMenuItem salvarMenItem = new JMenuItem("Salvar");
         salvarMenItem.setAccelerator(KeyStroke.getKeyStroke('S', this.CTRL_MASK));
 
-        salvarMenItem.addActionListener(this.actionsListeners.getSaveAL());
+        salvarMenItem.addActionListener(e -> UIUtils.saveFile(this.centralPanel.getTabs()));
 
         JMenuItem exportarMemMenuItem = new JMenuItem("Exportar memória");
-        exportarMemMenuItem.addActionListener(this.actionsListeners.getExportMemAL());
+        exportarMemMenuItem.addActionListener(e -> UIUtils.exportMemoryData(this.centralPanel.getTabs(), this.vm));
 
+        JMenuItem fecharMenuItem = new JMenuItem("Fechar");
+        fecharMenuItem.addActionListener(e -> UIUtils.closeFile(this.centralPanel.getTabs()));
 
         // Sair
         JMenuItem sairMenItem = new JMenuItem("Sair");
@@ -78,6 +81,7 @@ public class MenuBar extends JMenuBar {
         this.arquivoMenu.add(abrirMenItem);
         this.arquivoMenu.add(salvarMenItem);
         this.arquivoMenu.add(exportarMemMenuItem);
+        this.arquivoMenu.add(fecharMenuItem);
         this.arquivoMenu.add(sairMenItem);
     }
 
@@ -85,19 +89,28 @@ public class MenuBar extends JMenuBar {
         // --------------------- Sub-itens menu Executar ---------------------
         JMenuItem montarMenItem = new JMenuItem("Montar código");
         montarMenItem.setAccelerator(KeyStroke.getKeyStroke('M', this.CTRL_MASK));
-        montarMenItem.addActionListener(this.actionsListeners.getMontarAL());
+        montarMenItem.addActionListener(e -> UIUtils.assembleFile(this.centralPanel.getTabs()));
 
         JMenuItem executarTudoMenItem = new JMenuItem("Executar tudo");
         executarTudoMenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
-        executarTudoMenItem.addActionListener(this.actionsListeners.getRunAL());
+        executarTudoMenItem.addActionListener(e -> UIUtils.runFile(this.centralPanel.getTabs(), this.vm));
+
+        JMenuItem definirDependenciasMenuItem = new JMenuItem("Definir dependências");
+        definirDependenciasMenuItem.addActionListener(e -> UIUtils.setDependecies(this.centralPanel.getTabs()));
 
         this.executarMenu.add(montarMenItem);
         this.executarMenu.add(executarTudoMenItem);
+        this.executarMenu.add(definirDependenciasMenuItem);
     }
 
     private void populateLoggerMenu() {
+        JMenuItem openCloseLoggerMenuItem = new JMenuItem("Open/Close logger");
+        openCloseLoggerMenuItem.addActionListener(e -> UIUtils.openCloseLogger(this.centralPanel));
+
         JMenuItem clearLoggerTextMenuItem = new JMenuItem("Limpar saída do logger");
-        clearLoggerTextMenuItem.addActionListener(this.actionsListeners.getClearLoggerTextAL());
+        clearLoggerTextMenuItem.addActionListener(e -> UIUtils.clearLoggerText(this.centralPanel.getLoggerPanel()));
+
+        this.loggerMenu.add(openCloseLoggerMenuItem);
         this.loggerMenu.add(clearLoggerTextMenuItem);
     }
 

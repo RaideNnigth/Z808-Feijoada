@@ -1,10 +1,8 @@
 package z808_gui.components.buttons;
 
-import virtual_machine.VirtualMachine;
 import z808_gui.observerpattern.ProgramPathListener;
 import z808_gui.observerpattern.MessageType;
 import z808_gui.observerpattern.ProgramPathEventManager;
-import z808_gui.utils.ActionsListeners;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,8 +13,8 @@ import java.awt.event.MouseEvent;
 import static z808_gui.utils.UIUtils.*;
 
 public class PlayButton extends JLabel implements ProgramPathListener {
-    public PlayButton(ImageIcon IMG, VirtualMachine vm) {
-        super(IMG);
+    public PlayButton() {
+        super(PLAY_DEFAULT_IMG);
         setToolTipText("Run");
         setPreferredSize(new Dimension(CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE));
         setEnabled(false);

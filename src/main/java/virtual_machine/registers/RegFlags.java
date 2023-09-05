@@ -1,6 +1,7 @@
 package virtual_machine.registers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RegFlags implements StatusRegister {
     Boolean of;
@@ -135,5 +136,24 @@ public class RegFlags implements StatusRegister {
                 "&emsp;pf: %s<br>" +
                 "&emsp;cf: %s"
                 , of ? "1" : "0", sf ? "1" : "0", zf ? "1" : "0", ifFlag ? "1" : "0", pf ? "1" : "0", cf ? "1" : "0");
+    }
+
+    public HashMap<String, Short> getFlagRegsValues() {
+        HashMap<String, Short> flagRegs = new HashMap<>();
+        this.of = false;
+        this.sf = false;
+        this.zf = false;
+        this.ifFlag = false;
+        this.pf = false;
+        this.cf = false;
+
+        flagRegs.put("OF", (short) (of ? 1 : 0));
+        flagRegs.put("SF", (short) (sf ? 1 : 0));
+        flagRegs.put("ZF", (short) (zf ? 1 : 0));
+        flagRegs.put("IF", (short) (ifFlag ? 1 : 0));
+        flagRegs.put("PF", (short) (pf ? 1 : 0));
+        flagRegs.put("CF", (short) (cf ? 1 : 0));
+
+        return flagRegs;
     }
 }

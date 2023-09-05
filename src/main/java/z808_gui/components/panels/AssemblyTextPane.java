@@ -10,10 +10,12 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.*;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class AssemblyTextPane extends JScrollPane {
     private JTextPane assemblyTextEditor;
     private String filepath = "";
+    private final LinkedList<String> dependeciesPath = new LinkedList<>();
 
     private final HashMap<String, Color> colorMap = new HashMap<>();
     private final HashMap<String, Color> colorGroups = new HashMap<>();
@@ -22,7 +24,7 @@ public class AssemblyTextPane extends JScrollPane {
     private final String segmentsRegex = "(\\s)*(\\.(code|data|stack)\\s+segment)(\\s)*";
     private final String directivesRegex = "(\\W)*(macrodef|endm|callm|name|extrn|public)";
     private final String numbersRegex = "(\\W)*([0-9])*(b|d|)";
-    private final String commentsRegex = ";(.*)";
+    private final String commentsRegex = ";(\\s)*";
     private final String stringRegex = "";
 
     private final StyleContext styleContext = StyleContext.getDefaultStyleContext();
@@ -36,7 +38,7 @@ public class AssemblyTextPane extends JScrollPane {
     private final AttributeSet defaultStyle = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Foreground, Color.BLACK);
 
 
-    public AssemblyTextPane(SyntaxHighlightingProfile highlightProfile) {
+    public AssemblyTextPane() {
         assemblyTextEditor = new JTextPane();
 
         TextLineNumber tln = new TextLineNumber(assemblyTextEditor);
@@ -74,7 +76,7 @@ public class AssemblyTextPane extends JScrollPane {
                         } else if (lowerCase.matches("\"\"")) {
                             setCharacterAttributes(wordL, wordR - wordL, labelsStyle, false);
                         } else if (lowerCase.matches(commentsRegex)) {
-                            setCharacterAttributes(wordL, after - wordL, commentsStyle, false);
+                            setCharacterAttributes(wordL, wordR - wordL, commentsStyle, false);
                         } else if (text.toLowerCase().matches(segmentsRegex)) {
                             setCharacterAttributes(0, after, segmentsStyle, false);
                         } else if (text.toLowerCase().matches(stringRegex)) {
@@ -211,5 +213,9 @@ public class AssemblyTextPane extends JScrollPane {
 
     public void setFilepath(String filepath) {
         this.filepath = filepath;
+    }
+
+    public LinkedList<String> getDependeciesPath() {
+        return dependeciesPath;
     }
 }

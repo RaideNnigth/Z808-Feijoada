@@ -10,7 +10,6 @@ import java.awt.*;
 import z808_gui.observerpattern.ProgramPathListener;
 import z808_gui.observerpattern.MessageType;
 import z808_gui.observerpattern.ProgramPathEventManager;
-import z808_gui.utils.ActionsListeners;
 import z808_gui.utils.SyntaxHighlightingProfile;
 import z808_gui.utils.UIUtils;
 
@@ -31,8 +30,6 @@ public class MainWindow extends JFrame implements ProgramPathListener {
 
     RegistersPanel registersPanel;
 
-    ActionsListeners actionsListeners;
-
 
     public MainWindow(VirtualMachine virtualMachine) {
         this.vm = virtualMachine;
@@ -48,21 +45,19 @@ public class MainWindow extends JFrame implements ProgramPathListener {
         ProgramPathEventManager ppm = ProgramPathEventManager.getInstance();
         ppm.subscribe(this);
 
-        // Creates menu
+        this.centralPanel = new CentralPanel();
+
+        this.menuBar = new MenuBar(this.centralPanel, this.vm);
+        this.setJMenuBar(this.menuBar);
 
         // Painel superior com o título
         this.upperTitlePanel = new UpperTitlePanel();
 
-        // Painel inferior com os botões
-        this.sideBar = new SideBar(vm);
+        this.sideBar = new SideBar(this.centralPanel, this.vm);
 
         this.registersPanel = new RegistersPanel();
         vm.subscribe(this.registersPanel);
         vm.notifySubscribers();
-
-
-        // ------------------------------ Criando painel central ------------------------------
-        this.centralPanel = new CentralPanel();
 
         // Adicionando os painéis
         this.add(this.upperTitlePanel, BorderLayout.NORTH);
@@ -70,14 +65,7 @@ public class MainWindow extends JFrame implements ProgramPathListener {
         this.add(this.registersPanel, BorderLayout.EAST);
         this.add(this.centralPanel, BorderLayout.CENTER);
 
-        this.actionsListeners = new ActionsListeners(vm, this.centralPanel.getTabs(), this.centralPanel.getLoggerPanel(), this.defaultProfile);
-
-        // Precisa ser iniciado depois dos actionListeners
-        this.createMenuBar();
-
-        this.sideBar.getAssembleButton().setActionListener(this.actionsListeners.getMontarAL());
-        this.sideBar.getPlayButton().setActionListener(this.actionsListeners.getRunAL());
-        this.sideBar.getClearLogsButton().setActionListener(this.actionsListeners.getOpenLoggerAL());
+        UIUtils.newFile(this.centralPanel.getTabs());
 
         // Packing UI
         this.pack();
@@ -88,11 +76,6 @@ public class MainWindow extends JFrame implements ProgramPathListener {
 
         // Appear
         this.setVisible(true);
-    }
-
-    private void createMenuBar() {
-        this.menuBar = new MenuBar(this.actionsListeners);
-        this.setJMenuBar(this.menuBar);
     }
 
     @Override

@@ -1,10 +1,8 @@
 package z808_gui.components.buttons;
 
-import virtual_machine.VirtualMachine;
 import z808_gui.observerpattern.ProgramPathListener;
 import z808_gui.observerpattern.MessageType;
 import z808_gui.observerpattern.ProgramPathEventManager;
-import z808_gui.utils.ActionsListeners;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,8 +13,8 @@ import java.awt.event.MouseEvent;
 import static z808_gui.utils.UIUtils.*;
 
 public class AssembleButton extends JLabel implements ProgramPathListener {
-    public AssembleButton(ImageIcon IMG, VirtualMachine vm) {
-        super(IMG);
+    public AssembleButton() {
+        super(ASSEM_DEFAULT_IMG);
         this.setToolTipText("Assemble code");
         this.setPreferredSize(new Dimension(CONTROLS_BUTTON_SIZE, CONTROLS_BUTTON_SIZE));
         setEnabled(false);

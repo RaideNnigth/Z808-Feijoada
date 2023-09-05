@@ -1,13 +1,30 @@
 package z808_gui.utils;
 
+import assembler.Assembler;
+import linker.Linker;
+import logger.Log;
+import logger.LogType;
+import logger.Logger;
+import macroprocessor.MacroProcessor;
+import virtual_machine.VirtualMachine;
 import virtual_machine.registers.Registers;
+import z808_gui.components.DependenciesWindow;
+import z808_gui.components.panels.AssemblyTextPane;
+import z808_gui.components.panels.CentralPanel;
+import z808_gui.components.panels.LoggerPanel;
+import z808_gui.observerpattern.MessageType;
+import z808_gui.observerpattern.ProgramPathEventManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 public class UIUtils {
@@ -72,5 +89,187 @@ public class UIUtils {
         String fileName = path.substring(ind + 1);
 
         return fileName.split("\\.")[0];
+    }
+
+    public static void newFile(JTabbedPane tabs) {
+        AssemblyTextPane assemblyEditor = new AssemblyTextPane();
+        tabs.add("*new file", assemblyEditor);
+        tabs.setSelectedIndex(tabs.getTabCount() - 1);
+    }
+
+    public static void openFile(JTabbedPane tabs) {
+        AssemblyTextPane assemblyEditor = new AssemblyTextPane();
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+
+        // Filtro de itens
+        var assemblyFilter = new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                if (f.isDirectory()) {
+                    return true;
+                } else {
+                    return f.getName().toLowerCase().endsWith(".asm");
+                }
+            }
+
+            @Override
+            public String getDescription() {
+                return "Assembly source file (*.asm)";
+            }
+        };
+
+        fileChooser.addChoosableFileFilter(assemblyFilter);
+        fileChooser.setFileFilter(assemblyFilter);
+
+        int result = fileChooser.showOpenDialog(null);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+
+            // Validando arquivo uwu
+            if (selectedFile.getName().endsWith(".asm")) {
+                // Seta PROGRAM_PATH com o endereço do arquivo selecionado
+                assemblyEditor.setFilepath(selectedFile.getAbsolutePath());
+
+                // Carrega texto no textarea
+                try {
+                    assemblyEditor.setText(Files.readString(Paths.get(assemblyEditor.getFilepath())));
+                } catch (IOException ex) {
+                    Logger.getInstance().error(ex.getMessage());
+                }
+
+                // Notifica inscritos
+                ProgramPathEventManager.getInstance().notifySubscribers(MessageType.PATH_IS_SET);
+            } else {
+                JOptionPane.showMessageDialog(null, "Você só pode abrir arquivos Assembly (.asm)!", "Erro", JOptionPane.ERROR_MESSAGE, null);
+            }
+
+            String[] filepathTokens = assemblyEditor.getFilepath().split("/");
+            tabs.add(filepathTokens[filepathTokens.length - 1], assemblyEditor);
+            tabs.setSelectedIndex(tabs.getTabCount() - 1);
+        }
+    }
+
+    public static void assembleFile(JTabbedPane tabs) {
+        AssemblyTextPane assemblyEditor = (AssemblyTextPane) tabs.getSelectedComponent();
+
+        if (!assemblyEditor.getFilepath().isEmpty()) {
+            // Save file
+            UIUtils.saveFile(tabs);
+
+            // Now, process macros, assemble and link
+            try {
+                File file = new File(assemblyEditor.getFilepath());
+                String processedCodePath = MacroProcessor.getInstance().parseMacros(file.getAbsolutePath());
+                Assembler.getInstance().assembleFile(processedCodePath);
+
+                // CALL LINKER <- TODO
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERRO: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE, null);
+            }
+        }
+    }
+
+    public static void runFile(JTabbedPane tabs, VirtualMachine vm) {
+        AssemblyTextPane assemblyEditor = (AssemblyTextPane) tabs.getSelectedComponent();
+
+        // Save file
+        UIUtils.saveFile(tabs);
+        // Assemble file
+        UIUtils.assembleFile(tabs);
+
+        // .bin file path to load
+        String binPath = assemblyEditor.getFilepath().replace(".asm", ".bin");
+
+        try {
+            // Load bin
+            vm.loadProgram(binPath);
+            vm.executeProgram();
+
+            // Add execution success log
+            Logger.getInstance().addLog(new Log(LogType.INFO, 0, "Programa executado com sucesso!"));
+        } catch (IOException ioException) {
+            Logger.getInstance().error(0, ioException.getMessage());
+            JOptionPane.showMessageDialog(null, "FALHA DE MONTAGEM. VERIFIQUE LOGS.", "Erro", JOptionPane.ERROR_MESSAGE, null);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex, "Erro", JOptionPane.ERROR_MESSAGE, null);
+            ex.printStackTrace();
+        }
+    }
+
+    public static void saveFile(JTabbedPane tabs) {
+        AssemblyTextPane assemblyEditor = (AssemblyTextPane) tabs.getSelectedComponent();
+
+        // Se PROGRAM_PATH está vazia, o programa não foi salvo
+        if (assemblyEditor.getFilepath().isEmpty()) {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+
+            int result = fileChooser.showSaveDialog(null);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+
+                if (selectedFile.getAbsolutePath().endsWith(".asm")) {
+                    assemblyEditor.setFilepath(selectedFile.getAbsolutePath());
+                } else {
+                    assemblyEditor.setFilepath(fileChooser.getSelectedFile().getAbsolutePath() + ".asm");
+                }
+
+                try (FileWriter fw = new FileWriter(assemblyEditor.getFilepath())) {
+                    fw.write(assemblyEditor.getText());
+                } catch (IOException ex) {
+                    Logger.getInstance().error(String.format("Couldn't write to asm file: %s", ex.getMessage()));
+                }
+
+                String[] filepathTokens = assemblyEditor.getFilepath().split("/");
+                tabs.add(filepathTokens[filepathTokens.length-1], assemblyEditor);
+
+                ProgramPathEventManager.getInstance().notifySubscribers(MessageType.PATH_IS_SET);
+            }
+        }
+        // Caso contrário, o arquivo existe e será atualizado com o código novo
+        else {
+            try (FileWriter fw = new FileWriter(assemblyEditor.getFilepath())) {
+                fw.write(assemblyEditor.getText());
+            } catch (IOException ex) {
+                Logger.getInstance().error(String.format("Couldn't write to asm file: %s", ex.getMessage()));
+            }
+
+            ProgramPathEventManager.getInstance().notifySubscribers(MessageType.PATH_IS_SET);
+        }
+    }
+
+    public static void closeFile(JTabbedPane tabs) {
+        int assemblyEditorIndex = tabs.getSelectedIndex();
+
+        saveFile(tabs);
+
+        tabs.removeTabAt(assemblyEditorIndex);
+    }
+
+    public static void exportMemoryData(JTabbedPane tabs, VirtualMachine vm) {
+        AssemblyTextPane assemblyEditor = (AssemblyTextPane) tabs.getSelectedComponent();
+        vm.exportMemoryData(assemblyEditor.getFilepath());
+    }
+
+    public static void openCloseLogger(CentralPanel centralPanel) {
+        if (centralPanel.getDividerLocation() >= centralPanel.getMaximumDividerLocation()) {
+            centralPanel.setDividerLocation(centralPanel.getLastDividerLocation());
+        } else {
+            centralPanel.setDividerLocation(1.0);
+        }
+    }
+
+    public static void clearLoggerText(LoggerPanel loggerPanel) {
+        loggerPanel.clearText();
+    }
+
+    public static void setDependecies(JTabbedPane tabs) {
+        AssemblyTextPane assemblyEditor = (AssemblyTextPane) tabs.getSelectedComponent();
+
+        DependenciesWindow dpWin = new DependenciesWindow(assemblyEditor.getDependeciesPath());
     }
 }

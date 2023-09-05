@@ -4,6 +4,7 @@ import virtual_machine.VirtualMachine;
 import z808_gui.components.buttons.AssembleButton;
 import z808_gui.components.buttons.OpenCloseLoggerButton;
 import z808_gui.components.buttons.PlayButton;
+import z808_gui.utils.UIUtils;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -16,10 +17,19 @@ public class SideBar extends JPanel {
     AssembleButton assembleButton;
     OpenCloseLoggerButton openCloseLoggerButton;
 
-    public SideBar(VirtualMachine vm) {
-        this.playButton = new PlayButton(PLAY_DEFAULT_IMG, vm);
-        this.assembleButton = new AssembleButton(ASSEM_DEFAULT_IMG, vm);
+    CentralPanel centralPanel;
+    VirtualMachine vm;
+
+    public SideBar(CentralPanel centralPanel, VirtualMachine vm) {
+        this.centralPanel = centralPanel;
+        this.vm = vm;
+
+        this.playButton = new PlayButton();
+        this.playButton.setActionListener(e -> UIUtils.runFile(this.centralPanel.getTabs(), this.vm));
+        this.assembleButton = new AssembleButton();
+        this.assembleButton.setActionListener(e -> UIUtils.assembleFile(this.centralPanel.getTabs()));
         this.openCloseLoggerButton = new OpenCloseLoggerButton();
+        this.openCloseLoggerButton.setActionListener(e -> UIUtils.openCloseLogger(this.centralPanel));
 
         this.setBorder(new EmptyBorder(0, 10, 0, 10));
 
@@ -33,17 +43,5 @@ public class SideBar extends JPanel {
         this.setPreferredSize(new Dimension(this.assembleButton.getPreferredSize().width + 20, 80));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setVisible(true);
-    }
-
-    public PlayButton getPlayButton() {
-        return playButton;
-    }
-
-    public AssembleButton getAssembleButton() {
-        return assembleButton;
-    }
-
-    public OpenCloseLoggerButton getClearLogsButton() {
-        return openCloseLoggerButton;
     }
 }

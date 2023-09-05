@@ -5,6 +5,7 @@ import virtual_machine.registers.Registers;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
@@ -13,49 +14,85 @@ import static z808_gui.utils.UIUtils.*;
 
 public class RegistersPanel extends JPanel implements RegObsListener {
     private boolean displayInDecimal = true;
+    private final HashMap<String, JLabel> registersHashMap = new HashMap<>();
     private HashMap<Registers, Short> currentWorkRegs;
+    private final String[] flagRegs = new String[]{"OF", "SF", "ZF", "IF", "PF", "CF"};
 
     public RegistersPanel() {
-        GroupLayout rightPanelLayout = new GroupLayout(this);
-        rightPanelLayout.setAutoCreateGaps(true);
-
-        this.setLayout(rightPanelLayout);
+        //this.setLayout(new BorderLayout());
         this.setBorder(new EmptyBorder(10,10,10,10));
 
         // Its size will be fixed 1/3 of the start dimension
-        setPreferredSize(new Dimension(200, Short.MAX_VALUE));
-        setBackground(Color.white);
+        this.setPreferredSize(new Dimension(200, Short.MAX_VALUE));
+        //this.setBackground(Color.white);
+
+        JPanel registers = new JPanel();
+        GridLayout gridLayout = new GridLayout(14, 2, 20, 15);
+        gridLayout.setHgap(0);
+        gridLayout.setVgap(0);
+        registers.setLayout(gridLayout);
 
         // Inicializando labels
-        Font fonteLabels = new Font("Consolas", Font.PLAIN, 22);
+        Font fonteLabels = new Font("Arial", Font.PLAIN, 14);
 
         for (Registers r : Registers.values()) {
-            var newLabel = new JLabel();
-            newLabel.setFont(fonteLabels);
-            registersJLabelsMap.put(r, newLabel);
+            if (!r.getLabel().equals("SR")) {
+                JLabel lblReg = new JLabel(r.getLabel());
+                lblReg.setHorizontalAlignment(JLabel.CENTER);
+                lblReg.setPreferredSize(new Dimension(80, 20));
+                lblReg.setFont(fonteLabels);
+                lblReg.setBorder(new EtchedBorder());
+                registers.add(lblReg);
+
+                JLabel lblValue = new JLabel("0");
+                lblValue.setHorizontalAlignment(JLabel.CENTER);
+                lblValue.setPreferredSize(new Dimension(80, 20));
+                lblValue.setFont(fonteLabels);
+                lblValue.setBorder(new EtchedBorder());
+                registers.add(lblValue);
+
+                registersHashMap.put(r.getLabel(), lblValue);
+            }
         }
+
+        for (String regFlag : this.flagRegs) {
+            JLabel lblReg = new JLabel(regFlag);
+            lblReg.setHorizontalAlignment(JLabel.CENTER);
+            lblReg.setPreferredSize(new Dimension(80, 20));
+            lblReg.setFont(fonteLabels);
+            lblReg.setBorder(new EtchedBorder());
+            registers.add(lblReg);
+
+            JLabel lblValue = new JLabel("0");
+            lblValue.setHorizontalAlignment(JLabel.CENTER);
+            lblValue.setPreferredSize(new Dimension(80, 20));
+            lblValue.setFont(fonteLabels);
+            lblValue.setBorder(new EtchedBorder());
+            registers.add(lblValue);
+
+            this.registersHashMap.put(regFlag, lblValue);
+        }
+
 
         // Criando os grupos
-        var hGroup = rightPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING);
-        var vGroup = rightPanelLayout.createSequentialGroup();
+        //var hGroup = rightPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING);
+        //var vGroup = rightPanelLayout.createSequentialGroup();
 
         // Populando os grupos com os labels de registradores
-        for (Registers r : Registers.values()) {
-            hGroup.addComponent(registersJLabelsMap.get(r));
-            vGroup.addComponent(registersJLabelsMap.get(r));
-        }
+        //for (Registers r : Registers.values()) {
+        //    hGroup.addComponent(registersJLabelsMap.get(r));
+        //    vGroup.addComponent(registersJLabelsMap.get(r));
+        //}
 
         // ------------------- Creating and configuring radio buttons of Hex and Decimal -------------------
         JRadioButton decimalRButton = new JRadioButton("Decimal");
         decimalRButton.setMnemonic(KeyEvent.VK_D);
         decimalRButton.setSelected(true);
         decimalRButton.setHorizontalAlignment(SwingConstants.CENTER);
-        decimalRButton.setBackground(Color.white);
 
         JRadioButton hexRButton = new JRadioButton("Hex");
         hexRButton.setMnemonic(KeyEvent.VK_H);
         hexRButton.setHorizontalAlignment(SwingConstants.CENTER);
-        hexRButton.setBackground(Color.white);
 
         ButtonGroup radioButtonsGroup = new ButtonGroup();
         radioButtonsGroup.add(decimalRButton);
@@ -73,11 +110,9 @@ public class RegistersPanel extends JPanel implements RegObsListener {
 
         // ------------ Configuring radio buttons area ------------
         JPanel radioButtonsArea = new JPanel();
-        radioButtonsArea.setBackground(Color.white);
         radioButtonsArea.setLayout(new BorderLayout());
 
         JPanel radioButtonsContainer = new JPanel();
-        radioButtonsContainer.setBackground(Color.white);
 
         var rbLayout = new FlowLayout(FlowLayout.CENTER);
         radioButtonsContainer.setLayout(rbLayout);
@@ -87,23 +122,31 @@ public class RegistersPanel extends JPanel implements RegObsListener {
 
         radioButtonsArea.add(BorderLayout.SOUTH, radioButtonsContainer);
 
-        // Adding radio buttons to RegistersPanel
-        hGroup.addComponent(radioButtonsArea);
-        vGroup.addComponent(radioButtonsArea);
+        this.add(registers);
+        this.add(radioButtonsArea);
+        //this.add(registers, BorderLayout.NORTH);
+        //this.add(radioButtonsArea, BorderLayout.SOUTH);
 
-        rightPanelLayout.setHorizontalGroup(hGroup);
-        rightPanelLayout.setVerticalGroup(vGroup);
+        // Adding radio buttons to RegistersPanel
+        //hGroup.addComponent(radioButtonsArea);
+        //vGroup.addComponent(radioButtonsArea);
+
+        //rightPanelLayout.setHorizontalGroup(hGroup);
+        //rightPanelLayout.setVerticalGroup(vGroup);
     }
 
     @Override
-    public void updatedRegs(HashMap<Registers, Short> workRegs, String flagReg) {
+    public void updatedRegs(HashMap<Registers, Short> workRegs, HashMap<String, Short> flagRegs) {
         currentWorkRegs = workRegs;
 
         for (Registers r : Registers.values()) {
             if (r != Registers.SR) {
-                registersJLabelsMap.get(r).setText(r.getLabel() + " " + (displayInDecimal ? workRegs.get(r) : Integer.toHexString(workRegs.get(r))));
-            } else
-                registersJLabelsMap.get(r).setText("<html>" + r.getLabel() + "<br>" + flagReg);
+                this.registersHashMap.get(r.getLabel()).setText(displayInDecimal ? String.valueOf(workRegs.get(r)) : Integer.toHexString(workRegs.get(r)).toUpperCase());
+            }
+        }
+
+        for (String flagRegName : this.flagRegs) {
+            this.registersHashMap.get(flagRegName).setText(String.valueOf(flagRegs.get(flagRegName)));
         }
     }
 
@@ -111,13 +154,13 @@ public class RegistersPanel extends JPanel implements RegObsListener {
         if (displayInDecimal) {
             for (Registers r : Registers.values()) {
                 if (r != Registers.SR) {
-                    registersJLabelsMap.get(r).setText(r.getLabel() + " " + currentWorkRegs.get(r));
+                    this.registersHashMap.get(r.getLabel()).setText(String.valueOf(this.currentWorkRegs.get(r)));
                 }
             }
         } else {
             for (Registers r : Registers.values()) {
                 if (r != Registers.SR) {
-                    registersJLabelsMap.get(r).setText(r.getLabel() + " " + Integer.toHexString(currentWorkRegs.get(r)).toUpperCase());
+                    this.registersHashMap.get(r.getLabel()).setText(Integer.toHexString(currentWorkRegs.get(r)).toUpperCase());
                 }
             }
         }

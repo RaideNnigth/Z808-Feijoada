@@ -122,8 +122,7 @@ public class MacroProcessor {
         try {
             for (String line : outputLines)
                 dataOutStream.writeBytes(line + "\n");
-        } catch (
-                IOException e) {
+        } catch (IOException e) {
             Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, "Error while writing " + pathToProgram + "file: " + e.getMessage()));
             resetMacroProcessor();
             throw e;
