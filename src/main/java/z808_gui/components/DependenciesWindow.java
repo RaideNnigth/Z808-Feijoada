@@ -1,6 +1,7 @@
 package z808_gui.components;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.text.Highlighter;
 import java.awt.*;
 import java.util.LinkedList;
@@ -13,6 +14,8 @@ public class DependenciesWindow extends JFrame {
     public DependenciesWindow(LinkedList<String> dependenciesPath) {
         this.setTitle("Dependências");
         this.setLayout(new BorderLayout());
+        Border raisedbevel = BorderFactory.createRaisedBevelBorder();
+        Border loweredbevel = BorderFactory.createLoweredBevelBorder();
 
         this.dependenciesPath = dependenciesPath;
 
@@ -36,6 +39,7 @@ public class DependenciesWindow extends JFrame {
 
         this.setSize(new Dimension(300, 200));
         this.setLocationRelativeTo(null);
+        getRootPane().setBorder( BorderFactory.createCompoundBorder(raisedbevel, loweredbevel));
         this.setVisible(true);
     }
 

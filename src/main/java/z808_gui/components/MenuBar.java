@@ -117,6 +117,7 @@ public class MenuBar extends JMenuBar {
     private void populateAjudaMenu() {
         // --------------------- Sub-itens menu Sobre ---------------------
         JMenuItem devsMenItem = new JMenuItem("Desenvolvedores");
+        devsMenItem.addActionListener(e -> JOptionPane.showMessageDialog(null, " Gabriel Bessa\n Daniel Lisboa\n Gustavo Pereira\n Henrique Rodrigues\n Miguel Strelow\n Nicolas Machado\n Pedro da Silva\n Rafael Ferrão\n Ravilon dos Santos\n", "Desenvolvedores", JOptionPane.INFORMATION_MESSAGE, null));
 
         JMenuItem sobreMenItem = new JMenuItem("Sobre");
         sobreMenItem.setMnemonic(KeyEvent.VK_F1);
