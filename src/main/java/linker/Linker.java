@@ -41,7 +41,7 @@ public class Linker {
     }
 
     public void link(String finalProgramName) throws IOException, NotDeclaredPublicSymbolException, AlreadyDeclaredPublicSymbolException {
-        // Thanks to Gustavo for clean code tips. This monstrosity was 100 lines long.
+        // Thanks to Gustavo for clean code tips. This monstrosity was over 100 lines long.
         var modulesSet = modulesMap.values();
 
         // First, let's populate the global symbol table (1st pass)
@@ -142,8 +142,17 @@ public class Linker {
                     // Get symbol value from global symbol table
                     var symbolValue = globalSymbolTable.getSymbol(symbolName).getValue();
 
+                    // Calculate offset of data segment
+                    int offset = 0;
+                    for(var mod: modulesNamesOrder) {
+                        if(modulesMap.get(mod) == m) {
+                            break;
+                        }
+                        offset += modulesMap.get(mod).getDataSegmentSize();
+                    }
+
                     for (var occurrence : symbolOccurrences) {
-                        m.writeInModuleCode((short)((2 * occurrence.address) + headerSizeBytes), symbolValue);
+                        m.writeInModuleCode((short)((2 * occurrence.address) + headerSizeBytes), (short)(symbolValue + offset));
                     }
                 }
                 // Symbol is not declared in any module, throw exception
