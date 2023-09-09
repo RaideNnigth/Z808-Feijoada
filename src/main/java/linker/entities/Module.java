@@ -53,10 +53,10 @@ public class Module {
     private void calculateSegments() {
         short csStart = BinaryUtils.concatBytes(moduleCode[1], moduleCode[0]);
         short csEnd = BinaryUtils.concatBytes(moduleCode[3], moduleCode[2]);
-        codeSegmentSize = csEnd - csStart;
+        codeSegmentSize = csEnd - csStart + 1;
 
         short dsStart = BinaryUtils.concatBytes(moduleCode[5], moduleCode[4]);
         short dsEnd = BinaryUtils.concatBytes(moduleCode[7], moduleCode[6]);
-        dataSegmentSize = dsEnd - dsStart;
+        dataSegmentSize = dsStart > dsEnd ? 0 : (dsEnd - dsStart + 1);
     }
 }

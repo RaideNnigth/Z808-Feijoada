@@ -58,6 +58,16 @@ public class Linker {
 
         // Now we have all modules linked, let's write the final program
         writeLinkedModulesToBinFile(finalProgramName);
+
+        // Reset linker
+        reset();
+    }
+
+    private void reset() {
+        globalSymbolTable.reset();
+        modulesMap.clear();
+        modulesNamesOrder.clear();
+        finalProgramSize = 0;
     }
 
     private void writeLinkedModulesToBinFile(String finalProgramName) throws IOException {
@@ -133,7 +143,7 @@ public class Linker {
                     var symbolValue = globalSymbolTable.getSymbol(symbolName).getValue();
 
                     for (var occurrence : symbolOccurrences) {
-                        m.writeInModuleCode(occurrence.address, symbolValue);
+                        m.writeInModuleCode((short)((2 * occurrence.address) + headerSizeBytes), symbolValue);
                     }
                 }
                 // Symbol is not declared in any module, throw exception

@@ -239,8 +239,8 @@ public class Assembler {
 
         // If no data segment was declared, set invalid segment for interpreter ignore
         if (!this.dataSegmentSet) {
-            this.dsStart = headerSize;
-            this.dsEnd = this.csEnd;
+            this.dsStart = 0;
+            this.dsEnd = -1;
         }
         // If data segment was declared,
         else {

@@ -1,3 +1,4 @@
+name mod
 .code segment
 add ax, 1
 add ax, 1

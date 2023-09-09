@@ -17,9 +17,8 @@ public class Extrn implements AssembleOperation {
 
         var usageTable = Linker.getInstance().getUsageTable(Assembler.getInstance().getModuleName());
 
-        for (String token : tokens) {
-            token = token.split(":")[0];
-            usageTable.addSymbol(token);
+        for (int i = 1; i < tokens.length; i++) {
+            usageTable.addSymbol(tokens[i]);
         }
     }
 }

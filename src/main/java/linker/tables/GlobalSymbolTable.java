@@ -38,6 +38,10 @@ public class GlobalSymbolTable {
         return globalSymbolTable.containsKey(symbolName);
     }
 
+    public void reset() {
+        globalSymbolTable.clear();
+    }
+
     public LinkerSymbol getSymbol(String symbolName) {
         return globalSymbolTable.get(symbolName);
     }

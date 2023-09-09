@@ -1,3 +1,5 @@
+name mod
+
 .code segment
 oi macrodef x
 	add ax, x

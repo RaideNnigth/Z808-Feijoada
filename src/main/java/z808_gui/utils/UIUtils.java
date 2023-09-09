@@ -8,6 +8,7 @@ import logger.Logger;
 import macroprocessor.MacroProcessor;
 import virtual_machine.VirtualMachine;
 import virtual_machine.registers.Registers;
+import z808_gui.MainWindow;
 import z808_gui.components.DependenciesWindow;
 import z808_gui.components.panels.AssemblyTextPane;
 import z808_gui.components.panels.CentralPanel;
@@ -58,6 +59,8 @@ public class UIUtils {
     public static final Dimension H_SPACER = new Dimension(10, 0);
     public static final Dimension V_SPACER = new Dimension(0, 10);
     public static final JSeparator VERTICAL_SEPARATOR = new JSeparator(SwingConstants.VERTICAL);
+
+    public static MainWindow mainWindowInstance = null;
 
 
     public static Image resizeImage(String imgPath, int width, int height, int algorithm) {
@@ -159,23 +162,27 @@ public class UIUtils {
             // Save file
             UIUtils.saveFile(tabs);
 
+            // Get active file path
+            String directoryOfActiveFile = assemblyEditor.getFilepath().substring(0, assemblyEditor.getFilepath().lastIndexOf(File.separatorChar));
+
+            // Now, we need to display the dependencies window and get the files to assemble
+            DependenciesWindow dpWin = new DependenciesWindow(assemblyEditor.getDependeciesPath(), mainWindowInstance);
+
             // Now, process macros, assemble and link
             try {
-                /*for (String dpPath : assemblyEditor.getDependeciesPath()) {
+                // Parse all macros and assemble code
+                for (String dpPath : assemblyEditor.getDependeciesPath()) {
+                    dpPath = directoryOfActiveFile + File.separatorChar + dpPath;
+
                     File file = new File(dpPath);
+                    //System.out.println("Absolute path: " + file.getAbsolutePath());
+
                     String processedCodePath = MacroProcessor.getInstance().parseMacros(file.getAbsolutePath());
                     Assembler.getInstance().assembleFile(processedCodePath);
-                }*/
+                }
 
-                String output_filepath = assemblyEditor.getFilepath().replace(".asm", ".bin");
-
-                File file = new File(assemblyEditor.getFilepath());
-
-                String processedCodePath = MacroProcessor.getInstance().parseMacros(file.getAbsolutePath());
-                Assembler.getInstance().assembleFile(processedCodePath);
-
-                // CALL LINKER <- TODO
-                //Linker.getInstance().link(output_filepath);
+                // CALL LINKER
+                Linker.getInstance().link(assemblyEditor.getFilepath().replace(".asm", ".bin"));
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "ERRO: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE, null);
             }
@@ -279,6 +286,6 @@ public class UIUtils {
     public static void setDependecies(JTabbedPane tabs) {
         AssemblyTextPane assemblyEditor = (AssemblyTextPane) tabs.getSelectedComponent();
 
-        DependenciesWindow dpWin = new DependenciesWindow(assemblyEditor.getDependeciesPath());
+        DependenciesWindow dpWin = new DependenciesWindow(assemblyEditor.getDependeciesPath(), mainWindowInstance);
     }
 }

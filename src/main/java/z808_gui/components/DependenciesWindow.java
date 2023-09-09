@@ -7,11 +7,12 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DependenciesWindow extends JFrame {
+public class DependenciesWindow extends JDialog {
     private LinkedList<String> dependenciesPath;
     JTextField txtDependencies;
 
-    public DependenciesWindow(LinkedList<String> dependenciesPath) {
+    public DependenciesWindow(LinkedList<String> dependenciesPath, JFrame parent) {
+        super(parent, true);
         this.setTitle("Dependências");
         this.setLayout(new BorderLayout());
         Border raisedbevel = BorderFactory.createRaisedBevelBorder();
@@ -21,7 +22,8 @@ public class DependenciesWindow extends JFrame {
 
         JLabel lblDependencies = new JLabel("Dependencies");
         txtDependencies = new JTextField();
-        //txtDependencies.setText(dependenciesPath.);
+        txtDependencies.setText("");
+        dependenciesPath.forEach(e -> txtDependencies.setText(txtDependencies.getText() + e + ";"));
 
         JPanel btnsGroup = new JPanel();
         btnsGroup.setLayout(new BorderLayout());
@@ -45,6 +47,7 @@ public class DependenciesWindow extends JFrame {
     }
 
     private void btnOkClick() {
+        dependenciesPath.clear();
         String[] temp = this.txtDependencies.getText().split(";");
         this.dependenciesPath.addAll(List.of(temp));
         this.dispose();
