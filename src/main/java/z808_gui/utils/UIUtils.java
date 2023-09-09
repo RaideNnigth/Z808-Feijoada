@@ -161,12 +161,21 @@ public class UIUtils {
 
             // Now, process macros, assemble and link
             try {
+                /*for (String dpPath : assemblyEditor.getDependeciesPath()) {
+                    File file = new File(dpPath);
+                    String processedCodePath = MacroProcessor.getInstance().parseMacros(file.getAbsolutePath());
+                    Assembler.getInstance().assembleFile(processedCodePath);
+                }*/
+
+                String output_filepath = assemblyEditor.getFilepath().replace(".asm", ".bin");
+
                 File file = new File(assemblyEditor.getFilepath());
+
                 String processedCodePath = MacroProcessor.getInstance().parseMacros(file.getAbsolutePath());
                 Assembler.getInstance().assembleFile(processedCodePath);
 
                 // CALL LINKER <- TODO
-
+                //Linker.getInstance().link(output_filepath);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "ERRO: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE, null);
             }

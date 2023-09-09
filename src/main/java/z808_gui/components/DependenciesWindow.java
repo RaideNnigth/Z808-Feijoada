@@ -18,6 +18,7 @@ public class DependenciesWindow extends JFrame {
 
         JLabel lblDependencies = new JLabel("Dependencies");
         txtDependencies = new JTextField();
+        //txtDependencies.setText(dependenciesPath.);
 
         JPanel btnsGroup = new JPanel();
         btnsGroup.setLayout(new BorderLayout());

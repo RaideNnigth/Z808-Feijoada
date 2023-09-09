@@ -147,8 +147,6 @@ public class MacroProcessor {
         // Get all tokens in line
         String[] tokens = AssemblerUtils.decomposeInTokens(this.currentLine);
 
-        System.out.println(Arrays.toString(tokens));
-
         // Increment nest level to 1
         currentMacroNestLevel += 1;
 
@@ -156,6 +154,7 @@ public class MacroProcessor {
         // no cu sim! - Gustavo
         // Cala a boca e senta - Bessa
         // Semata - Nicolas
+        //Vão se fuder - Vinigperuzzi (Monitor de SO "vinigperuzzi.github.io/PersonalPage" [Eu sei de tudo e estou em todos os lugares, Ferrão!!])
 
         // Get macro name
         String outerMacroName = tokens[0];

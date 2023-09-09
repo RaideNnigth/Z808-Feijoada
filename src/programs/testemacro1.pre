@@ -1,3 +1,4 @@
-.CODE SEGMENT
-ADD AX, 16
-ADD AX, 20
+NAME hehe
+.code segment
+add ax, 16
+add ax, 20

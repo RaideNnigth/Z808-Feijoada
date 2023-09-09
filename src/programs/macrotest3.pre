@@ -1,0 +1,7 @@
+.data segment
+val dw 0
+.code segment
+mov ax, 0
+add ax, 12
+add ax, 13
+mov val, ax

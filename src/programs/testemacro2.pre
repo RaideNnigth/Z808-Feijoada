@@ -1,4 +1,6 @@
-.CODE SEGMENT
-MOV AX, 0
-ADD AX, 1
-ADD AX, 2
+name testemacro2
+.code segment
+mov ax, 0
+mov ax, 1
+add ax, 200
+add ax, 20000

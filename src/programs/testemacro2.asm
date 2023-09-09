@@ -1,3 +1,5 @@
+name testemacro2
+
 .code segment
 
 wnd macrodef
@@ -8,9 +10,6 @@ wnd macrodef
 	endm
 endm
 
-linux
-sum 1,2
-
 linux macrodef
 	mov ax, 0
 	sum macrodef x,y
@@ -19,3 +18,6 @@ linux macrodef
 	endm
 endm
 
+callm linux
+callm wnd
+callm linux#sum 200,20000
