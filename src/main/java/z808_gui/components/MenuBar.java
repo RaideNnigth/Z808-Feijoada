@@ -15,7 +15,6 @@ public class MenuBar extends JMenuBar {
     JMenu arquivoMenu;
     JMenu executarMenu;
     JMenu loggerMenu;
-    JMenu configsMenu;
     JMenu ajudaMenu;
     CentralPanel centralPanel;
     VirtualMachine vm;
@@ -28,7 +27,6 @@ public class MenuBar extends JMenuBar {
         this.arquivoMenu = new JMenu("Arquivo");
         this.executarMenu = new JMenu("Executar");
         this.loggerMenu = new JMenu("Logger");
-        this.configsMenu = new JMenu("Configurações");
         this.ajudaMenu = new JMenu("Ajuda");
 
         this.populateArquivoMenu();
@@ -40,7 +38,6 @@ public class MenuBar extends JMenuBar {
         this.add(arquivoMenu);
         this.add(executarMenu);
         this.add(loggerMenu);
-        this.add(configsMenu);
         this.add(ajudaMenu);
     }
 
@@ -120,7 +117,13 @@ public class MenuBar extends JMenuBar {
         devsMenItem.addActionListener(e -> JOptionPane.showMessageDialog(null, " Gabriel Bessa\n Daniel Lisboa\n Gustavo Pereira\n Henrique Rodrigues\n Miguel Strelow\n Nicolas Machado\n Pedro da Silva\n Rafael Ferrão\n Ravilon dos Santos\n", "Desenvolvedores", JOptionPane.INFORMATION_MESSAGE, null));
 
         JMenuItem sobreMenItem = new JMenuItem("Sobre");
-        sobreMenItem.setMnemonic(KeyEvent.VK_F1);
+        sobreMenItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
+        sobreMenItem.addActionListener(e -> {
+            JOptionPane.showMessageDialog(null,
+                    "Z808 Feijoada Edition V 1.0 \n" +
+                            "O Z808 Feijoada é um simulador de uma máquina virtual baseada no computador hipotético Z808, elaborado por Cristian Koliver.",
+                    "Sobre", JOptionPane.INFORMATION_MESSAGE, null);
+        });
 
         JMenuItem comoUsarMenItem = new JMenuItem("Como usar");
         comoUsarMenItem.addActionListener(e -> JOptionPane.showMessageDialog(null, "Te vira.", "Como usar", JOptionPane.INFORMATION_MESSAGE, null));

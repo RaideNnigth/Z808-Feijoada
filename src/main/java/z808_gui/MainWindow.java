@@ -68,8 +68,7 @@ public class MainWindow extends JFrame implements ProgramPathListener {
         UIUtils.newFile(this.centralPanel.getTabs());
 
         // Packing UI
-        this.pack();
-        this.setSize(this.getWidth(), (int) startDimension.getHeight());
+        this.setSize((int) startDimension.getWidth(), (int) startDimension.getHeight());
 
         // Center window
         this.setLocationRelativeTo(null);

@@ -29,7 +29,8 @@ public class CentralPanel extends JSplitPane {
         this.add(this.tabs);
         this.add(this.loggerPanel);
 
-        this.setDividerLocation(0.25);
+        this.setResizeWeight(0.8);
+        this.setDividerLocation(0.8);
     }
 
     public JTabbedPane getTabs() {

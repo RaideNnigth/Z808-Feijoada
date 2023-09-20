@@ -8,5 +8,3 @@ jmp fim
 
 hello:
 add ax, 20
-
-fim:
