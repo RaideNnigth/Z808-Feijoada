@@ -1,6 +1,7 @@
 package virtual_machine.commands;
 
 
+import logger.Logger;
 import virtual_machine.commands.operations.Command;
 import virtual_machine.commands.operations.arithmetical.*;
 import virtual_machine.commands.operations.flow.*;
@@ -10,10 +11,10 @@ import virtual_machine.commands.operations.stack.*;
 import virtual_machine.interpreter.OpParameters;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class CommandExecutor {
-
-    private Command command;
+    private final LinkedList<Command> commands = new LinkedList<>();
 
     private final HashMap<Short, Command> opCodeMap;
 
@@ -91,14 +92,17 @@ public class CommandExecutor {
     }
 
     private void setOperation(short opCode) {
-        this.command = this.opCodeMap.get(opCode);
-        if (this.command == null)
-            this.command = new Halt();
+        if (this.opCodeMap.get(opCode) != null) {
+            this.commands.add(0, this.opCodeMap.get(opCode));
+        } else {
+            Logger.getInstance().error(0, String.format("VM Error: Undefined opcode %x", opCode));
+            this.commands.add(0, new Halt());
+        }
     }
 
     public void doOperation(short opCode, HashMap<OpParameters, Object> args) {
         this.setOperation(opCode);
-        this.command.doOperation(args);
+        this.commands.get(0).doOperation(args);
     }
 
 }

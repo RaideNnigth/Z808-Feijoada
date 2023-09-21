@@ -122,8 +122,7 @@ public class MacroProcessor {
         try {
             for (String line : outputLines)
                 dataOutStream.writeBytes(line + "\n");
-        } catch (
-                IOException e) {
+        } catch (IOException e) {
             Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, "Error while writing " + pathToProgram + "file: " + e.getMessage()));
             resetMacroProcessor();
             throw e;
@@ -155,6 +154,7 @@ public class MacroProcessor {
         // no cu sim! - Gustavo
         // Cala a boca e senta - Bessa
         // Semata - Nicolas
+        //Vão se fuder - Vinigperuzzi (Monitor de SO "vinigperuzzi.github.io/PersonalPage" [Eu sei de tudo e estou em todos os lugares, Ferrão!!])
 
         // Get macro name
         String outerMacroName = tokens[0];

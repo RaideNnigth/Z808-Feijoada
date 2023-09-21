@@ -24,6 +24,7 @@ public class CodeTable {
         codeMap.put(Sub.MNEMONIC, new Sub());
         codeMap.put(Call.MNEMONIC, new Call());
         codeMap.put(Int.MNEMONIC, new Int());
+        codeMap.put(Hlt.MNEMONIC, new Hlt());
         codeMap.put(Je.MNEMONIC, new Je());
         codeMap.put(Jmp.MNEMONIC, new Jmp());
         codeMap.put(Jnz.MNEMONIC, new Jnz());

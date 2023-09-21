@@ -1,0 +1,10 @@
+.data segment
+penes dw 55
+gustavo dw 36
+danigay dw 10
+tico dw 0
+.code segment
+mov ax, danigay
+label:
+mov ax, gustavo
+mov tico, ax

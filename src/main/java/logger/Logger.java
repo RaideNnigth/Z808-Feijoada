@@ -29,6 +29,11 @@ public class Logger extends Observable {
         this.addLog(log);
     }
 
+    public void error(String message) {
+        Log log = new Log(LogType.ERROR, 0, message);
+        this.addLog(log);
+    }
+
     public void warning(int lineNumber, String message) {
         Log log = new Log(LogType.ERROR, lineNumber, message);
         this.addLog(log);
@@ -36,6 +41,11 @@ public class Logger extends Observable {
 
     public void info(int lineNumber, String message) {
         Log log = new Log(LogType.INFO, lineNumber, message);
+        this.addLog(log);
+    }
+
+    public void info(String message) {
+        Log log = new Log(LogType.INFO, 0, message);
         this.addLog(log);
     }
 
@@ -51,7 +61,11 @@ public class Logger extends Observable {
     @Override
     public void notifyObservers() {
         for (Observer observer : this.observers) {
-            observer.update(String.format("%s (at line %d) : %s", this.logs.getLast().getLogType(), this.logs.getLast().getLine(), this.logs.getLast().getMessage()));
+            if (this.logs.getLast().getLine() == 0) {
+                observer.update(String.format("%s : %s", this.logs.getLast().getLogType(), this.logs.getLast().getMessage()));
+            } else {
+                observer.update(String.format("%s (at line %d) : %s", this.logs.getLast().getLogType(), this.logs.getLast().getLine(), this.logs.getLast().getMessage()));
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-package z808_gui.components;
+package z808_gui.components.panels;
 
 import z808_gui.utils.UIUtils;
 

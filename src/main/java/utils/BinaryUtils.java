@@ -1,4 +1,4 @@
-package virtual_machine.utils;
+package utils;
 
 public class BinaryUtils {
     public static final short maxShort = Short.MAX_VALUE;
@@ -35,5 +35,10 @@ public class BinaryUtils {
         byte LO = getLowByte(value);
 
         return concatBytes(LO, HO);
+    }
+
+    public static void writeShortInByteArrayLE(byte[] array, int index, short value) {
+        array[index] = getLowByte(value);
+        array[index + 1] = getHighByte(value);
     }
 }

@@ -3,8 +3,6 @@
 Ksrc/main/java/virtual_machine/commands/operations/arithmetical/SubAxAx.java,a\4\a4d66b5cedf0f5fb97c76b04b8be3e5187c9f6fc
 y
 Isrc/main/java/virtual_machine/commands/operations/arithmetical/DivAx.java,7\0\70e1e341f5ec2c4e9a2e2a1adc9a5e52de66bdc7
-Z
-*src/main/java/assembler/directives/Dw.java,0\2\02ccbe89733561e71bf7237a4acdf2bbc19db268
 o
 ?src/main/java/assembler/tables/datatable/dataitemtype/CHAR.java,e\2\e26b1b92b4017e8a8ddff4af625478f4b016ce18
 m
@@ -103,3 +101,15 @@ j
 :src/main/java/virtual_machine/interpreter/Interpreter.java,0\b\0b98f8107923188fbedaf00b6cdb5848a7869141
 j
 :src/main/java/virtual_machine/memory/MemoryController.java,1\1\1126c0efed438f6e505252cb4dfe41501d77bd68
+`
+0src/main/java/macroprocessor/MacroProcessor.java,1\0\10e9902d91cdd883508330be26813727875f5f62
+\
+,src/main/java/assembler/LinkerOperation.java,6\c\6c210da14efd9ba2f0d0d84c9e3ccfc4e56149db
+Z
+*src/main/java/assembler/directives/Dw.java,0\2\02ccbe89733561e71bf7237a4acdf2bbc19db268
+a
+1src/main/java/assembler/linkerdirectives/Abs.java,8\7\8782807f1334d9ae134020eb715416fd477e5843
+b
+2src/main/java/assembler/linkerdirectives/Word.java,1\c\1c86f89044dc09ae5dc28e5415dcd67bc101f34f
+b
+2src/main/java/assembler/linkerdirectives/Near.java,3\e\3ec9c50626b4acc6d2ec4b8ba5b9b13bd406067c

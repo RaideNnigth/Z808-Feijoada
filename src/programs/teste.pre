@@ -1,6 +1,2 @@
-.CODE SEGMENT
-ADD AX, 10
-ADD AX, 20
-ADD AX, 30
-SUB AX, 15
-SUB AX, 25
+.code segment
+sum 16, 20

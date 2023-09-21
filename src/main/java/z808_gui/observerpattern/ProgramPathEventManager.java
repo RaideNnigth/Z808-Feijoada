@@ -2,7 +2,7 @@ package z808_gui.observerpattern;
 
 import java.util.LinkedList;
 
-public class ProgramPathEventManager {
+public class    ProgramPathEventManager {
     private static ProgramPathEventManager instance = null;
     private static final LinkedList<ProgramPathListener> subscribers = new LinkedList<>();
 

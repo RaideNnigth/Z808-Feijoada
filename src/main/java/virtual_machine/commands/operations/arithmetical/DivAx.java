@@ -4,7 +4,7 @@ import virtual_machine.commands.operations.Command;
 import virtual_machine.interpreter.OpParameters;
 import virtual_machine.registers.BankOfRegisters;
 import virtual_machine.registers.RegWork;
-import virtual_machine.utils.BinaryUtils;
+import utils.BinaryUtils;
 
 import java.util.HashMap;
 

@@ -1,8 +1,6 @@
 package virtual_machine.registers;
 
-import virtual_machine.utils.BinaryUtils;
-
-import java.util.ArrayList;
+import utils.BinaryUtils;
 
 public class RegWork  {
     private byte regHigh;

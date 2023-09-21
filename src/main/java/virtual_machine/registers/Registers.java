@@ -1,9 +1,9 @@
 package virtual_machine.registers;
 
 public enum Registers {
-    AX("AX: "), DX("DX: "), IP("IP: "), SI("SI: "),
-    SP("SP: "), CS("CS: "), DS("DS: "), SS("SS: "),
-    SR("SR: ");
+    AX("AX"), DX("DX"), IP("IP"), SI("SI"),
+    SP("SP"), CS("CS"), DS("DS"), SS("SS"),
+    SR("SR");
 
     private String label;
 

@@ -1,6 +1,8 @@
 package assembler.tables.datatable;
 
 import assembler.Assembler;
+import linker.Linker;
+import linker.entities.LinkerSymbol;
 import logger.Log;
 import logger.LogType;
 import logger.Logger;
@@ -44,6 +46,8 @@ public class DataTable {
                     dataItem.setTypeAndInitialValue(tokens[1], tokens[2]);
                     dataItem.setAddress(this.nextAvailableAddress);
 
+                    processPublicDataItemDeclaration(dataItem);
+
                     this.nextAvailableAddress = (short) (nextAvailableAddress + (AssemblerUtils.roundUpToClosestPower2(dataItem.getSize() / 2)));
                     return;
                 }
@@ -52,6 +56,8 @@ public class DataTable {
             // If it's not redeclaration, then it's a new variable
             d = new DataItem(tokens[0], true, tokens[1],
                     tokens[2], this.nextAvailableAddress);
+
+            processPublicDataItemDeclaration(d);
 
             addDataItem(d);
         }
@@ -65,6 +71,19 @@ public class DataTable {
         }
 
         nextAvailableAddress = (short) (nextAvailableAddress + (AssemblerUtils.roundUpToClosestPower2(d.getSize() / 2)));
+    }
+
+    // Check if is a Public variable (definition table) and update it
+    private void processPublicDataItemDeclaration(DataItem dataItem) {
+        var linker = Linker.getInstance();
+        var moduleName = Assembler.getInstance().getModuleName();
+        if(linker.getDefinitionsTable(moduleName).containsSymbol(dataItem.getIdentification())) {
+            var linkerSymbol = linker.getDefinitionsTable(moduleName).getSymbol(dataItem.getIdentification());
+
+            linkerSymbol.setValue(dataItem.getAddress());
+            linkerSymbol.setModuleName(moduleName);
+            linkerSymbol.setRelocability(LinkerSymbol.RELOCABILITY.A);
+        }
     }
 
     private void addDataItem(DataItem d) {

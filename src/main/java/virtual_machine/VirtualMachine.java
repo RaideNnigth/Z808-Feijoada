@@ -27,13 +27,17 @@ public class VirtualMachine {
         notifySubscribers();
     }
 
+    public void exportMemoryData(String filepath) {
+        vmInterpreter.getMemoryController().exportMemoryData(filepath);
+    }
+
     public void subscribe(RegObsListener rl) {
         subscribers.add(rl);
     }
 
     public void notifySubscribers() {
         HashMap<Registers, Short> workRegValues = vmInterpreter.getRegisters().getWorkRegValues();
-        String regFlagValue = vmInterpreter.getRegisters().getSr().toString();
+        HashMap<String, Short> regFlagValue = vmInterpreter.getRegisters().getSr().getFlagRegsValues();
 
         for(RegObsListener rl : subscribers) {
             rl.updatedRegs(workRegValues, regFlagValue);

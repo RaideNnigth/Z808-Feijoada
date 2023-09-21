@@ -1,5 +1,7 @@
-package z808_gui.components;
+package z808_gui.components.panels;
 
+import z808_gui.utils.SyntaxHighlightingGroup;
+import z808_gui.utils.SyntaxHighlightingProfile;
 import z808_gui.utils.TextLineNumber;
 
 import javax.swing.*;
@@ -8,18 +10,21 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.*;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class AssemblyTextPane extends JScrollPane {
     private JTextPane assemblyTextEditor;
-    private static AssemblyTextPane instance = null;
+    private String filepath = "";
+    private final LinkedList<String> dependeciesPath = new LinkedList<>();
+
     private final HashMap<String, Color> colorMap = new HashMap<>();
     private final HashMap<String, Color> colorGroups = new HashMap<>();
     private final String instructionsRegex = "(\\W)*(mov|add|sub|mult|hlt)";
     private final String registersRegex = "(\\W)*(ax|dx)";
     private final String segmentsRegex = "(\\s)*(\\.(code|data|stack)\\s+segment)(\\s)*";
-    private final String directivesRegex = "(\\W)*(macrodef|endm)";
+    private final String directivesRegex = "(\\W)*(macrodef|endm|callm|name|extrn|public)";
     private final String numbersRegex = "(\\W)*([0-9])*(b|d|)";
-    private final String commentsRegex = ";(.*)";
+    private final String commentsRegex = ";(\\s)*";
     private final String stringRegex = "";
 
     private final StyleContext styleContext = StyleContext.getDefaultStyleContext();
@@ -32,6 +37,7 @@ public class AssemblyTextPane extends JScrollPane {
     private final AttributeSet stringStyle = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Foreground, Color.yellow);
     private final AttributeSet defaultStyle = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Foreground, Color.BLACK);
 
+
     public AssemblyTextPane() {
         assemblyTextEditor = new JTextPane();
 
@@ -43,8 +49,6 @@ public class AssemblyTextPane extends JScrollPane {
         setRowHeaderView(tln);
         setViewportView(assemblyTextEditor);
 
-
-        // Obrigado a https://github.com/stark9000/java-Syntax-Highlight
         DefaultStyledDocument doc = new DefaultStyledDocument() {
             @Override
             public void insertString(int offset, String str, AttributeSet a) throws BadLocationException {
@@ -72,7 +76,7 @@ public class AssemblyTextPane extends JScrollPane {
                         } else if (lowerCase.matches("\"\"")) {
                             setCharacterAttributes(wordL, wordR - wordL, labelsStyle, false);
                         } else if (lowerCase.matches(commentsRegex)) {
-                            setCharacterAttributes(wordL, after - wordL, commentsStyle, false);
+                            setCharacterAttributes(wordL, wordR - wordL, commentsStyle, false);
                         } else if (text.toLowerCase().matches(segmentsRegex)) {
                             setCharacterAttributes(0, after, segmentsStyle, false);
                         } else if (text.toLowerCase().matches(stringRegex)) {
@@ -112,7 +116,68 @@ public class AssemblyTextPane extends JScrollPane {
             }
         };
 
-        assemblyTextEditor.setDocument(doc);
+        /*
+        doc = new DefaultStyledDocument() {
+            @Override
+            public void insertString(int offset, String str, AttributeSet a) throws BadLocationException {
+                super.insertString(offset, str, a);
+
+                String text = getText(0, getLength());
+                int before = findLastNonWordChar(text, offset);
+                if (before < 0) {
+                    before = 0;
+                }
+                int after = findFirstNonWordChar(text, offset + str.length());
+                int wordL = before;
+                int wordR = before;
+
+                while (wordR <= after) {
+                    if (wordR == after || String.valueOf(text.charAt(wordR)).matches("\\W")) {
+                        String lowerCase = text.substring(wordL, wordR).toLowerCase();
+
+                        for (SyntaxHighlightingGroup gp : SyntaxHighlightingGroup.values()) {
+                            if (lowerCase.matches(highlightProfile.getRegex(gp))) {
+                                switch (gp) {
+                                    case COMMENTS ->
+                                            setCharacterAttributes(wordL, after - wordL, styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Foreground, highlightProfile.getColor(gp)), false);
+                                    case SEGMENTS ->
+                                            setCharacterAttributes(0, after, highlightProfile.getAttribute(SyntaxHighlightingGroup.SEGMENTS, styleContext), false);
+                                    default -> setCharacterAttributes(wordL, wordR - wordL, styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Foreground, highlightProfile.getColor(gp)), false);
+                                }
+                            } else {
+                                setCharacterAttributes(wordL, wordR - wordL, highlightProfile.getAttribute(SyntaxHighlightingGroup.DEFAULT, styleContext), false);
+                            }
+                        }
+
+                        wordL = wordR;
+                    }
+                    wordR++;
+                }
+            }
+
+            @Override
+            public void remove(int offs, int len) throws BadLocationException {
+                super.remove(offs, len);
+
+                String text = getText(0, getLength());
+
+                int before = findLastNonWordChar(text, offs);
+
+                if (before < 0) {
+                    before = 0;
+                }
+
+                int after = findFirstNonWordChar(text, offs);
+
+                try {
+                    setCharacterAttributes(before, after - before, highlightProfile.getAttribute(SyntaxHighlightingGroup.DEFAULT, styleContext), false);
+                } catch (Exception e) {
+
+                }
+            }
+        };*/
+
+        this.assemblyTextEditor.setDocument(doc);
     }
 
     private int findLastNonWordChar(String text, int index) {
@@ -134,18 +199,23 @@ public class AssemblyTextPane extends JScrollPane {
         return index;
     }
 
-    public static AssemblyTextPane getInstance() {
-        if (instance == null)
-            instance = new AssemblyTextPane();
-
-        return instance;
-    }
-
     public String getText() {
         return assemblyTextEditor.getText();
     }
 
     public void setText(String s) {
         assemblyTextEditor.setText(s);
+    }
+
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
+    }
+
+    public LinkedList<String> getDependeciesPath() {
+        return dependeciesPath;
     }
 }

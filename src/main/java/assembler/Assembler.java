@@ -2,11 +2,16 @@ package assembler;
 
 import assembler.codeprocessors.DirectiveProcessor;
 import assembler.codeprocessors.LabelProcessor;
+import assembler.codeprocessors.LinkerDirectivesProcessor;
 import assembler.codeprocessors.OperationProcessor;
+import assembler.linkerdirectives.Name;
 import assembler.tables.datatable.DataTable;
 import assembler.tables.datatable.UndeclaredDataItem;
 import assembler.tables.symboltable.SymbolTable;
 import assembler.tables.symboltable.UndeclaredSymbol;
+import assembler.utils.AssemblerUtils;
+import linker.Linker;
+import linker.tables.exceptions.UndaclaredModuleNameException;
 import logger.*;
 import macroprocessor.MacroProcessor;
 
@@ -20,6 +25,10 @@ public class Assembler {
     private final LabelProcessor labelProcessor = new LabelProcessor();
     private final DirectiveProcessor directiveProcessor = new DirectiveProcessor();
     private final OperationProcessor operationProcessor = new OperationProcessor();
+    private final LinkerDirectivesProcessor linkerDirectivesProcessor = new LinkerDirectivesProcessor();
+
+    // Linker
+    private final Linker linker = Linker.getInstance();
 
     // Assembled code
     private final LinkedList<Short> assembledCode = new LinkedList<>();
@@ -27,6 +36,7 @@ public class Assembler {
     private final ArrayList<Byte> assembledData = new ArrayList<>();
 
     // Handling files utils
+    private String currentModuleName;
     private String inputFile;
     private String outputFile;
     private String currentLine;
@@ -64,11 +74,19 @@ public class Assembler {
     public void assembleFile(String inputFile) {
         this.inputFile = inputFile;
         this.outputFile = String.valueOf(inputFile).replace(".pre", ".bin").replace(".asm", ".bin");
+
+        try {
+            File f = new File(outputFile);
+            f.delete();
+        } catch (Exception ex) {
+            Logger.getInstance().error(ex.getMessage());
+        }
+
         this.startAssembleFile();
         this.resetAssembler();
     }
 
-    public void startAssembleFile() {
+    private void startAssembleFile() {
         // Handling macros and returns intermediate file path to new file soo we do not change user one
         //pathToProgram = macroProcessor.parseMacros(pathToProgram);
         FileReader fileReader;
@@ -81,12 +99,17 @@ public class Assembler {
             return;
         }
 
-        // Assemble line by line
+        // ------------------------------------------ Assemble line by line ------------------------------------------
         try (BufferedReader fileIO = new BufferedReader(fileReader)) {
             this.currentLine = fileIO.readLine();
-            this.lineCounter += 1;
 
-            while (this.currentLine != null) { //&& !Logger.getInstance().isInterrupted()) {
+            // Process first line
+            currentLine = currentLine.toUpperCase();
+            assembleFirstLine();
+
+            // Process remaining lines
+            this.currentLine = fileIO.readLine();
+            while (this.currentLine != null) {
                 // Our assembler IS NOT case-sensitive!!
                 // The input file will be uppercased because of macroprocessor
                 currentLine = currentLine.toUpperCase();
@@ -97,24 +120,19 @@ public class Assembler {
             }
         } catch (IOException e) {
             logger.error(lineCounter, String.format("IO Error: Error while reading %s (%s)", this.inputFile, e.getMessage()));
-            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("IO Error: Error while reading %s (%s)", this.inputFile, e.getMessage())));
             return;
         } catch (AssemblerError e) {
             logger.error(lineCounter, String.format("Assembly error: %s", e.getMessage()));
-            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Assembly error: %s", e.getMessage())));
             return;
         } catch (Exception e) {
             logger.error(lineCounter, String.format("Unknown error: %s", e.getMessage()));
-            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Unknown error: %s", e.getMessage())));
             return;
         } finally {
             try {
                 fileReader.close();
             } catch (IOException e) {
                 logger.error(lineCounter, String.format("Fatal error: couldn't close input file! (%s)", e.getMessage()));
-                //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Fatal error: couldn't close input file! (%s)", e.getMessage())));
             }
-            //return;
         }
 
         // Resolve symbols in symboltable
@@ -122,9 +140,6 @@ public class Assembler {
             SymbolTable.getInstance().replaceAllOcorrencesOfDeclaredSymbols();
         } catch (UndeclaredSymbol e) {
             logger.error(lineCounter, String.format("Symbol table error: %s", e.getMessage()));
-            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, String.format("Symbol table error: %s", e.getMessage())));
-            //Logger.getInstance().printLogs();
-            //resetAssembler();
             return;
         }
 
@@ -162,6 +177,9 @@ public class Assembler {
             return;
         }
 
+        // Add bin path to linker
+        linker.addBinPath(this.currentModuleName, this.outputFile);
+
         // Log success message
         logger.info(lineCounter, "Code assembled!");
         //Logger.getInstance().addLog(new Log(LogType.INFO, 0, "Code assembled!"));
@@ -182,14 +200,13 @@ public class Assembler {
         if (labelProcessor.assembleLabel(currentLine))
             return;
 
-        // Handling directives
-        //try {
+        // Handling assembler directives
         if (directiveProcessor.assembleDirective(currentLine))
             return;
-        //} catch (Exception e) {
-            //Logger.getInstance().addLog(new Log(LogType.ERROR, lineCounter, "ERROR ON DIRECTIVE PROCESSOR\n " + e.getMessage()));
-            //return;
-        //}
+
+        // Handling linker directives
+        if (linkerDirectivesProcessor.processLinkerDirective(currentLine))
+            return;
 
         // Handling operations and data declarations
         if (isCodeSegment) {
@@ -203,6 +220,18 @@ public class Assembler {
 
     }
 
+    // First line MUST be the name of the module
+    private void assembleFirstLine() throws Exception {
+        String[] tokens = AssemblerUtils.decomposeInTokens(currentLine);
+
+        if(tokens[0].equals(Name.MNEMONIC)) {
+            linkerDirectivesProcessor.processLinkerDirective(currentLine);
+        }
+        else {
+            throw new UndaclaredModuleNameException();
+        }
+    }
+
     private void calculateHeader() {
         // -------------------------- Calculating segments of header --------------------------
         // Since each short takes 2 bytes, we need to multiply by 2. We need to subtract 1 because the first byte is already counted
@@ -210,8 +239,8 @@ public class Assembler {
 
         // If no data segment was declared, set invalid segment for interpreter ignore
         if (!this.dataSegmentSet) {
-            this.dsStart = headerSize;
-            this.dsEnd = this.csEnd;
+            this.dsStart = 0;
+            this.dsEnd = -1;
         }
         // If data segment was declared,
         else {
@@ -305,5 +334,13 @@ public class Assembler {
 
     public boolean isDataSegmentFound() {
         return dataSegmentSet;
+    }
+
+    public void setModuleName(String moduleName) {
+        this.currentModuleName = moduleName;
+    }
+
+    public String getModuleName() {
+        return this.currentModuleName;
     }
 }
