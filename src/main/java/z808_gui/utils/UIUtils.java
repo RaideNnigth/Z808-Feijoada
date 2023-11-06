@@ -153,7 +153,7 @@ public class UIUtils {
             }
 
             String[] filepathTokens = assemblyEditor.getFilepath().split("/");
-            tabs.add(filepathTokens[filepathTokens.length - 1], assemblyEditor);
+            tabs.add(selectedFile.getName(), assemblyEditor);
             tabs.setSelectedIndex(tabs.getTabCount() - 1);
         }
     }
