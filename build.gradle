@@ -5,6 +5,20 @@ plugins {
 group = 'org.example'
 version = '1.0-SNAPSHOT'
 
+jar {
+    manifest {
+        attributes "Main-Class": "z808_gui.Main"
+    }
+    archiveBaseName.set("Z808-Feijoada")
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    from('src/main/java') {
+        include 'z808_gui/imgs/*.png'
+    }
+}
+
 repositories {
     mavenCentral()
 }

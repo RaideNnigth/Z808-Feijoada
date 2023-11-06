@@ -31,12 +31,12 @@ import java.util.HashMap;
 public class UIUtils {
     public static final Dimension startDimension = new Dimension(1200, 800);
     // IMGs paths
-    public static final String PLAY_DEFAULT_IMG_PATH = "src/main/java/z808_gui/imgs/graoFeijao.png";
-    public static final String PLAY_ACTIVE_IMG_PATH = "src/main/java/z808_gui/imgs/graoFeijaoActive.png";
-    public static final String Z808_FEIJOADA_LOGO_IMG_PATH = "src/main/java/z808_gui/imgs/Z808FEIJOADALOGO.png";
-    public static final String ASSEM_DEFAULT_IMG_PATH = "src/main/java/z808_gui/imgs/assemFeijao.png";
-    public static final String ASSEM_ACTIVE_IMG_PATH = "src/main/java/z808_gui/imgs/assemFeijaoActive.png";
-    public static final String CLEAR_LOGS_IMG_PATH = "src/main/java/z808_gui/imgs/clearLogsImg.png";
+    public static final String PLAY_DEFAULT_IMG_PATH = "/z808_gui/imgs/graoFeijao.png";
+    public static final String PLAY_ACTIVE_IMG_PATH = "/z808_gui/imgs/graoFeijaoActive.png";
+    public static final String Z808_FEIJOADA_LOGO_IMG_PATH = "/z808_gui/imgs/Z808FEIJOADALOGO.png";
+    public static final String ASSEM_DEFAULT_IMG_PATH = "/z808_gui/imgs/assemFeijao.png";
+    public static final String ASSEM_ACTIVE_IMG_PATH = "/z808_gui/imgs/assemFeijaoActive.png";
+    public static final String CLEAR_LOGS_IMG_PATH = "/z808_gui/imgs/clearLogsImg.png";
 
     // Play and Step icon
     public static final int CONTROLS_BUTTON_SIZE = 45;
@@ -64,8 +64,11 @@ public class UIUtils {
 
 
     public static Image resizeImage(String imgPath, int width, int height, int algorithm) {
-        File img = new File(imgPath);
+        var img = UIUtils.class.getResource(imgPath);
         BufferedImage bufferedImage = null;
+
+        System.out.println("Tried to load: " + imgPath);
+        System.out.println("Img URL: " + img);
 
         try {
             bufferedImage = ImageIO.read(img);
